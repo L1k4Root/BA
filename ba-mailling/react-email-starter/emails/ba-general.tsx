@@ -1,3 +1,4 @@
+
 import {
   Body,
   Button,
@@ -199,7 +200,7 @@ export default function BaPropuestaValorEmail() {
                 </Text>
                 <Button
                   className="cta-button"
-                  href={`mailto:${contactEmail}`}
+                  href={https://calendar.app.google/AobVgbz97XfXCM266}
                   style={primaryButton}
                 >
                   Conversar con nuestro equipo
