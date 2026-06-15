@@ -15,6 +15,19 @@ La preview local queda disponible en [http://localhost:3000](http://localhost:30
 
 Dentro del selector de templates, abre `ba-general`.
 
+Para los flyers horizontales adjuntos, abre:
+
+- `ba-flyer-ingenieria-derecho`
+- `ba-flyer-derecho-empresa`
+
+## Design system de BA
+
+El sistema visual compartido está definido en `design-system/ba-email.tsx` y documentado en `BA_EMAIL_DESIGN_SYSTEM.md`.
+
+Los nuevos mailings deben reutilizar sus tokens, botones, encabezados y tarjetas para mantener consistencia visual y compatibilidad entre clientes de correo.
+
+Los flyers usan `design-system/ba-flyer.tsx`: son piezas 4:3 de ancho fijo para mantener fidelidad visual y poder editar titulares, bajadas y listas desde React.
+
 ## Comandos útiles
 
 ```sh
