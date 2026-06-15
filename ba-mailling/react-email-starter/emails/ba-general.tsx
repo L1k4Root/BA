@@ -1,4 +1,3 @@
-
 import {
   Body,
   Button,
@@ -17,9 +16,11 @@ import {
 } from "@react-email/components";
 
 const siteUrl = "https://bachile.cl";
+const contactPageUrl = `${siteUrl}/contacto/`;
 const contactEmail = "contacto@bachile.cl";
+const contactHref = `mailto:${contactEmail}`;
 const phoneDisplay = "+56 9 3100 7417";
-const phoneHref = "+56931007417";
+const phoneHref = "tel:+56931007417";
 const logoUrl =
   "https://bachile.cl/wp-content/uploads/2025/11/logo-BaChile-00001.png";
 const officeImageUrl =
@@ -29,41 +30,32 @@ const practices = [
   {
     number: "01",
     title: "Derecho de la Empresa",
-    text: "Asesoría jurídica orientada a fortalecer el gobierno corporativo, prevenir riesgos y acompañar decisiones empresariales.",
+    text: "Asesoría jurídica estratégica para la gestión, estructura y crecimiento empresarial.",
     href: `${siteUrl}/derecho-de-la-empresa/`,
   },
   {
     number: "02",
     title: "Ingeniería y Derecho",
-    text: "Experiencia legal y técnica para contratos, proyectos, controversias y riesgos propios de industrias complejas.",
+    text: "Soluciones jurídico-estratégicas para empresas y proyectos complejos.",
     href: `${siteUrl}/ingenieria-y-derecho/`,
   },
   {
     number: "03",
     title: "Comercio y Negocios Internacionales",
-    text: "Asesoría legal y estratégica para conectar empresas, mercados y oportunidades globales.",
+    text: "Asesoría jurídica y estratégica para conectar empresas, mercados y oportunidades.",
     href: `${siteUrl}/comercio-y-negocios-internacionales/`,
-  },
-  {
-    number: "04",
-    title: "Fintech, Innovación y Nuevas Tecnologías",
-    text: "Asesoría legal para la transformación financiera y digital en un entorno global en constante evolución.",
-    href: `${siteUrl}/fintech-innovacion-y-nuevas-tecnologias-2026/`,
   },
 ];
 
 const approach = [
   {
     title: "Experiencia legal",
-    text: "Criterio jurídico para estructurar, prevenir y resolver.",
   },
   {
     title: "Visión de negocio",
-    text: "Decisiones alineadas con los objetivos de la compañía.",
   },
   {
     title: "Inteligencia organizacional",
-    text: "Soluciones aplicables a la operación y su contexto.",
   },
 ];
 
@@ -113,9 +105,6 @@ const responsiveCss = `
     .footer-contact {
       padding-left: 0 !important;
     }
-    .mobile-center {
-      text-align: left !important;
-    }
   }
 
   @media (prefers-color-scheme: dark) {
@@ -160,7 +149,7 @@ const responsiveCss = `
   }
 `;
 
-export default function BaPropuestaValorEmail() {
+export default function BaGeneralEmail() {
   return (
     <Html lang="es" dir="ltr">
       <Head>
@@ -168,9 +157,7 @@ export default function BaPropuestaValorEmail() {
         <meta name="supported-color-schemes" content="light dark" />
         <style>{responsiveCss}</style>
       </Head>
-      <Preview>
-        Derecho, Estrategia y Empresa para decisiones sólidas y crecimiento sostenible.
-      </Preview>
+      <Preview>Derecho, Estrategia y Empresa.</Preview>
 
       <Body style={main}>
         <Container className="email-container light-surface" style={container}>
@@ -194,16 +181,15 @@ export default function BaPropuestaValorEmail() {
                   Derecho, Estrategia y Empresa
                 </Heading>
                 <Text style={heroLead}>
-                  Soluciones legales diseñadas para fortalecer el gobierno corporativo,
-                  mitigar riesgos y apoyar el crecimiento sostenible de nuestros clientes
-                  en Chile y en el extranjero.
+                  Integramos Derecho, Estrategia y Empresa para fortalecer el
+                  gobierno corporativo, mitigar riesgos y apoyar el crecimiento
+                  sostenible.
                 </Text>
-                <Button
-                  className="cta-button"
-                  href={https://calendar.app.google/AobVgbz97XfXCM266}
-                  style={primaryButton}
-                >
-                  Conversar con nuestro equipo
+                <Button className="cta-button" href={contactPageUrl} style={primaryButton}>
+                  Contactar ahora
+                </Button>
+                <Button className="cta-button" href={contactHref} style={secondaryButton}>
+                  contacto@bachile.cl
                 </Button>
               </Column>
               <Column className="mobile-block" style={heroImageColumn}>
@@ -224,9 +210,10 @@ export default function BaPropuestaValorEmail() {
               Asesoría para decisiones empresariales
             </Heading>
             <Text className="muted-text" style={introText}>
-              Combinamos experiencia legal, visión de negocio e
-              inteligencia organizacional para entregar soluciones eficientes,
-              aplicables y alineadas con los objetivos estratégicos de cada compañía.
+              Nuestro enfoque combina experiencia legal, visión de negocio e
+              inteligencia organizacional, para que cada decisión empresarial sea
+              sólida, eficiente y alineada con los objetivos estratégicos de la
+              compañía.
             </Text>
           </Section>
 
@@ -266,7 +253,7 @@ export default function BaPropuestaValorEmail() {
                 <Column
                   className="mobile-block practice-column"
                   key={practice.title}
-                  style={practiceColumn}
+                  style={practiceColumnFull}
                 >
                   <Section className="card-surface light-border" style={practiceCard}>
                     <Text className="gold-text" style={practiceNumber}>
@@ -292,39 +279,39 @@ export default function BaPropuestaValorEmail() {
               NUESTRO ENFOQUE
             </Text>
             <Heading as="h2" style={sectionTitleOnDark}>
-              Derecho al servicio de la estrategia
+              Experiencia legal, visión de negocio e inteligencia organizacional
             </Heading>
             <Row>
-              {approach.map((item) => (
+              {approach.map((item, index) => (
                 <Column
                   className="mobile-block approach-column"
                   key={item.title}
-                  style={approachColumn}
+                  style={{
+                    ...approachColumn,
+                    borderRight: index === approach.length - 1 ? "0" : approachColumn.borderRight,
+                  }}
                 >
                   <Heading as="h3" style={approachTitle}>
                     {item.title}
                   </Heading>
-                  <Text style={approachText}>{item.text}</Text>
                 </Column>
               ))}
             </Row>
           </Section>
 
           <Section className="light-surface mobile-padding" style={ctaSection}>
+            <Text className="gold-text" style={sectionEyebrow}>
+              CONTACTO
+            </Text>
             <Heading className="dark-text" as="h2" style={ctaTitle}>
-              Conversemos sobre los desafíos de su empresa
+              Bright Alliance | BA Chile
             </Heading>
             <Text className="muted-text" style={ctaText}>
-              Nuestro equipo puede acompañarle en necesidades permanentes, asuntos
-              específicos y decisiones estratégicas que requieren una mirada jurídica y
-              empresarial integrada.
+              Dirección: Apoquindo N° 3076, oficina N° 702, Barrio El Golf, Las
+              Condes, Santiago, Chile.
             </Text>
-            <Button
-              className="cta-button"
-              href={`mailto:${contactEmail}`}
-              style={primaryButtonDark}
-            >
-              Solicitar una reunión
+            <Button className="cta-button" href={contactPageUrl} style={primaryButtonDark}>
+              Ir a contacto
             </Button>
           </Section>
 
@@ -343,15 +330,18 @@ export default function BaPropuestaValorEmail() {
               <Column className="mobile-block footer-contact" style={footerContactColumn}>
                 <Text style={footerTitle}>Bright Alliance | BA Chile</Text>
                 <Text style={footerText}>
-                  Apoquindo N° 3076, oficina N° 702<br />
-                  Barrio El Golf, Las Condes, Santiago, Chile
+                  <Link href={contactPageUrl} style={footerLink}>
+                    Apoquindo N° 3076, oficina N° 702
+                  </Link>
+                  <br />
+                  Barrio El Golf, Las Condes, Santiago, Chile.
                 </Text>
                 <Text style={footerText}>
-                  <Link href={`mailto:${contactEmail}`} style={footerLink}>
+                  <Link href={contactHref} style={footerLink}>
                     {contactEmail}
                   </Link>
                   <br />
-                  <Link href={`tel:${phoneHref}`} style={footerLink}>
+                  <Link href={phoneHref} style={footerLink}>
                     {phoneDisplay}
                   </Link>
                   <br />
@@ -465,6 +455,19 @@ const primaryButton = {
   borderRadius: "2px",
 };
 
+const secondaryButton = {
+  marginTop: "10px",
+  backgroundColor: "transparent",
+  color: white,
+  fontSize: "12px",
+  lineHeight: "16px",
+  fontWeight: "700",
+  textDecoration: "none",
+  padding: "14px 18px",
+  border: `1px solid ${gold}`,
+  borderRadius: "2px",
+};
+
 const introSection = {
   padding: "34px 34px 36px",
   backgroundColor: white,
@@ -505,8 +508,14 @@ const practiceColumn = {
   verticalAlign: "top",
 };
 
+const practiceColumnFull = {
+  width: "100%",
+  padding: "0 6px 12px",
+  verticalAlign: "top",
+};
+
 const practiceCard = {
-  minHeight: "220px",
+  minHeight: "192px",
   padding: "20px",
   backgroundColor: white,
   border: `1px solid ${border}`,
@@ -573,18 +582,11 @@ const approachColumn = {
 };
 
 const approachTitle = {
-  margin: "0 0 8px",
+  margin: "0",
   color: white,
   fontSize: "15px",
   lineHeight: "20px",
   fontWeight: "700",
-};
-
-const approachText = {
-  margin: "0",
-  color: "#dbe4ea",
-  fontSize: "12px",
-  lineHeight: "19px",
 };
 
 const ctaSection = {

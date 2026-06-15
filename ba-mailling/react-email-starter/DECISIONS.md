@@ -7,4 +7,6 @@
 | 2026-06-07 | Serve production images from BA Chile with absolute HTTPS URLs. | Relative React Email preview paths do not work in delivered emails. |
 | 2026-06-07 | Use official PNG logos in the email. | PNG has broader email-client compatibility than SVG. |
 | 2026-06-07 | Treat Gmail Mobile dark mode as best effort. | Gmail may apply automatic color inversion instead of authored dark-mode CSS. |
+| 2026-06-15 | Remove the fintech practice card from `ba-general` and add explicit contact CTAs. | The requested mailing variant should emphasize the remaining three practice areas and make contact easier from the email itself. |
+| 2026-06-15 | Align `ba-general` copy and destination links with the official BA Chile website. | The user asked to avoid invented language and external destinations not backed by `www.bachile.cl`. |
 
