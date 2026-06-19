@@ -22,40 +22,41 @@ const contactHref = `mailto:${contactEmail}`;
 const phoneDisplay = "+56 9 3100 7417";
 const phoneHref = "tel:+56931007417";
 
-const logoUrl =
+const logoUrl = "https://automize.cl/logo-BaChile-azul.svg";
+const logoUrl2 =
   "https://bachile.cl/wp-content/uploads/2025/11/logo-BaChile-00001.png";
 const officeImageUrl =
   "https://bachile.cl/wp-content/uploads/2025/12/bachile-oficina-.jpg";
 
 const services = [
-  "Derecho de la empresa",
-  "Gobierno corporativo",
-  "Contratos y negociación",
-  "Ingeniería y derecho",
+  "Asesoría jurídico-corporativa",
+  "Contratos civiles y comerciales",
+  "Compliance corporativo",
+  "Laboral, tributario y defensa corporativa",
 ];
 
 const pillars = [
   {
     number: "01",
-    title: "Diagnóstico con contexto",
-    text: "Levantamos el escenario jurídico, contractual y operacional antes de recomendar un curso de acción.",
+    title: "Asesoría caso a caso",
+    text: "Intervención puntual en contratos, consultas, litigios o informes legales, con respuestas precisas para necesidades específicas.",
   },
   {
     number: "02",
-    title: "Criterio estratégico",
-    text: "Conectamos la decisión legal con riesgos, gobierno corporativo, continuidad operacional y objetivos comerciales.",
+    title: "Asesoría por proyecto",
+    text: "Acompañamiento en procesos definidos como reorganizaciones, expansión, M&A, auditorías legales o programas de cumplimiento.",
   },
   {
     number: "03",
-    title: "Ejecución aterrizada",
-    text: "Entregamos soluciones comprensibles, aplicables y útiles para equipos directivos, legales y de negocio.",
+    title: "Departamento jurídico externo",
+    text: "Apoyo legal permanente para integrar criterio jurídico a la operación diaria, la prevención de riesgos y la toma de decisiones.",
   },
 ];
 
 const outcomes = [
-  "Mejor base para negociar, estructurar y resolver asuntos relevantes.",
-  "Anticipación de contingencias legales antes de que escalen.",
-  "Acompañamiento jurídico sobrio para decisiones empresariales críticas.",
+  "Estructura legal más sólida para operar, crecer y reorganizar la empresa.",
+  "Mejor prevención de contingencias laborales, contractuales, tributarias y regulatorias.",
+  "Acompañamiento jurídico flexible según la etapa, urgencia y complejidad del negocio.",
 ];
 
 export default function BaGeneralEmail() {
@@ -68,7 +69,7 @@ export default function BaGeneralEmail() {
       </Head>
 
       <Preview>
-        Asesoría jurídica estratégica para decisiones empresariales relevantes.
+        Derecho de la Empresa para gestión, estructura y crecimiento empresarial.
       </Preview>
 
       <Body style={styles.body}>
@@ -84,7 +85,7 @@ export default function BaGeneralEmail() {
                 />
               </Column>
               <Column className="mobile-center mobile-top-space" style={styles.headerMetaColumn}>
-                <Text style={styles.headerMeta}>Derecho · Estrategia · Empresa</Text>
+                <Text style={styles.headerMeta}>Derecho de la Empresa</Text>
               </Column>
             </Row>
           </Section>
@@ -96,17 +97,17 @@ export default function BaGeneralEmail() {
               <Column className="mobile-block" style={styles.heroTextColumn}>
                 <Text style={styles.eyebrow}>BRIGHT ALLIANCE | BA CHILE</Text>
                 <Heading as="h1" style={styles.heroTitle}>
-                  Asesoría legal para decisiones empresariales críticas
+                  Derecho de la Empresa para crecer con estructura y seguridad
                 </Heading>
                 <Text style={styles.heroLead}>
-                  Integramos derecho, estrategia y comprensión del negocio para
-                  ayudar a empresas a ordenar riesgos, negociar mejor y ejecutar
-                  decisiones con mayor claridad.
+                  Entregamos soporte jurídico integral para que empresas puedan
+                  operar con solidez, ordenar riesgos y alinear sus decisiones
+                  legales con la estrategia corporativa.
                 </Text>
 
                 <Section style={styles.heroActions}>
                   <Link href={contactPageUrl} style={styles.primaryButton}>
-                    Solicitar una reunión
+                    Solicitar asesoría
                   </Link>
                 </Section>
               </Column>
@@ -126,19 +127,18 @@ export default function BaGeneralEmail() {
           <Section style={styles.problemSection}>
             <Text style={styles.sectionEyebrow}>EL PUNTO DE FONDO</Text>
             <Heading as="h2" style={styles.sectionTitle}>
-              El riesgo legal rara vez vive separado de la operación
+              La empresa necesita soporte legal antes, durante y después de cada decisión relevante
             </Heading>
             <Text style={styles.sectionText}>
-              Contratos, proyectos complejos, gobierno corporativo y expansión
-              internacional requieren una lectura que conecte lo jurídico con la
-              realidad comercial de la empresa. Cuando esa conexión falla, las
-              decisiones llegan tarde, pierden contexto o trasladan riesgos a
-              otras áreas.
+              Constitución de sociedades, contratos, relaciones laborales,
+              cumplimiento normativo, defensa corporativa, propiedad intelectual,
+              libre competencia y reorganizaciones requieren una mirada legal
+              conectada con la realidad operacional del negocio.
             </Text>
           </Section>
 
           <Section style={styles.servicesBand}>
-            <Text style={styles.bandLabel}>Ámbitos de trabajo</Text>
+            <Text style={styles.bandLabel}>Áreas principales</Text>
             <Row>
               {services.map((service) => (
                 <Column className="service-pill" key={service} style={styles.serviceColumn}>
@@ -149,9 +149,9 @@ export default function BaGeneralEmail() {
           </Section>
 
           <Section style={styles.approachSection}>
-            <Text style={styles.sectionEyebrowDark}>NUESTRA FORMA DE TRABAJO</Text>
+            <Text style={styles.sectionEyebrowDark}>MODALIDADES DE ASESORÍA</Text>
             <Heading as="h2" style={styles.sectionTitleDark}>
-              Criterio jurídico con utilidad ejecutiva
+              Tres formas de acompañamiento según la necesidad de la empresa
             </Heading>
 
             {pillars.map((item) => (
@@ -176,7 +176,7 @@ export default function BaGeneralEmail() {
               <Column className="mobile-block" style={styles.outcomeIntroColumn}>
                 <Text style={styles.sectionEyebrow}>RESULTADO ESPERADO</Text>
                 <Heading as="h2" style={styles.sectionTitle}>
-                  Más claridad para decidir, negociar y avanzar
+                  Más continuidad, prevención y valor jurídico para el negocio
                 </Heading>
               </Column>
               <Column className="mobile-block" style={styles.outcomeListColumn}>
@@ -192,15 +192,14 @@ export default function BaGeneralEmail() {
           <Section style={styles.ctaSection}>
             <Text style={styles.ctaEyebrow}>BRIGHT ALLIANCE | BA CHILE</Text>
             <Heading as="h2" style={styles.ctaTitle}>
-              Conversemos sobre su próximo desafío jurídico
+              Conversemos sobre las necesidades legales de su empresa
             </Heading>
             <Text style={styles.ctaText}>
-              Podemos acompañar necesidades permanentes, asuntos específicos o
-              decisiones estratégicas que requieran una mirada jurídica y
-              empresarial integrada.
+              Podemos apoyar asuntos puntuales, proyectos definidos o una asesoría
+              legal permanente como departamento jurídico externo para su empresa.
             </Text>
             <Link href={contactPageUrl} style={styles.secondaryButton}>
-              Agendar conversación
+              Contactar a BA Chile
             </Link>
           </Section>
 
@@ -208,7 +207,7 @@ export default function BaGeneralEmail() {
             <Row>
               <Column className="mobile-block mobile-center" style={styles.footerLogoColumn}>
                 <Img
-                  src={logoUrl}
+                  src={logoUrl2}
                   width="86"
                   alt="Bright Alliance | BA Chile"
                   style={styles.footerLogo}

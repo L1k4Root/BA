@@ -7,7 +7,8 @@
     "agent:log:end": "node scripts/agent-log.js end",
     "build": "email build",
     "dev": "email dev",
-    "export": "email export"
+    "export": "email export",
+    "export:whatsapp-ads": "node scripts/export-whatsapp-ads.js"
   },
   "dependencies": {
     "@react-email/components": "^1.0.12",

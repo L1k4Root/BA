@@ -13,12 +13,21 @@ npm run dev
 
 La preview local queda disponible en [http://localhost:3000](http://localhost:3000).
 
-Dentro del selector de templates, abre `ba-general`.
+Dentro del selector de templates, abre el mailing que quieras revisar:
 
-Para los flyers horizontales adjuntos, abre:
+- `ba-mailing-ingenieria-derecho`
+- `mailing-derecho-empresa`
 
-- `ba-flyer-ingenieria-derecho`
-- `ba-flyer-derecho-empresa`
+Para los artes de WhatsApp, abre:
+
+- `ba-wa-ingenieria-derecho`
+- `ba-wa-derecho-empresa`
+
+Importante: los templates `ba-wa-*` son artboards fijos para generar imagen, no
+HTML de correo para enviar con el botón `Send`. Si se envían como email HTML,
+algunos clientes pueden ignorar fondos, gradientes y posicionamiento absoluto.
+Para usarlos correctamente, exporta el JPG con `npm run export:whatsapp-ads` y
+envía la imagen resultante.
 
 ## Design system de BA
 
@@ -33,17 +42,24 @@ Los flyers usan `design-system/ba-flyer.tsx`: son piezas 4:3 de ancho fijo para 
 ```sh
 npm run build
 npm run export -- --pretty
+npm run export:whatsapp-ads
 ```
 
 - `npm run build` valida y compila los emails.
-- `npm run export -- --pretty` genera el HTML exportable en `out/`.
+- `npm run export -- --pretty` genera el HTML exportable en `out/` para los
+  mailings.
+- `npm run export:whatsapp-ads` genera los HTML, levanta un servidor temporal y exporta los JPG de `ba-wa` en `out/whatsapp-ads/`.
 
 La carpeta `.react-email/` se usa para la build local y `out/` para los archivos exportados. Ambas están ignoradas por Git.
 
 ## Notas de implementación
 
 - Las imágenes de producción deben usar URLs HTTPS absolutas.
-- Los archivos en `emails/static/` sirven para la preview local y para el export de React Email.
+- Evita SVG y rutas locales (`/static/...`) en mailings que se van a enviar:
+  pueden verse en preview local, pero no son confiables en correos reales.
+- Los archivos en `emails/static/` sirven para la preview local y para el export
+  de React Email; si el correo saldrá a usuarios, reemplaza esas rutas por URLs
+  públicas HTTPS.
 - Si cambias copy, imágenes o CTAs, vuelve a correr `npm run build` antes de exportar.
 
 ## Agent Log
