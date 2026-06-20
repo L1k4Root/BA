@@ -43,25 +43,32 @@ const pillars = [
     number: "01",
     title: "Departamento Jurídico Externo",
     text: "Soporte legal continuo, especializado y alineado con la operación real de la empresa, sin necesidad de internalizar una estructura jurídica completa.",
+    featured: false,
   },
   {
     number: "02",
     title: "Ciclo de vida completo de proyectos",
     text: "Acompañamiento desde la etapa preliminar hasta el cierre, entendiendo el contrato como herramienta de gestión, control de riesgos y protección económica.",
+    featured: true,
   },
   {
     number: "03",
     title: "Protección patrimonial",
     text: "Resguardo de socios, directores, gerentes y representantes legales frente a contingencias derivadas de la operación, crecimiento o proyectos de alto riesgo.",
+    featured: false,
   },
 ];
 
-const serviceModalities = [
-  "Departamento Jurídico Externo permanente",
-  "Asesoría por proyecto",
-  "Intervención en etapas críticas o controversias específicas",
-  "Diagnóstico estratégico de contratos en ejecución",
-  "Diseño de estructuras de protección patrimonial",
+const lifecycleStages = [
+  "Procesos de licitación",
+  "Revisión y negociación de contratos",
+  "Gestión estratégica de riesgos",
+  "Soporte técnico-legal en ejecución",
+  "Cumplimiento contractual",
+  "Ingeniería forense",
+  "Reclamos, incumplimientos y multas",
+  "Litigación y resolución de disputas",
+  "Cierre contractual",
 ];
 
 export default function BaMailingIngenieriaDerecho() {
@@ -72,7 +79,7 @@ export default function BaMailingIngenieriaDerecho() {
         <meta name="supported-color-schemes" content="light" />
         <style>{responsiveCss}</style>
       </Head>
-      <Preview>Ingeniería y Derecho para empresas y proyectos complejos.</Preview>
+      <Preview>Soluciones especializadas en ingeniería y derecho para el ciclo de vida completo de sus proyectos.</Preview>
 
       <Body style={styles.body}>
         <Container className="email-container" style={styles.container}>
@@ -90,17 +97,17 @@ export default function BaMailingIngenieriaDerecho() {
               <Column className="mobile-block mobile-padding" style={styles.heroCopy}>
                 <Text style={styles.eyebrow}>INGENIERÍA Y DERECHO | BA CHILE</Text>
                 <Heading as="h1" style={styles.heroTitle}>
-                  Visión legal.
-                  <br />
-                  Comprensión operativa.
-                  <br />
-                  Enfoque preventivo.
+                  Soluciones especializadas en ingeniería y derecho
+                </Heading>
+                <Heading as="h5" style={styles.heroSubtitle}>
+                  Visión legal. Comprensión operativa. Enfoque preventivo.
                 </Heading>
                 <Section style={styles.goldRule} />
                 <Text style={styles.heroLead}>
-                  En Bright Alliance contamos con un área especializada en Ingeniería
-                  y Derecho, enfocada en empresas que desarrollan proyectos de alta
-                  complejidad técnica, contractual y patrimonial.
+                  Asesoría jurídico-estratégica especializada para empresas de
+                  ingeniería, construcción, minería, energía e infraestructura,
+                  integrando conocimiento legal, visión de negocio y comprensión
+                  técnica.
                 </Text>
                 <Link href={contactPageUrl} style={styles.primaryButton}>
                   Solicitar asesoría
@@ -120,25 +127,6 @@ export default function BaMailingIngenieriaDerecho() {
             </Row>
           </Section>
 
-          <Section style={styles.positioningSection}>
-            <Text style={styles.sectionEyebrow}>INGENIERÍA Y DERECHO</Text>
-            <Heading as="h2" style={styles.sectionTitleDark}>
-              Soluciones jurídico-estratégicas para empresas y proyectos complejos
-            </Heading>
-            <Section style={styles.highlightPanel}>
-              <Text style={styles.highlightText}>
-                En Bright Alliance contamos con un área especializada en Ingeniería
-                y Derecho, enfocada en empresas que desarrollan proyectos de alta
-                complejidad técnica, contractual y patrimonial.
-              </Text>
-              <Text style={styles.highlightTextLast}>
-                Integramos visión legal, comprensión operativa y enfoque
-                preventivo para proteger la posición contractual, acompañar
-                decisiones críticas y resguardar el patrimonio empresarial.
-              </Text>
-            </Section>
-          </Section>
-
           <Section style={styles.navySection}>
             <Text style={styles.sectionEyebrowGold}>SOLUCIÓN</Text>
             <Heading as="h2" style={styles.sectionTitleLight}>
@@ -146,8 +134,18 @@ export default function BaMailingIngenieriaDerecho() {
             </Heading>
             <Row>
               {pillars.map((item) => (
-                <Column className="mobile-block pillar-column" key={item.title} style={styles.pillarColumn}>
-                  <Text style={styles.pillarNumber}>{item.number}</Text>
+                <Column
+                  className="mobile-block pillar-column"
+                  key={item.title}
+                  style={
+                    item.featured
+                      ? { ...styles.pillarColumn, ...styles.pillarColumnFeatured }
+                      : styles.pillarColumn
+                  }
+                >
+                  <Text style={item.featured ? styles.pillarNumberFeatured : styles.pillarNumber}>
+                    {item.number}
+                  </Text>
                   <Heading as="h3" style={styles.pillarTitle}>
                     {item.title}
                   </Heading>
@@ -157,45 +155,40 @@ export default function BaMailingIngenieriaDerecho() {
             </Row>
           </Section>
 
-          <Section style={styles.modalitiesSection}>
-            <Text style={styles.sectionEyebrowGold}>MODALIDADES DE SERVICIO</Text>
+          <Section style={styles.lifecycleSection}>
+            <Text style={styles.sectionEyebrowGold}>CICLO DE VIDA DEL PROYECTO</Text>
             <Heading as="h2" style={styles.sectionTitleLight}>
-              Modalidades de servicio
+              Acompañamiento en el ciclo de vida completo del proyecto
             </Heading>
-            <Text style={styles.modalitiesIntro}>
-              Ofrecemos esta línea bajo distintas modalidades, según la estructura
-              y necesidad de cada cliente:
+            <Text style={styles.lifecycleIntro}>
+              Acompañamiento integral desde la preparación inicial hasta el cierre
+              contractual: gestión de riesgos, soporte técnico-legal y resolución
+              de controversias, entendiendo el contrato como herramienta de gestión
+              y protección económica.
             </Text>
 
-            <Section style={styles.modalitiesPanel}>
-              {serviceModalities.map((item) => (
-                <Text key={item} style={styles.modalityItem}>
-                  — {item}
+            <Text style={styles.categoryBar}>ÁMBITOS DE ASESORÍA</Text>
+
+            <Section style={styles.lifecyclePanel}>
+              {lifecycleStages.map((item) => (
+                <Text key={item} style={styles.lifecycleItem}>
+                  <span style={styles.diamond}>◆</span>
+                  {item}
                 </Text>
               ))}
             </Section>
-
-            <Text style={styles.modalitiesTextStrong}>
-              Ingeniería y Derecho es una línea pensada para empresas que no solo
-              necesitan asesoría legal, sino una intervención estratégica capaz de
-              dialogar con la operación, el contrato, el riesgo y el patrimonio.
-            </Text>
-            <Text style={styles.modalitiesText}>
-              Acompañamos a nuestros clientes para que sus proyectos se desarrollen
-              con mayor control, mejor posición negociadora y una estructura jurídica
-              más sólida en todas sus etapas.
-            </Text>
           </Section>
 
           <Section style={styles.ctaSection}>
             <Text style={styles.sectionEyebrow}>BRIGHT ALLIANCE</Text>
             <Heading as="h2" style={styles.ctaTitle}>
-              Conversemos sobre su próximo desafío jurídico
+              Conversemos sobre su próximo proyecto
             </Heading>
             <Text style={styles.ctaText}>
-              Nuestro equipo acompaña empresas que requieren soporte legal externo,
-              asesoría durante el ciclo completo de sus proyectos y protección
-              patrimonial para socios, directores y representantes legales.
+              Acompañamos cada etapa de sus proyectos: licitación, negociación de
+              contratos, gestión estratégica de riesgos, ejecución, reclamos y
+              cierre contractual, combinando criterio legal, visión de negocio y
+              comprensión técnica.
             </Text>
             <Link href={contactPageUrl} style={styles.goldButton}>
               Solicitar una reunión
@@ -331,18 +324,25 @@ const styles = {
     textTransform: "uppercase",
   },
   heroTitle: {
-    margin: "0 0 0",
+    margin: "0 0 10px",
     color: colors.ink,
-    fontSize: "32px",
-    lineHeight: "35px",
+    fontSize: "30px",
+    lineHeight: "34px",
     fontWeight: "700",
     letterSpacing: "-0.4px",
+  },
+  heroSubtitle: {
+    margin: "0",
+    color: colors.muted,
+    fontSize: "14px",
+    lineHeight: "20px",
+    fontWeight: "700",
   },
   goldRule: {
     width: "88px",
     height: "4px",
     backgroundColor: colors.goldSoft,
-    margin: "24px 0 24px",
+    margin: "18px 0 22px",
   },
   heroLead: {
     margin: "0 0 22px",
@@ -359,10 +359,6 @@ const styles = {
     fontWeight: "700",
     textDecoration: "none",
     padding: "13px 22px",
-  },
-  positioningSection: {
-    padding: "38px 32px 40px",
-    backgroundColor: colors.white,
   },
   sectionEyebrow: {
     margin: "0 0 9px",
@@ -382,14 +378,6 @@ const styles = {
     letterSpacing: "1.3px",
     textTransform: "uppercase",
   },
-  sectionTitleDark: {
-    margin: "0 0 18px",
-    color: colors.ink,
-    fontSize: "25px",
-    lineHeight: "31px",
-    fontWeight: "700",
-    letterSpacing: "-0.2px",
-  },
   sectionTitleLight: {
     margin: "0 0 24px",
     color: colors.white,
@@ -398,32 +386,13 @@ const styles = {
     fontWeight: "700",
     letterSpacing: "-0.2px",
   },
-  highlightPanel: {
-    padding: "22px 24px",
-    backgroundColor: "#fbfaf7",
-    borderLeft: `4px solid ${colors.gold}`,
-  },
-  highlightText: {
-    margin: "0 0 14px",
-    color: colors.ink,
-    fontSize: "15px",
-    lineHeight: "23px",
-    fontWeight: "700",
-  },
-  highlightTextLast: {
-    margin: "0",
-    color: colors.ink,
-    fontSize: "15px",
-    lineHeight: "23px",
-    fontWeight: "700",
-  },
   navySection: {
     padding: "38px 32px 44px",
     backgroundColor: colors.navy,
   },
   pillarColumn: {
     width: "33.333%",
-    padding: "0 11px",
+    padding: "14px 11px 0",
     verticalAlign: "top",
   },
   pillarNumber: {
@@ -446,41 +415,55 @@ const styles = {
     fontSize: "12px",
     lineHeight: "19px",
   },
-  modalitiesSection: {
+  pillarColumnFeatured: {
+    padding: "11px 14px 18px",
+    backgroundColor: "#1c4a6b",
+    borderTop: `3px solid ${colors.gold}`,
+  },
+  pillarNumberFeatured: {
+    margin: "0 0 10px",
+    color: colors.white,
+    fontSize: "10px",
+    lineHeight: "14px",
+    fontWeight: "700",
+  },
+  lifecycleSection: {
     padding: "38px 32px 42px",
     backgroundColor: colors.navy,
     borderTop: `1px solid rgba(255,255,255,0.35)`,
   },
-  modalitiesIntro: {
-    margin: "0 0 24px",
+  lifecycleIntro: {
+    margin: "0 0 22px",
     color: "#e5edf4",
     fontSize: "14px",
     lineHeight: "22px",
   },
-  modalitiesPanel: {
-    padding: "22px 24px",
+  categoryBar: {
+    margin: "0 0 18px",
+    padding: "9px 16px",
     backgroundColor: "#1c4a6b",
     borderLeft: `4px solid ${colors.gold}`,
+    color: colors.goldSoft,
+    fontSize: "11px",
+    lineHeight: "15px",
+    fontWeight: "700",
+    letterSpacing: "1.3px",
+    textTransform: "uppercase",
   },
-  modalityItem: {
+  lifecyclePanel: {
+    padding: "0",
+  },
+  lifecycleItem: {
     margin: "0 0 12px",
     color: colors.white,
-    fontSize: "15px",
-    lineHeight: "21px",
+    fontSize: "14px",
+    lineHeight: "20px",
     fontWeight: "700",
   },
-  modalitiesTextStrong: {
-    margin: "28px 0 0",
-    color: colors.white,
-    fontSize: "15px",
-    lineHeight: "23px",
-    fontWeight: "700",
-  },
-  modalitiesText: {
-    margin: "14px 0 0",
-    color: "#e5edf4",
-    fontSize: "13px",
-    lineHeight: "21px",
+  diamond: {
+    color: colors.goldSoft,
+    fontSize: "11px",
+    marginRight: "10px",
   },
   ctaSection: {
     padding: "40px 34px 44px",
