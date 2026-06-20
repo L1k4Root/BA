@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CTA from '../components/CTA.astro';
+import { articlesByLang, clientLogos, home, servicesByLang } from '../content/site';
+
+const lang = 'es';
+const content = home[lang];
+const services = servicesByLang(lang).filter((service) => !service.slug.startsWith('landing') && service.slug !== 'compliance');
+const articles = articlesByLang(lang);
+---
+
+<BaseLayout title="Inicio - Bright Alliance | BA Chile" description={content.lead} lang={lang}>
+  <Hero
+    lang={lang}
+    title={content.title}
+    subtitle={content.subtitle}
+    primaryLabel="Ver áreas de especialidad"
+    primaryHref="#servicios"
+    secondaryLabel="Conversemos"
+    secondaryHref="/contacto/"
+  />
+
+  <section class="ba-section light">
+    <div class="ba-container ba-grid-2">
+      <div>
+        <SectionHeader eyebrow="Quiénes somos" title="En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa." lead={content.approach} />
+        <a class="ba-btn ba-btn-outline-dark" href="/nosotros/">Leer más</a>
+      </div>
+      <div class="ba-frame home-portrait">
+        <img src="/assets/website/jose-francisco-gris-claro.jpg" alt="José Francisco Mazzei Alliende" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section offwhite" id="servicios">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Servicios" title={content.servicesHeading} lead={content.servicesSubheading} />
+      <div class="ba-grid-3">
+        {services.map((service, index) => (
+          <ServiceCard
+            index={String(index + 1).padStart(2, '0')}
+            title={service.navLabel}
+            description={service.summary}
+            href={`/${service.slug}/`}
+            variant={index === 2 ? 'dark' : 'light'}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section light">
+    <div class="ba-container">
+      <SectionHeader align="center" eyebrow="Confianza" title="Empresas que han confiado en nosotros" lead="Una selección de organizaciones presentes en el sitio actual de BA Chile." />
+      <div class="client-grid">
+        {clientLogos.map((logo) => (
+          <div class="client-logo">
+            <img src={logo.src} alt={logo.alt} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section offwhite" id="noticias">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Noticias jurídicas" title="Actualidad legal para anticiparse" lead="Artículos relacionados con leyes para empresas y regulación jurídica." />
+      <div class="ba-grid-2 news-grid">
+        {articles.map((article) => (
+          <article class="news-card">
+            <img src={article.image} alt={article.title} loading="lazy" />
+            <div>
+              <span class="ba-label">{article.category}</span>
+              <h3 class="ba-heading-md">{article.title}</h3>
+              <p>{article.summary}</p>
+              <a href={`/${article.slug}/`}>Leer artículo</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section navy quote-band">
+    <div class="ba-container-sm">
+      <SectionHeader tone="dark" eyebrow={content.founderHeading} title={content.founderQuote} lead={content.founderText} />
+      <p class="founder">— José Francisco Mazzei Alliende</p>
+    </div>
+  </section>
+
+  <CTA title="Conversemos sobre su próximo proyecto" text="Ordenamos contratos, riesgos, cumplimiento y decisiones críticas con criterio jurídico y visión de negocio." href="/contacto/" label="Contactar" />
+</BaseLayout>
+
+<style>
+  .home-portrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .client-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--ba-space-5);
+  }
+
+  .client-logo {
+    display: flex;
+    min-height: 112px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+    padding: var(--ba-space-5);
+    transition: border-color var(--ba-ease), filter var(--ba-ease), transform var(--ba-ease);
+  }
+
+  .client-logo:hover {
+    border-color: var(--ba-gold-500);
+    transform: translateY(-2px);
+  }
+
+  .client-logo img {
+    width: min(100%, 96px);
+    max-height: 72px;
+    object-fit: contain;
+    filter: grayscale(1) saturate(0) contrast(0.9);
+    opacity: 0.72;
+  }
+
+  .client-logo:hover img {
+    filter: grayscale(1) saturate(0) contrast(1.05);
+    opacity: 0.92;
+  }
+
+  .news-grid {
+    align-items: stretch;
+  }
+
+  .news-card {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+  }
+
+  .news-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .news-card div {
+    padding: var(--ba-space-6);
+  }
+
+  .news-card .ba-label {
+    color: var(--ba-gold-500);
+  }
+
+  .news-card h3 {
+    margin: var(--ba-space-3) 0;
+  }
+
+  .news-card p {
+    margin: 0 0 var(--ba-space-5);
+  }
+
+  .news-card a {
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .quote-band {
+    position: relative;
+  }
+
+  .quote-band :global(.section-header) {
+    margin-bottom: 0;
+  }
+
+  .founder {
+    margin: var(--ba-space-6) 0 0;
+    color: var(--ba-gold-400);
+    font-family: var(--ba-font-head);
+    font-weight: 700;
+  }
+
+  @media (max-width: 920px) {
+    .client-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 620px) {
+    .client-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

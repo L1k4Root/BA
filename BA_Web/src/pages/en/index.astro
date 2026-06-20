@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CTA from '../../components/CTA.astro';
+import { articlesByLang, home, servicesByLang } from '../../content/site';
+
+const lang = 'en';
+const content = home[lang];
+const services = servicesByLang(lang);
+const articles = articlesByLang(lang);
+---
+
+<BaseLayout title="Home - Bright Alliance | BA Chile" description={content.lead} lang={lang}>
+  <Hero
+    lang={lang}
+    title={content.title}
+    subtitle={content.subtitle}
+    primaryLabel="View services"
+    primaryHref="#services"
+    secondaryLabel="Contact"
+    secondaryHref="/en/contact/"
+  />
+
+  <section class="ba-section light">
+    <div class="ba-container ba-grid-2">
+      <div>
+        <SectionHeader eyebrow="About Us" title="At Bright Alliance | BA Chile, we integrate Law, Strategy, and Business." lead={content.approach} />
+        <a class="ba-btn ba-btn-outline-dark" href="/en/about-us/">Read more</a>
+      </div>
+      <div class="ba-frame home-portrait">
+        <img src="/assets/website/jose-francisco-gris-claro.jpg" alt="José Francisco Mazzei Alliende" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section offwhite" id="services">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Services" title={content.servicesHeading} lead={content.servicesSubheading} />
+      <div class="ba-grid-3">
+        {services.map((service, index) => (
+          <ServiceCard
+            index={String(index + 1).padStart(2, '0')}
+            title={service.navLabel}
+            description={service.summary}
+            href={`/en/${service.slug}/`}
+            ctaLabel="Read more"
+            variant={index === 2 ? 'dark' : 'light'}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section offwhite" id="news">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Legal News" title="Analysis to anticipate change" lead="Articles related to business law and regulatory issues." />
+      <div class="ba-grid-2 news-grid">
+        {articles.map((article) => (
+          <article class="news-card">
+            <img src={article.image} alt={article.title} loading="lazy" />
+            <div>
+              <span class="ba-label">{article.category}</span>
+              <h3 class="ba-heading-md">{article.title}</h3>
+              <p>{article.summary}</p>
+              <a href={`/en/${article.slug}/`}>Read article</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section navy quote-band">
+    <div class="ba-container-sm">
+      <SectionHeader tone="dark" eyebrow={content.founderHeading} title={content.founderQuote} lead={content.founderText} />
+      <p class="founder">— José Francisco Mazzei Alliende</p>
+    </div>
+  </section>
+
+  <CTA title="Let us discuss your next project" text="We organize contracts, risks, compliance, and critical decisions with legal criteria and business vision." href="/en/contact/" label="Contact" />
+</BaseLayout>
+
+<style>
+  .home-portrait {
+    aspect-ratio: 4 / 3;
+  }
+
+  .news-grid {
+    align-items: stretch;
+  }
+
+  .news-card {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+  }
+
+  .news-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .news-card div {
+    padding: var(--ba-space-6);
+  }
+
+  .news-card .ba-label {
+    color: var(--ba-gold-500);
+  }
+
+  .news-card h3 {
+    margin: var(--ba-space-3) 0;
+  }
+
+  .news-card p {
+    margin: 0 0 var(--ba-space-5);
+  }
+
+  .news-card a {
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .founder {
+    margin: var(--ba-space-6) 0 0;
+    color: var(--ba-gold-400);
+    font-family: var(--ba-font-head);
+    font-weight: 700;
+  }
+</style>

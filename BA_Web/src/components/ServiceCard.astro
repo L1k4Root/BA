@@ -1,0 +1,106 @@
+---
+type Props = {
+  index?: string;
+  title: string;
+  description: string;
+  href?: string;
+  ctaLabel?: string;
+  variant?: 'light' | 'dark';
+};
+
+const { index, title, description, href, ctaLabel = 'Leer más', variant = 'light' } = Astro.props;
+---
+
+<article class:list={['service-card', variant === 'dark' && 'is-dark']}>
+  {index && <span class="service-card__index">{index}</span>}
+  <h3 class="ba-heading-md">{title}</h3>
+  <p>{description}</p>
+  {href && <a href={href}>{ctaLabel}</a>}
+</article>
+
+<style>
+  .service-card {
+    position: relative;
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    gap: var(--ba-space-5);
+    padding: var(--ba-space-8) var(--ba-space-7) var(--ba-space-7);
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+    transition: border-color var(--ba-ease), box-shadow var(--ba-ease), transform var(--ba-ease);
+  }
+
+  .service-card::before {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 72px;
+    height: 4px;
+    background: var(--ba-gold-500);
+    content: '';
+    transition: width var(--ba-ease);
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(179, 146, 89, 0.42);
+    box-shadow: 0 24px 48px -32px rgba(16, 47, 75, 0.42);
+  }
+
+  .service-card:hover::before {
+    width: 100%;
+  }
+
+  .service-card.is-dark {
+    border-color: var(--ba-navy-800);
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+  }
+
+  .service-card__index {
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .service-card h3 {
+    margin: 0;
+    max-width: 13ch;
+  }
+
+  .service-card.is-dark h3 {
+    color: var(--ba-white);
+  }
+
+  .service-card p {
+    margin: 0;
+    color: var(--ba-gray-700);
+    font-size: var(--ba-body-md);
+  }
+
+  .service-card.is-dark p {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .service-card a {
+    align-self: flex-start;
+    margin-top: auto;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--ba-gray-200);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .service-card.is-dark a {
+    border-color: rgba(221, 179, 99, 0.5);
+    color: var(--ba-gold-400);
+  }
+</style>

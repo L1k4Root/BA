@@ -1,0 +1,198 @@
+---
+import Logo from './Logo.astro';
+import type { Language } from '../content/site';
+import { nav } from '../content/site';
+
+type Props = {
+  lang?: Language;
+  tone?: 'navy' | 'light';
+};
+
+const { lang = 'es', tone = 'navy' } = Astro.props;
+const items = nav[lang];
+const isDark = tone === 'navy';
+const ctaHref = lang === 'es' ? '/contacto/' : '/en/contact/';
+const ctaLabel = lang === 'es' ? 'Contacto' : 'Contact';
+const switchHref = lang === 'es' ? '/en/' : '/';
+const switchLabel = lang === 'es' ? 'Eng' : 'Esp';
+---
+
+<header class:list={['site-header', isDark && 'is-dark']}>
+  <div class="site-header__inner">
+    <a class="site-header__brand" href={lang === 'es' ? '/' : '/en/'} aria-label="Bright Alliance | BA Chile">
+      <Logo variant={isDark ? 'white' : 'navy'} />
+    </a>
+
+    <button class="site-header__toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-menu-toggle>
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-header__nav" aria-label="Principal" data-menu>
+      {items.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a class="site-header__lang" href={switchHref}>{switchLabel}</a>
+      <a class="ba-btn ba-btn-primary" href={ctaHref}>{ctaLabel}</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const menu = document.querySelector('[data-menu]');
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    document.body.classList.toggle('is-menu-open', !open);
+    menu?.classList.toggle('is-open', !open);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    background: var(--ba-navy-900);
+    backdrop-filter: blur(14px);
+  }
+
+  .site-header.is-dark {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+    background: rgba(16, 47, 75, 0.96);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: min(calc(100% - 40px), var(--ba-container-xl));
+    min-height: 116px;
+    margin-inline: auto;
+    gap: var(--ba-space-6);
+  }
+
+  .site-header__brand {
+    flex: none;
+  }
+
+  .site-header__brand :global(.ba-logo) {
+    width: 148px;
+    max-height: 92px;
+    object-fit: contain;
+  }
+
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--ba-space-7);
+  }
+
+  .site-header__nav a:not(.ba-btn) {
+    position: relative;
+    color: rgba(255, 255, 255, 0.88);
+    font-family: var(--ba-font-head);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .is-dark .site-header__nav a:not(.ba-btn) {
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .site-header__nav a:not(.ba-btn)::after {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--ba-gold-500);
+    content: '';
+    transition: width var(--ba-ease);
+  }
+
+  .site-header__nav a:not(.ba-btn):hover::after {
+    width: 100%;
+  }
+
+  .site-header__lang {
+    padding-left: var(--ba-space-4);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .is-dark .site-header__lang {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .site-header__toggle {
+    display: none;
+    width: 52px;
+    height: 52px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: transparent;
+  }
+
+  .site-header__toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin: 5px 0;
+    background: var(--ba-white);
+  }
+
+  .is-dark .site-header__toggle {
+    border-color: rgba(255, 255, 255, 0.24);
+  }
+
+  .is-dark .site-header__toggle span {
+    background: var(--ba-white);
+  }
+
+  @media (max-width: 980px) {
+    .site-header__inner {
+      min-height: 88px;
+    }
+
+    .site-header__brand :global(.ba-logo) {
+      width: 108px;
+      max-height: 68px;
+    }
+
+    .site-header__toggle {
+      display: block;
+    }
+
+    .site-header__nav {
+      position: fixed;
+      top: 88px;
+      right: 0;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      padding: var(--ba-space-6);
+      border-top: 1px solid var(--ba-gray-200);
+      background: var(--ba-navy-900);
+      box-shadow: 0 20px 40px rgba(16, 47, 75, 0.14);
+    }
+
+    .site-header__nav.is-open {
+      display: flex;
+    }
+
+    .is-dark .site-header__nav {
+      border-top-color: rgba(255, 255, 255, 0.12);
+      background: var(--ba-navy-900);
+    }
+
+    .site-header__nav a:not(.ba-btn) {
+      padding: var(--ba-space-3) 0;
+    }
+  }
+ </style>

@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTA from '../components/CTA.astro';
+import { about } from '../content/site';
+
+const content = about.es;
+---
+
+<BaseLayout title="Nosotros - Bright Alliance | BA Chile" description={content.lead} lang="es">
+  <section class="ba-section light page-hero">
+    <div class="ba-container ba-grid-2">
+      <div>
+        <SectionHeader eyebrow="Firma" title={content.title} lead={content.lead} />
+        <a class="ba-btn ba-btn-primary" href="/contacto/">Contactar</a>
+      </div>
+      <div class="ba-frame portrait">
+        <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende" />
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section offwhite">
+    <div class="ba-container">
+      <div class="ba-grid-2">
+        <div>
+          <h2 class="ba-heading-xl">Nuestra Propuesta</h2>
+          {content.proposal.map((paragraph) => <p class="ba-body-lg">{paragraph}</p>)}
+        </div>
+        <div class="mission-card">
+          <h3>Misión</h3>
+          <p>{content.mission}</p>
+          <h3>Visión</h3>
+          <p>{content.vision}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section light">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Valores" title="Nuestros Valores" lead="Principios que ordenan la relación con clientes, proyectos y decisiones." />
+      <div class="ba-grid-3">
+        {content.values.map((value) => <div class="value-card">{value}</div>)}
+      </div>
+    </div>
+  </section>
+
+  <CTA title="Conversemos sobre su necesidad legal" text="BA Chile trabaja bajo una lógica técnica, sobria y orientada a decisiones empresariales relevantes." href="/contacto/" label="Contactar" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-top: var(--ba-space-8);
+  }
+
+  .portrait {
+    aspect-ratio: 1 / 1;
+  }
+
+  .mission-card {
+    padding: var(--ba-space-7);
+    border-left: 4px solid var(--ba-gold-500);
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+  }
+
+  .mission-card h3 {
+    margin: 0 0 var(--ba-space-3);
+    color: var(--ba-gold-400);
+    font-family: var(--ba-font-head);
+    text-transform: uppercase;
+  }
+
+  .mission-card p {
+    margin: 0 0 var(--ba-space-6);
+  }
+
+  .value-card {
+    padding: var(--ba-space-6);
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+</style>

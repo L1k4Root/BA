@@ -1,0 +1,72 @@
+---
+type Props = {
+  title: string;
+  text: string;
+  href: string;
+  label: string;
+};
+
+const { title, text, href, label } = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="ba-container cta-band__inner">
+    <div>
+      <span class="ba-label ba-eyebrow">Contacto</span>
+      <h2 class="ba-heading-xl">{title}</h2>
+      <p class="ba-body-lg">{text}</p>
+    </div>
+    <a class="ba-btn ba-btn-primary" href={href}>{label}</a>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    position: relative;
+    overflow: hidden;
+    padding: var(--ba-space-8) 0;
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+  }
+
+  .cta-band::after {
+    position: absolute;
+    top: -30%;
+    right: 8%;
+    width: 180px;
+    height: 180px;
+    color: var(--ba-gray-500);
+    background-image: radial-gradient(currentColor 1.5px, transparent 1.6px);
+    background-size: 14px 14px;
+    opacity: 0.12;
+    content: '';
+  }
+
+  .cta-band__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ba-space-7);
+  }
+
+  .cta-band h2 {
+    max-width: 720px;
+    margin: var(--ba-space-4) 0 0;
+    color: var(--ba-white);
+  }
+
+  .cta-band p {
+    max-width: 720px;
+    margin: var(--ba-space-4) 0 0;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  @media (max-width: 760px) {
+    .cta-band__inner {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

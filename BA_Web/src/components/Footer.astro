@@ -1,0 +1,123 @@
+---
+import Logo from './Logo.astro';
+import type { Language } from '../content/site';
+import { contact, servicesByLang } from '../content/site';
+
+type Props = {
+  lang?: Language;
+};
+
+const { lang = 'es' } = Astro.props;
+const serviceItems = servicesByLang(lang).filter((item) => !item.slug.startsWith('landing')).slice(0, 4);
+const isEs = lang === 'es';
+---
+
+<footer class="footer" id="contacto">
+  <div class="footer__top">
+    <div>
+      <Logo variant="white" />
+      <p>{isEs ? 'Asesoría jurídico-estratégica para empresas, proyectos y operaciones complejas.' : 'Strategic legal advisory for companies, projects, and complex operations.'}</p>
+    </div>
+
+    <div>
+      <h2>{isEs ? 'Servicios' : 'Services'}</h2>
+      {serviceItems.map((service) => (
+        <a href={`${lang === 'en' ? '/en/' : '/'}${service.slug}/`}>{service.navLabel}</a>
+      ))}
+    </div>
+
+    <div>
+      <h2>{isEs ? 'Contacto' : 'Contact'}</h2>
+      <p>{contact.address}</p>
+      <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
+      <div class="footer__social">
+        <a href={contact.linkedin}>IN</a>
+        <a href={contact.youtube}>YT</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    © 2026 Bright Alliance Chile | {isEs ? 'Despacho de Abogados para empresas y comercio | Santiago de Chile' : 'Law Firm for Businesses and Commerce | Santiago, Chile'}
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+  }
+
+  .footer__top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.4fr;
+    gap: var(--ba-space-8);
+    width: min(calc(100% - 40px), var(--ba-container-lg));
+    margin-inline: auto;
+    padding: var(--ba-space-9) 0 var(--ba-space-7);
+  }
+
+  .footer h2 {
+    margin: 0 0 var(--ba-space-5);
+    color: var(--ba-gold-400);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .footer p,
+  .footer a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--ba-body-sm);
+    line-height: 1.55;
+  }
+
+  .footer p {
+    max-width: 36ch;
+    margin: var(--ba-space-5) 0 0;
+  }
+
+  .footer a {
+    display: block;
+    margin-bottom: var(--ba-space-3);
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    color: var(--ba-gold-400);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: var(--ba-space-3);
+    margin-top: var(--ba-space-5);
+  }
+
+  .footer__social a {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    font-family: var(--ba-font-head);
+    font-weight: 700;
+  }
+
+  .footer__bottom {
+    padding: var(--ba-space-5) var(--ba-space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  @media (max-width: 860px) {
+    .footer__top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
