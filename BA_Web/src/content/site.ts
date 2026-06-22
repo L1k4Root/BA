@@ -165,7 +165,7 @@ export const services: ServicePage[] = [
     navLabel: 'Derecho de la Empresa',
     summary: 'Asesoría jurídica estratégica para la gestión, estructura y crecimiento empresarial.',
     intro: 'En Bright Alliance | BA Chile entendemos el Derecho de la Empresa como un soporte jurídico integral que permite a las organizaciones operar con solidez, eficiencia y visión de futuro.',
-    heroImage: '/assets/office/office-ba-brand.webp',
+    heroImage: '/assets/services/corporate-law.webp',
     body: [
       'No se trata solo de cumplir la ley, sino de alinear las decisiones legales con la estrategia corporativa y el desarrollo sostenible del negocio.',
       'El Derecho de la Empresa se estructura sobre múltiples áreas de práctica, adaptadas a las necesidades específicas de cada cliente.'
@@ -212,7 +212,7 @@ export const services: ServicePage[] = [
     navLabel: 'Ingeniería y Derecho',
     summary: 'Soluciones jurídico-estratégicas para empresas, proyectos y estructuras patrimoniales complejas.',
     intro: 'Área especializada para empresas que desarrollan proyectos de alta complejidad técnica, contractual y patrimonial.',
-    heroImage: '/assets/office/office-boardroom-wide.webp',
+    heroImage: '/assets/services/engineering-law.webp',
     body: [
       'Integramos visión legal, comprensión operativa y enfoque preventivo para proteger la posición contractual, acompañar decisiones críticas y resguardar el patrimonio empresarial.',
       'La asesoría transforma el contrato en una herramienta activa de gestión, control de riesgos, protección patrimonial y defensa del resultado económico del negocio.'
@@ -267,7 +267,7 @@ export const services: ServicePage[] = [
     navLabel: 'Comercio y Negocios Internacionales',
     summary: 'Asesoría jurídica y estratégica para conectar empresas, mercados y oportunidades.',
     intro: 'El comercio internacional requiere estructuras jurídicas sólidas, visión estratégica y conocimiento de las normas que regulan las operaciones entre distintos países.',
-    heroImage: '/assets/hero/chile-puerto-valparaiso.jpg',
+    heroImage: '/assets/services/international-trade.webp',
     body: [
       'Acompañamos a empresas chilenas y extranjeras en procesos de expansión, representación o inversión, integrando Derecho, Estrategia y Empresa.',
       'Nuestra práctica combina una base jurídica local con alianzas profesionales en Europa, América y Oceanía.'

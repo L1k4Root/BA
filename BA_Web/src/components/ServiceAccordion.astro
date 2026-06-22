@@ -9,9 +9,9 @@ type Props = {
 const { services, defaultOpenIndex = 0 } = Astro.props;
 
 const imageForService = (service: ServicePage) => {
-  if (service.slug === 'derecho-de-la-empresa') return '/assets/office/office-ba-brand.webp';
-  if (service.slug === 'ingenieria-y-derecho') return '/assets/office/office-boardroom-wide.webp';
-  if (service.slug === 'comercio-y-negocios-internacionales') return '/assets/hero/chile-puerto-valparaiso.jpg';
+  if (service.slug === 'derecho-de-la-empresa') return '/assets/services/corporate-law.webp';
+  if (service.slug === 'ingenieria-y-derecho') return '/assets/services/engineering-law.webp';
+  if (service.slug === 'comercio-y-negocios-internacionales') return '/assets/services/international-trade.webp';
   return service.heroImage ?? '/assets/office/office-boardroom-wide.webp';
 };
 
@@ -49,22 +49,27 @@ const baseVisual = '/assets/office/office-private-room.webp';
   </div>
 
   <figure class:list={['service-accordion__visual', defaultOpenIndex === null && 'is-empty']}>
-    <img
-      class:list={['service-accordion__base', defaultOpenIndex === null && 'is-active']}
-      src={baseVisual}
-      alt=""
-      loading="eager"
-      data-service-base
-    />
-    {services.map((service, index) => (
+    <div class="service-accordion__visual-media">
       <img
-        class:list={[defaultOpenIndex === index && 'is-active']}
-        src={imageForService(service)}
+        class:list={['service-accordion__base', defaultOpenIndex === null && 'is-active']}
+        src={baseVisual}
         alt=""
-        loading={index === 0 ? 'eager' : 'lazy'}
-        data-service-visual
+        loading="eager"
+        data-service-base
       />
-    ))}
+      {services.map((service, index) => (
+        <img
+          class:list={[defaultOpenIndex === index && 'is-active']}
+          src={imageForService(service)}
+          alt=""
+          loading={index === 0 ? 'eager' : 'lazy'}
+          data-service-visual
+        />
+      ))}
+    </div>
+    <figcaption class="service-accordion__empty-note" data-service-empty-note>
+      Seleccione una especialidad
+    </figcaption>
   </figure>
 </div>
 
@@ -229,35 +234,50 @@ const baseVisual = '/assets/office/office-private-room.webp';
 
   .service-accordion__visual {
     position: relative;
-    min-height: 520px;
+    display: grid;
+    grid-template-rows: minmax(520px, 1fr) auto;
     margin: 0;
     overflow: hidden;
     border: 1px solid rgba(16, 47, 75, 0.12);
+    background: var(--ba-white);
+  }
+
+  .service-accordion__visual-media {
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
     background: var(--ba-navy-900);
   }
 
-  .service-accordion__visual::before {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    display: grid;
-    place-items: center;
-    padding: var(--ba-space-7);
-    color: rgba(255, 255, 255, 0.82);
-    content: 'Seleccione una especialidad';
+  .service-accordion__empty-note {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ba-space-4);
+    min-height: 68px;
+    padding: var(--ba-space-4) var(--ba-space-5);
+    border-top: 1px solid rgba(16, 47, 75, 0.10);
+    background: var(--ba-white);
+    color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
-    font-size: 18px;
-    font-weight: 600;
-    opacity: 0;
-    text-align: center;
-    transition: opacity var(--ba-ease-slow);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
-  .service-accordion__visual.is-empty::before {
-    opacity: 1;
+  .service-accordion__empty-note::after {
+    width: 56px;
+    height: 3px;
+    background: var(--ba-gold-500);
+    content: '';
   }
 
-  .service-accordion__visual::after {
+  .service-accordion__visual.is-empty .service-accordion__empty-note {
+    display: flex;
+  }
+
+  .service-accordion__visual-media::after {
     position: absolute;
     inset: 0;
     z-index: 2;
@@ -265,7 +285,7 @@ const baseVisual = '/assets/office/office-private-room.webp';
     content: '';
   }
 
-  .service-accordion__visual img {
+  .service-accordion__visual-media img {
     position: absolute;
     inset: 0;
     z-index: 1;
@@ -277,7 +297,7 @@ const baseVisual = '/assets/office/office-private-room.webp';
     transition: opacity var(--ba-ease-slow), transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
-  .service-accordion__visual img.is-active {
+  .service-accordion__visual-media img.is-active {
     opacity: 1;
     transform: scale(1);
   }
@@ -286,7 +306,7 @@ const baseVisual = '/assets/office/office-private-room.webp';
     .service-accordion__item::after,
     .service-accordion__trigger svg,
     .service-accordion__panel,
-    .service-accordion__visual img {
+    .service-accordion__visual-media img {
       transition: none;
     }
   }
@@ -297,8 +317,12 @@ const baseVisual = '/assets/office/office-private-room.webp';
     }
 
     .service-accordion__visual {
-      min-height: 340px;
+      grid-template-rows: minmax(340px, 1fr) auto;
       order: -1;
+    }
+
+    .service-accordion__visual-media {
+      min-height: 340px;
     }
   }
 

@@ -47,8 +47,12 @@ BA_Web/
       SectionHeader.astro
       ServiceAccordion.astro
       ServiceCard.astro
+      dev/
+        NewsDraftWorkbench.astro
     content/
       site.ts
+    lib/
+      newsDraftContract.ts
     layouts/
       BaseLayout.astro
     pages/
@@ -57,6 +61,8 @@ BA_Web/
       nosotros.astro
       servicios.astro
       contacto.astro
+      dev/
+        noticias.astro
     styles/
       global.css
   public/
@@ -65,6 +71,7 @@ BA_Web/
       clients/
       flyers/
       hero/
+      services/
       office/
       website/
 ```
@@ -74,10 +81,11 @@ BA_Web/
 - `public/assets/brand-source/`: logos del Design System.
 - `public/assets/flyers/`: flyers usados como referencia visual.
 - `public/assets/hero/`: imágenes del hero de inicio con foco país/Chile.
+- `public/assets/services/`: fotos representativas para áreas de servicio.
 - `public/assets/news/`: fotos representativas para noticias jurídicas.
 - `public/assets/office/`: fotos de oficina optimizadas a WebP con Squoosh CLI.
 - `public/assets/clients/`: logos de clientes extraídos del sitio actual.
-- `src/styles/global.css`: tokens de color, tipografía, spacing y componentes base.
+- `src/styles/global.css`: tokens de color, tipografía, spacing, header responsive y componentes base.
 - `src/content/site.ts`: estructura de páginas, navegación, servicios y posts.
 
 ## Modularidad frontend
@@ -95,6 +103,7 @@ La regla base es que cada componente tenga una responsabilidad principal:
 - `Header.astro` / `Footer.astro`: navegación global y cierre institucional.
 - `CTA.astro`: llamado final reutilizable.
 - `SectionHeader.astro`: encabezados consistentes.
+- `components/dev/NewsDraftWorkbench.astro`: herramienta local para drafts de noticias.
 
 Las páginas deben componer componentes, no concentrar todo el markup y CSS. El contenido editable debe vivir en `src/content/site.ts` salvo que sea copy estrictamente estructural de un componente.
 
@@ -110,6 +119,42 @@ Las páginas deben componer componentes, no concentrar todo el markup y CSS. El 
 Esto mantiene responsabilidad única: el componente controla interacción visual; cada página decide su estado inicial.
 
 El footer incluye crédito externo a `https://automize.cl/`.
+
+### Header responsive
+
+Los tamaños del header y logo viven en `src/styles/global.css`:
+
+- `--ba-header-expanded`
+- `--ba-header-compact`
+- `--ba-header-logo-expanded`
+- `--ba-header-logo-compact`
+- `--ba-header-nav-size`
+
+`Header.astro` consume esos tokens. Si se ajusta la escala para desktop, notebook o mobile, hacerlo en los tokens y no con números locales dispersos.
+
+### Agregador MVP de noticias
+
+Ruta escondida de desarrollo:
+
+```text
+/dev/noticias/
+```
+
+Solo debe usarse corriendo:
+
+```bash
+npm run dev
+```
+
+Responsabilidades:
+
+- `src/pages/dev/noticias.astro`: habilita la pantalla solo en entorno dev.
+- `src/components/dev/NewsDraftWorkbench.astro`: formulario, preview local, exportación JSON y escape de HTML.
+- `src/lib/newsDraftContract.ts`: contrato de draft y ejemplo de transformación a `ArticlePage`.
+
+Estado actual: persistencia local con `localStorage`.
+
+Opción persistente futura: reemplazar el bloque comentado en `NewsDraftWorkbench.astro` por `POST /api/news-drafts` o una integración CMS/DB, validando DTOs antes de escribir.
 
 ## Páginas públicas principales
 
@@ -136,6 +181,8 @@ npx @squoosh/cli --webp '{"quality":80}' /tmp/ba-office-selected/*.jpg -d BA_Web
 
 Nota: `NODE_OPTIONS=--no-experimental-fetch` evita el fallo de carga WASM de `@squoosh/cli` en runtimes Node donde `fetch()` nativo intenta resolver archivos locales como URL remota.
 
+Las fotos nuevas de servicios se intentaron optimizar con `@squoosh/cli`, pero la CLI falló en este entorno con `ERR_INVALID_URL` al cargar WASM desde `@squoosh/lib`. Se usó `cwebp -q 80` como fallback local equivalente para producir WebP optimizado sin agregar dependencias al proyecto.
+
 ## Verificación mínima
 
 Antes de cerrar cambios:
@@ -158,6 +205,7 @@ Revisar al menos:
 - Hero sin overflow horizontal.
 - Acordeón de servicios e imagen activa por especialidad.
 - `/nosotros/`, especialmente valores y CTA.
+- `/dev/noticias/` en dev: crear draft, exportar JSON y limpiar drafts.
 
 Para E2E automatizada en Codex se usa el runtime de navegador incluido por el entorno, sin agregar dependencias al proyecto. Si se decide institucionalizar E2E en CI, agregar Playwright como `devDependency` en una tarea separada y documentar browsers, screenshots y umbrales visuales.
 - Las tres páginas de servicio.

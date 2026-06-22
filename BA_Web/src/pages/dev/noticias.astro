@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsDraftWorkbench from '../../components/dev/NewsDraftWorkbench.astro';
+
+const isDev = import.meta.env.DEV;
+---
+
+<BaseLayout
+  title="Dev Noticias - Bright Alliance | BA Chile"
+  description="Agregador interno de borradores de noticias para desarrollo local."
+  lang="es"
+>
+  <section class="ba-section offwhite dev-news-page">
+    <div class="ba-container">
+      {isDev ? (
+        <NewsDraftWorkbench />
+      ) : (
+        <div class="dev-news-page__disabled">
+          <p class="ba-label ba-eyebrow">Ruta interna</p>
+          <h1 class="ba-heading-xl">No disponible en producción</h1>
+          <p>Este agregador solo se habilita con `npm run dev`.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dev-news-page {
+    min-height: 100vh;
+  }
+
+  .dev-news-page__disabled {
+    max-width: 760px;
+    border: 1px solid rgba(16, 47, 75, 0.14);
+    background: var(--ba-white);
+    padding: var(--ba-space-7);
+  }
+
+  .dev-news-page__disabled h1 {
+    margin: var(--ba-space-4) 0;
+  }
+</style>
+

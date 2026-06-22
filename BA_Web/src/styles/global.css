@@ -26,6 +26,13 @@
   --ba-body-sm: 15px;
   --ba-label: 14px;
 
+  --ba-header-expanded: clamp(118px, 10.6vw, 184px);
+  --ba-header-compact: clamp(74px, 5vw, 92px);
+  --ba-header-logo-expanded: clamp(168px, 15vw, 292px);
+  --ba-header-logo-compact: clamp(108px, 7.2vw, 138px);
+  --ba-header-nav-size: clamp(12px, 0.74vw, 14px);
+  --ba-page-top-offset: calc(var(--ba-header-compact) + var(--ba-space-9));
+
   --ba-space-1: 4px;
   --ba-space-2: 8px;
   --ba-space-3: 12px;
@@ -84,11 +91,11 @@ main {
 }
 
 main > .ba-section:first-child:not(.page-hero):not(.hero) {
-  padding-top: calc(var(--ba-space-9) + 96px);
+  padding-top: var(--ba-page-top-offset);
 }
 
 .page-hero {
-  padding-top: calc(var(--ba-space-9) + 96px);
+  padding-top: var(--ba-page-top-offset);
 }
 
 .hero + .ba-section,
@@ -384,6 +391,15 @@ main > .ba-section:first-child:not(.page-hero):not(.hero) {
 }
 
 @media (max-width: 980px) {
+  :root {
+    --ba-header-expanded: 100px;
+    --ba-header-compact: 86px;
+    --ba-header-logo-expanded: 132px;
+    --ba-header-logo-compact: 112px;
+    --ba-header-nav-size: 13px;
+    --ba-page-top-offset: calc(var(--ba-header-compact) + var(--ba-space-8));
+  }
+
   .ba-section {
     padding: var(--ba-space-9) 0;
   }
@@ -405,6 +421,11 @@ main > .ba-section:first-child:not(.page-hero):not(.hero) {
     --ba-heading-xl: 30px;
     --ba-body-lg: 18px;
     --ba-body-md: 16px;
+    --ba-header-expanded: 90px;
+    --ba-header-compact: 78px;
+    --ba-header-logo-expanded: 112px;
+    --ba-header-logo-compact: 96px;
+    --ba-page-top-offset: calc(var(--ba-header-compact) + var(--ba-space-7));
   }
 
   .ba-container,

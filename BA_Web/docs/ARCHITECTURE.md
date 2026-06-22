@@ -56,11 +56,13 @@ Cada componente debe tener una responsabilidad visible concreta.
 - `ServiceAccordion.astro`: acordeón reusable de servicios con imagen activa por especialidad, imagen base sin selección y estado inicial parametrizable.
 - `ClientTrustMarquee.astro`: muro institucional de logos de clientes.
 - `NewsPreview.astro`: noticias resumidas.
+- `ArticleDetail.astro`: detalle editorial de noticias.
 - `FounderQuote.astro`: bloque editorial del fundador.
 - `ServiceCard.astro`: tarjeta de servicio reusable.
 - `CTA.astro`: llamada a contacto.
 - `Footer.astro`: cierre institucional, links, contacto y redes.
 - `SectionHeader.astro`: patrón común de eyebrow, título y lead.
+- `components/dev/NewsDraftWorkbench.astro`: agregador local de drafts de noticias.
 
 ### Pages
 
@@ -71,6 +73,7 @@ Las páginas deben componer componentes y evitar acumular estilos largos.
 - `src/pages/[slug].astro`: template para servicios y artículos en español.
 - `src/pages/nosotros.astro`: página institucional y valores.
 - `src/pages/contacto.astro`: contacto.
+- `src/pages/dev/noticias.astro`: herramienta escondida para drafts de noticias en desarrollo.
 - `src/pages/en/*`: rutas en inglés existentes.
 
 ## Contratos de componentes
@@ -90,6 +93,35 @@ Reglas:
 - No decide el estado inicial de negocio; cada página lo pasa explícitamente.
 - Permite cerrar el item activo para no bloquear la interacción del usuario.
 - Si no hay servicio activo, muestra una imagen base institucional.
+- El mensaje de estado vacío se renderiza fuera de la imagen para evitar texto flotando sobre fotografía.
+
+### Header
+
+Responsabilidad: navegación global, menú móvil, selector de idioma y transición de scroll.
+
+Reglas:
+
+- La escala responsive vive en tokens globales, no en valores fijos locales.
+- Tokens principales: `--ba-header-expanded`, `--ba-header-compact`, `--ba-header-logo-expanded`, `--ba-header-logo-compact`, `--ba-header-nav-size`.
+- En home puede partir overlay/transparente; al hacer scroll pasa a estado compacto.
+- En rutas internas parte compacto para no tapar contenido.
+
+### NewsDraftWorkbench
+
+Responsabilidad: capturar drafts de noticias mientras corre `npm run dev`.
+
+Entradas:
+
+- No recibe datos de negocio por props.
+- Usa el contrato `src/lib/newsDraftContract.ts`.
+
+Reglas:
+
+- Persistencia actual: `localStorage`.
+- Exporta JSON para copiar manualmente a `src/content/site.ts`.
+- Escapa HTML antes de renderizar entradas del usuario.
+- No reemplaza un backend real.
+- La opción persistente queda indicada como contrato futuro: `POST /api/news-drafts` con DTO, validación y ownership de almacenamiento.
 
 ## Backend
 
@@ -108,6 +140,7 @@ BA_Web/
   Astro static frontend
 
 BA_API/
+  News draft endpoint
   Contact endpoint
   Email provider adapter
   CRM adapter
@@ -118,11 +151,12 @@ BA_API/
 
 - `public/assets/brand-source/`: logos BA.
 - `public/assets/hero/`: imágenes de Chile para el hero del home.
+- `public/assets/services/`: fotos WebP por especialidad.
 - `public/assets/office/`: fotos de oficina optimizadas a WebP.
 - `public/assets/clients/`: logos de clientes.
 - `public/assets/website/`: imágenes heredadas del sitio actual.
 
-Las imágenes nuevas deben optimizarse antes de entrar al repo. Para las fotos de oficina se usó Squoosh CLI con WebP quality 80.
+Las imágenes nuevas deben optimizarse antes de entrar al repo. Para las fotos de oficina se usó Squoosh CLI con WebP quality 80. Para las fotos nuevas de servicios, `@squoosh/cli` falló por `ERR_INVALID_URL` al cargar WASM, por lo que se usó `cwebp -q 80` como fallback local.
 
 ## Estilos
 
