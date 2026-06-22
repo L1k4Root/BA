@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ServiceAccordion from '../components/ServiceAccordion.astro';
+import CTA from '../components/CTA.astro';
+import { home, servicesByLang } from '../content/site';
+
+const lang = 'es';
+const services = servicesByLang(lang).filter((service) => !service.slug.startsWith('landing') && service.slug !== 'compliance');
+const content = home[lang];
+---
+
+<BaseLayout title="Servicios - Bright Alliance | BA Chile" description={content.servicesSubheading} lang={lang}>
+  <section class="ba-section light services-page">
+    <div class="ba-container">
+      <SectionHeader
+        eyebrow="Servicios"
+        title="Áreas de especialidad"
+        lead="Tres frentes de asesoría jurídico-estratégica para empresas, proyectos y operaciones que requieren criterio legal y visión de negocio."
+      />
+      <ServiceAccordion services={services} defaultOpenIndex={null} />
+    </div>
+  </section>
+
+  <CTA
+    title="Conversemos sobre el área que necesita fortalecer"
+    text="Podemos revisar estructura, contratos, proyectos, expansión internacional o continuidad jurídica desde una perspectiva ejecutiva."
+    href="/contacto/"
+    label="Contactar"
+  />
+</BaseLayout>

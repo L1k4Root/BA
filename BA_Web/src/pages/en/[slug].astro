@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import CTA from '../../components/CTA.astro';
+import ArticleDetail from '../../components/ArticleDetail.astro';
 import { articles, services } from '../../content/site';
 
 export function getStaticPaths() {
@@ -16,22 +17,19 @@ const isArticle = kind === 'article';
 ---
 
 <BaseLayout title={`${page.title} - Bright Alliance | BA Chile`} description={page.summary} lang="en">
-  <section class="ba-section light page-hero">
-    <div class="ba-container">
-      <SectionHeader eyebrow={isArticle ? page.category : 'Service'} title={page.title} lead={page.summary} />
-      {!isArticle && <p class="ba-body-lg intro">{page.intro}</p>}
-      {!isArticle && <a class="ba-btn ba-btn-primary" href="/en/contact/">{page.cta}</a>}
-    </div>
-  </section>
-
   {isArticle ? (
-    <article class="ba-section offwhite">
-      <div class="ba-container-sm article-body">
-        <img src={page.image} alt={page.title} />
-        {page.body.map((paragraph) => <p>{paragraph}</p>)}
-      </div>
-    </article>
+    <ArticleDetail page={page} lang="en" />
   ) : (
+    <section class="ba-section light page-hero">
+      <div class="ba-container">
+        <SectionHeader eyebrow="Service" title={page.title} lead={page.summary} />
+        <p class="ba-body-lg intro">{page.intro}</p>
+        <a class="ba-btn ba-btn-primary" href="/en/contact/">{page.cta}</a>
+      </div>
+    </section>
+  )}
+
+  {!isArticle && (
     <>
       <section class="ba-section offwhite">
         <div class="ba-container ba-grid-2">

@@ -8,7 +8,7 @@ type Props = {
 };
 
 const { lang = 'es' } = Astro.props;
-const serviceItems = servicesByLang(lang).filter((item) => !item.slug.startsWith('landing')).slice(0, 4);
+const serviceItems = servicesByLang(lang).filter((item) => !item.slug.startsWith('landing') && item.slug !== 'compliance').slice(0, 3);
 const isEs = lang === 'es';
 ---
 
@@ -32,19 +32,32 @@ const isEs = lang === 'es';
       <a href={`mailto:${contact.email}`}>{contact.email}</a>
       <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
       <div class="footer__social">
-        <a href={contact.linkedin}>IN</a>
-        <a href={contact.youtube}>YT</a>
+        <a href={contact.linkedin} aria-label="LinkedIn Bright Alliance" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6.94 8.96H3.72V20h3.22V8.96ZM5.34 4a1.86 1.86 0 1 0 0 3.72A1.86 1.86 0 0 0 5.34 4Zm14.94 9.95c0-3.22-1.72-5.29-4.53-5.29-1.78 0-2.74.98-3.2 1.67V8.96H9.46V20h3.22v-5.48c0-1.45.27-2.85 2.07-2.85 1.77 0 1.8 1.66 1.8 2.94V20h3.23v-6.05h.5Z" fill="currentColor" />
+          </svg>
+        </a>
+        <a href={contact.youtube} aria-label="YouTube Bright Alliance" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21.58 7.2a2.78 2.78 0 0 0-1.96-1.96C17.89 4.78 12 4.78 12 4.78s-5.89 0-7.62.46A2.78 2.78 0 0 0 2.42 7.2 29.02 29.02 0 0 0 1.96 12c0 1.55.15 3.11.46 4.8a2.78 2.78 0 0 0 1.96 1.96c1.73.46 7.62.46 7.62.46s5.89 0 7.62-.46a2.78 2.78 0 0 0 1.96-1.96c.31-1.69.46-3.25.46-4.8s-.15-3.11-.46-4.8ZM10 15.2V8.8l5.33 3.2L10 15.2Z" fill="currentColor" />
+          </svg>
+        </a>
       </div>
     </div>
   </div>
   <div class="footer__bottom">
-    © 2026 Bright Alliance Chile | {isEs ? 'Despacho de Abogados para empresas y comercio | Santiago de Chile' : 'Law Firm for Businesses and Commerce | Santiago, Chile'}
+    <span>© 2026 Bright Alliance Chile | {isEs ? 'Despacho de Abogados para empresas y comercio | Santiago de Chile' : 'Law Firm for Businesses and Commerce | Santiago, Chile'}</span>
+    <a class="footer__credit" href="https://automize.cl/" target="_blank" rel="noreferrer">
+      {isEs ? 'Desarrollado por Automize.cl' : 'Developed by Automize.cl'}
+    </a>
   </div>
 </footer>
 
 <style>
   .footer {
-    background: var(--ba-navy-900);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: var(--ba-navy-900);
+    background-image: linear-gradient(180deg, var(--ba-navy-900), #0b2338);
     color: var(--ba-white);
   }
 
@@ -59,7 +72,7 @@ const isEs = lang === 'es';
 
   .footer h2 {
     margin: 0 0 var(--ba-space-5);
-    color: var(--ba-gold-400);
+    color: var(--ba-gold-500);
     font-family: var(--ba-font-head);
     font-size: var(--ba-label);
     font-weight: 700;
@@ -69,7 +82,7 @@ const isEs = lang === 'es';
 
   .footer p,
   .footer a {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.78);
     font-size: var(--ba-body-sm);
     line-height: 1.55;
   }
@@ -102,17 +115,48 @@ const isEs = lang === 'es';
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.28);
+    color: var(--ba-white);
     font-family: var(--ba-font-head);
     font-weight: 700;
   }
 
+  .footer__social svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .footer__social a:hover {
+    border-color: var(--ba-gold-500);
+    background: var(--ba-gold-500);
+    color: var(--ba-navy-900);
+  }
+
   .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ba-space-3);
     padding: var(--ba-space-5) var(--ba-space-4);
     border-top: 1px solid rgba(255, 255, 255, 0.14);
-    color: rgba(255, 255, 255, 0.62);
+    background: rgba(8, 24, 38, 0.24);
+    color: rgba(255, 255, 255, 0.72);
     font-size: 13px;
     line-height: 1.6;
     text-align: center;
+  }
+
+  .footer__bottom .footer__credit {
+    display: inline-flex;
+    margin: 0;
+    color: var(--ba-gold-400);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .footer__bottom .footer__credit:hover {
+    color: var(--ba-white);
   }
 
   @media (max-width: 860px) {

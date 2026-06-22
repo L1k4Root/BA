@@ -1,0 +1,127 @@
+---
+type Props = {
+  heading: string;
+  quote: string;
+  text: string;
+};
+
+const { heading, quote, text } = Astro.props;
+---
+
+<section class="ba-section light quote-band">
+  <div class="ba-container quote-layout reveal-up">
+    <div class="founder-portrait">
+      <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende, socio fundador de BA Chile" loading="lazy" />
+    </div>
+    <div class="founder-copy">
+      <span class="ba-label ba-eyebrow">{heading}</span>
+      <blockquote>
+        <p>{quote}</p>
+      </blockquote>
+      <p class="founder-copy__text">{text}</p>
+      <p class="founder">José Francisco Mazzei Alliende</p>
+      <span class="founder-role">Abogado · MBA · LLM en Derecho de los Negocios · Socio Fundador</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quote-band {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--ba-gray-200);
+    background:
+      linear-gradient(180deg, rgba(16, 47, 75, 0.035), rgba(16, 47, 75, 0)),
+      var(--ba-white);
+  }
+
+  .quote-layout {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+    gap: var(--ba-space-8);
+    align-items: center;
+  }
+
+  .founder-portrait {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-offwhite);
+    aspect-ratio: 4 / 5;
+  }
+
+  .founder-portrait::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 86px;
+    height: 4px;
+    background: var(--ba-gold-400);
+    content: '';
+  }
+
+  .founder-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(0.08) contrast(1.03);
+  }
+
+  .founder-copy .ba-label {
+    color: var(--ba-gold-500);
+  }
+
+  .founder-copy blockquote {
+    margin: var(--ba-space-5) 0 0;
+    padding: 0;
+  }
+
+  .founder-copy blockquote p {
+    margin: 0;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.42;
+  }
+
+  .founder-copy__text {
+    max-width: 65ch;
+    margin: var(--ba-space-5) 0 0;
+    color: var(--ba-gray-700);
+    font-size: var(--ba-body-md);
+  }
+
+  .founder {
+    margin: var(--ba-space-6) 0 0;
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .founder-role {
+    display: block;
+    margin-top: var(--ba-space-2);
+    color: var(--ba-gray-700);
+    font-family: var(--ba-font-head);
+    font-size: 14px;
+  }
+
+  @media (max-width: 920px) {
+    .quote-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .founder-portrait {
+      max-width: 420px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .founder-copy blockquote p {
+      font-size: 23px;
+    }
+  }
+</style>

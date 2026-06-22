@@ -25,54 +25,63 @@ const { index, title, description, href, ctaLabel = 'Leer más', variant = 'ligh
     min-height: 100%;
     flex-direction: column;
     gap: var(--ba-space-5);
-    padding: var(--ba-space-8) var(--ba-space-7) var(--ba-space-7);
-    border: 1px solid var(--ba-gray-200);
+    padding: var(--ba-space-8) var(--ba-space-7);
+    border: 0;
+    border-right: 1px solid rgba(16, 47, 75, 0.10);
     background: var(--ba-white);
-    transition: border-color var(--ba-ease), box-shadow var(--ba-ease), transform var(--ba-ease);
+    transition: background 240ms ease, box-shadow 240ms ease;
+  }
+
+  .service-card:last-child {
+    border-right: 0;
   }
 
   .service-card::before {
     position: absolute;
-    top: -1px;
+    right: 0;
+    bottom: 0;
     left: 0;
-    width: 72px;
+    width: auto;
     height: 4px;
     background: var(--ba-gold-500);
     content: '';
-    transition: width var(--ba-ease);
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: opacity 240ms ease, transform 240ms ease;
   }
 
   .service-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(179, 146, 89, 0.42);
-    box-shadow: 0 24px 48px -32px rgba(16, 47, 75, 0.42);
+    background: #fbfaf7;
+    box-shadow: inset 0 0 0 1px rgba(179, 146, 89, 0.26);
   }
 
   .service-card:hover::before {
-    width: 100%;
+    opacity: 1;
+    transform: scaleX(1);
   }
 
   .service-card.is-dark {
-    border-color: var(--ba-navy-800);
-    background: var(--ba-navy-900);
-    color: var(--ba-white);
+    background: var(--ba-white);
+    color: var(--ba-navy-900);
   }
 
   .service-card__index {
     color: var(--ba-gold-500);
     font-family: var(--ba-font-head);
-    font-size: 52px;
-    font-weight: 900;
+    font-size: 18px;
+    font-weight: 600;
     line-height: 1;
   }
 
   .service-card h3 {
     margin: 0;
-    max-width: 13ch;
+    max-width: 15ch;
+    font-size: 26px;
   }
 
   .service-card.is-dark h3 {
-    color: var(--ba-white);
+    color: var(--ba-navy-900);
   }
 
   .service-card p {
@@ -82,25 +91,37 @@ const { index, title, description, href, ctaLabel = 'Leer más', variant = 'ligh
   }
 
   .service-card.is-dark p {
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--ba-gray-700);
   }
 
   .service-card a {
     align-self: flex-start;
     margin-top: auto;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--ba-gray-200);
+    padding-bottom: 7px;
+    border-bottom: 1px solid rgba(179, 146, 89, 0.48);
     color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
     font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-weight: 600;
+    letter-spacing: 0;
     text-decoration: none;
     text-transform: uppercase;
   }
 
   .service-card.is-dark a {
-    border-color: rgba(221, 179, 99, 0.5);
-    color: var(--ba-gold-400);
+    border-color: rgba(179, 146, 89, 0.48);
+    color: var(--ba-navy-900);
+  }
+
+  @media (max-width: 980px) {
+    .service-card {
+      border-right: 0;
+      border-bottom: 1px solid rgba(16, 47, 75, 0.10);
+      padding: var(--ba-space-7);
+    }
+
+    .service-card:last-child {
+      border-bottom: 0;
+    }
   }
 </style>

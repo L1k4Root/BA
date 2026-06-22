@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
 
 :root {
   --ba-navy-900: #102f4b;
@@ -43,6 +43,7 @@
   --ba-container-xl: 1320px;
   --ba-radius: 2px;
   --ba-ease: 180ms ease-out;
+  --ba-ease-slow: 520ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 * {
@@ -76,6 +77,45 @@ svg {
 
 a {
   color: inherit;
+}
+
+main {
+  min-height: 60vh;
+}
+
+main > .ba-section:first-child:not(.page-hero):not(.hero) {
+  padding-top: calc(var(--ba-space-9) + 96px);
+}
+
+.page-hero {
+  padding-top: calc(var(--ba-space-9) + 96px);
+}
+
+.hero + .ba-section,
+.hero + section {
+  padding-top: var(--ba-space-9);
+}
+
+.hero .ba-btn-primary,
+.hero .ba-btn-secondary {
+  min-width: 190px;
+  min-height: 50px;
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(9, 24, 38, 0.18);
+  color: var(--ba-white);
+  backdrop-filter: blur(10px);
+}
+
+.hero .ba-btn-primary {
+  border-color: rgba(221, 179, 99, 0.78);
+  background: rgba(179, 146, 89, 0.18);
+}
+
+.hero .ba-btn-primary:hover,
+.hero .ba-btn-secondary:hover {
+  border-color: var(--ba-gold-400);
+  background: rgba(179, 146, 89, 0.24);
+  color: var(--ba-gold-400);
 }
 
 .ba-container {
@@ -141,22 +181,22 @@ a {
 }
 
 .ba-display-xl {
-  font-size: clamp(40px, 5vw, var(--ba-display-xl));
-  font-weight: 800;
+  font-size: var(--ba-display-xl);
+  font-weight: 700;
   line-height: 1.05;
   text-transform: uppercase;
 }
 
 .ba-display-lg {
-  font-size: clamp(34px, 4vw, var(--ba-display-lg));
-  font-weight: 800;
+  font-size: var(--ba-display-lg);
+  font-weight: 700;
   line-height: 1.1;
   text-transform: uppercase;
 }
 
 .ba-heading-xl {
-  font-size: clamp(30px, 3vw, var(--ba-heading-xl));
-  font-weight: 800;
+  font-size: var(--ba-heading-xl);
+  font-weight: 700;
   line-height: 1.15;
 }
 
@@ -168,7 +208,7 @@ a {
 
 .ba-heading-md {
   font-size: var(--ba-heading-md);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.25;
 }
 
@@ -189,7 +229,7 @@ a {
 
 .ba-label {
   font-size: var(--ba-label);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -221,13 +261,13 @@ a {
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  padding: 14px 22px;
+  padding: 13px 21px;
   border: 1px solid transparent;
   border-radius: var(--ba-radius);
   font-family: var(--ba-font-head);
   font-size: var(--ba-label);
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0;
   line-height: 1.2;
   text-decoration: none;
   text-transform: uppercase;
@@ -239,12 +279,15 @@ a {
 }
 
 .ba-btn-primary {
+  border-color: var(--ba-gold-500);
   background: var(--ba-gold-500);
   color: var(--ba-navy-900);
 }
 
 .ba-btn-primary:hover {
-  background: var(--ba-gold-400);
+  border-color: var(--ba-navy-900);
+  background: var(--ba-navy-900);
+  color: var(--ba-white);
 }
 
 .ba-btn-secondary {
@@ -312,6 +355,28 @@ a {
   object-fit: cover;
 }
 
+.reveal-up {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: ba-reveal var(--ba-ease-slow) forwards;
+    animation-timeline: view();
+    animation-range: entry 0% cover 28%;
+  }
+}
+
+@keyframes ba-reveal {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .ba-dots {
   background-image: radial-gradient(currentColor 1.5px, transparent 1.6px);
   background-size: 14px 14px;
@@ -335,6 +400,9 @@ a {
 
 @media (max-width: 620px) {
   :root {
+    --ba-display-xl: 44px;
+    --ba-display-lg: 36px;
+    --ba-heading-xl: 30px;
     --ba-body-lg: 18px;
     --ba-body-md: 16px;
   }

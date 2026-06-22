@@ -1,0 +1,22 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import ServiceAccordion from './ServiceAccordion.astro';
+import type { ServicePage } from '../content/site';
+
+type Props = {
+  heading: string;
+  subheading: string;
+  services: ServicePage[];
+};
+
+const { heading, subheading, services } = Astro.props;
+---
+
+<section class="ba-section offwhite" id="servicios">
+  <div class="ba-container">
+    <SectionHeader eyebrow="Servicios" title={heading} lead={subheading} />
+    <div class="reveal-up">
+      <ServiceAccordion services={services} defaultOpenIndex={0} />
+    </div>
+  </div>
+</section>

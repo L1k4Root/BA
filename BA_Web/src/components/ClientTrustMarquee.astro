@@ -1,0 +1,206 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+type ClientLogo = {
+  src: string;
+  alt: string;
+};
+
+type Props = {
+  logos: ClientLogo[];
+};
+
+const { logos } = Astro.props;
+---
+
+<section class="ba-section offwhite clients-section">
+  <div class="ba-container">
+    <div class="clients-heading reveal-up">
+      <SectionHeader align="center" eyebrow="Confianza empresarial" title="Empresas que han confiado en nosotros" lead="Relaciones profesionales construidas con criterio técnico, confidencialidad y continuidad en decisiones relevantes." />
+      <div class="trust-points" aria-label="Criterios de confianza BA Chile">
+        <span>Confidencialidad</span>
+        <span>Continuidad</span>
+        <span>Criterio ejecutivo</span>
+      </div>
+    </div>
+    <div class="client-wall reveal-up" aria-label="Logos de clientes BA Chile">
+      {logos.map((logo) => (
+        <div class="client-logo">
+          <img src={logo.src} alt={logo.alt} loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients-section {
+    overflow: hidden;
+    border-top: 1px solid rgba(16, 47, 75, 0.08);
+    border-bottom: 1px solid rgba(16, 47, 75, 0.08);
+  }
+
+  .clients-heading {
+    margin-bottom: var(--ba-space-7);
+  }
+
+  .trust-points {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--ba-space-3);
+    margin-top: calc(-1 * var(--ba-space-5));
+  }
+
+  .trust-points span {
+    border: 1px solid rgba(16, 47, 75, 0.16);
+    padding: 8px 14px;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .client-wall {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid rgba(16, 47, 75, 0.10);
+    border-left: 1px solid rgba(16, 47, 75, 0.10);
+    background: var(--ba-white);
+    perspective: 1200px;
+  }
+
+  .client-logo {
+    position: relative;
+    display: flex;
+    min-height: 118px;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(16, 47, 75, 0.10);
+    border-bottom: 1px solid rgba(16, 47, 75, 0.10);
+    background: var(--ba-white);
+    padding: var(--ba-space-5);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: client-fade 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc((var(--client-index, 0)) * 42ms);
+    transition: background var(--ba-ease-slow), box-shadow var(--ba-ease-slow), transform var(--ba-ease-slow);
+  }
+
+  .client-logo:nth-child(1) { --client-index: 1; }
+  .client-logo:nth-child(2) { --client-index: 2; }
+  .client-logo:nth-child(3) { --client-index: 3; }
+  .client-logo:nth-child(4) { --client-index: 4; }
+  .client-logo:nth-child(5) { --client-index: 5; }
+  .client-logo:nth-child(6) { --client-index: 6; }
+  .client-logo:nth-child(7) { --client-index: 7; }
+  .client-logo:nth-child(8) { --client-index: 8; }
+  .client-logo:nth-child(9) { --client-index: 9; }
+  .client-logo:nth-child(10) { --client-index: 10; }
+  .client-logo:nth-child(11) { --client-index: 11; }
+  .client-logo:nth-child(12) { --client-index: 12; }
+  .client-logo:nth-child(13) { --client-index: 13; }
+  .client-logo:nth-child(14) { --client-index: 14; }
+  .client-logo:nth-child(15) { --client-index: 15; }
+  .client-logo:nth-child(16) { --client-index: 16; }
+  .client-logo:nth-child(17) { --client-index: 17; }
+  .client-logo:nth-child(18) { --client-index: 18; }
+  .client-logo:nth-child(19) { --client-index: 19; }
+  .client-logo:nth-child(20) { --client-index: 20; }
+  .client-logo:nth-child(21) { --client-index: 21; }
+  .client-logo:nth-child(22) { --client-index: 22; }
+  .client-logo:nth-child(23) { --client-index: 23; }
+  .client-logo:nth-child(24) { --client-index: 24; }
+  .client-logo:nth-child(25) { --client-index: 25; }
+
+  .client-logo::after {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    left: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(179, 146, 89, 0.50), transparent);
+    content: '';
+    opacity: 0;
+    transform: scaleX(0.6);
+    transition: opacity var(--ba-ease-slow), transform var(--ba-ease-slow);
+  }
+
+  .client-logo:hover {
+    background: rgba(255, 255, 255, 0.54);
+    box-shadow: 0 24px 50px -40px rgba(16, 47, 75, 0.42);
+    transform: translateY(-3px);
+  }
+
+  .client-logo:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .client-logo img {
+    width: min(100%, 126px);
+    max-height: 76px;
+    object-fit: contain;
+    filter: grayscale(1) saturate(0) contrast(1.05);
+    mix-blend-mode: multiply;
+    opacity: 0.72;
+    animation: client-breathe 9s ease-in-out infinite;
+    animation-delay: calc((var(--client-index, 0)) * 180ms);
+    transition: filter var(--ba-ease), opacity var(--ba-ease);
+  }
+
+  .client-logo:hover img {
+    filter: grayscale(1) saturate(0) contrast(1.18);
+    opacity: 1;
+  }
+
+  @keyframes client-fade {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes client-breathe {
+    0%,
+    100% {
+      opacity: 0.64;
+      filter: grayscale(1) saturate(0) contrast(1.02);
+    }
+
+    45%,
+    55% {
+      opacity: 0.86;
+      filter: grayscale(1) saturate(0) contrast(1.14);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .client-logo {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .client-logo img {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .client-wall {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 620px) {
+    .client-wall {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .client-logo {
+      min-height: 96px;
+      padding: var(--ba-space-4);
+    }
+  }
+</style>

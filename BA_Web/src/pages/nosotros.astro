@@ -12,7 +12,7 @@ const content = about.es;
     <div class="ba-container ba-grid-2">
       <div>
         <SectionHeader eyebrow="Firma" title={content.title} lead={content.lead} />
-        <a class="ba-btn ba-btn-primary" href="/contacto/">Contactar</a>
+        <a class="ba-btn ba-btn-outline-dark" href="/contacto/">Contactar</a>
       </div>
       <div class="ba-frame portrait">
         <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende" />
@@ -37,11 +37,24 @@ const content = about.es;
     </div>
   </section>
 
-  <section class="ba-section light">
+  <section class="ba-section light values-section">
     <div class="ba-container">
       <SectionHeader eyebrow="Valores" title="Nuestros Valores" lead="Principios que ordenan la relación con clientes, proyectos y decisiones." />
-      <div class="ba-grid-3">
-        {content.values.map((value) => <div class="value-card">{value}</div>)}
+      <div class="values-layout">
+        <div class="values-media">
+          <img src="/assets/office/office-ba-brand.webp" alt="Oficina Bright Alliance | BA Chile" loading="lazy" />
+        </div>
+        <div class="values-accordion">
+          {content.valueDetails.map((value, index) => (
+            <details class="value-card" open={index === 0}>
+              <summary>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{value.title}</strong>
+              </summary>
+              <p>{value.text}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -76,13 +89,141 @@ const content = about.es;
     margin: 0 0 var(--ba-space-6);
   }
 
+  .values-section {
+    border-top: 1px solid var(--ba-gray-200);
+  }
+
+  .values-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    gap: var(--ba-space-7);
+    align-items: start;
+  }
+
+  .values-media {
+    position: sticky;
+    top: 112px;
+    overflow: hidden;
+    border: 1px solid var(--ba-gray-200);
+    aspect-ratio: 4 / 5;
+  }
+
+  .values-media::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 96px;
+    height: 4px;
+    background: var(--ba-gold-500);
+    content: '';
+  }
+
+  .values-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .values-accordion {
+    display: grid;
+    gap: var(--ba-space-3);
+  }
+
   .value-card {
-    padding: var(--ba-space-6);
     border: 1px solid var(--ba-gray-200);
     background: var(--ba-white);
+    color: var(--ba-gray-700);
+  }
+
+  .value-card summary {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: var(--ba-space-4);
+    align-items: center;
+    padding: var(--ba-space-5);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .value-card summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .value-card summary span {
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .value-card summary strong {
     color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
-    font-weight: 800;
+    font-size: var(--ba-heading-md);
+    font-weight: 600;
     text-transform: uppercase;
+  }
+
+  .value-card p {
+    margin: 0;
+    padding: 0 var(--ba-space-5) var(--ba-space-5) calc(var(--ba-space-5) + 70px);
+  }
+
+  .value-card[open] {
+    border-color: rgba(179, 146, 89, 0.46);
+    box-shadow: 0 22px 54px -42px rgba(16, 47, 75, 0.52);
+  }
+
+  .value-card[open] p {
+    animation: value-open 320ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .value-card summary strong,
+  .value-card summary span {
+    transition: color var(--ba-ease), transform var(--ba-ease);
+  }
+
+  .value-card[open] summary strong {
+    color: var(--ba-navy-900);
+    transform: translateX(2px);
+  }
+
+  @keyframes value-open {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .value-card[open] p {
+      animation: none;
+    }
+
+    .value-card summary strong,
+    .value-card summary span {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .values-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .values-media {
+      position: relative;
+      top: auto;
+      aspect-ratio: 16 / 10;
+    }
+
+    .value-card p {
+      padding-left: var(--ba-space-5);
+    }
   }
 </style>
