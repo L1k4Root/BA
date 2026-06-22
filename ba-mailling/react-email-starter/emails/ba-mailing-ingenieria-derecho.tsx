@@ -62,9 +62,9 @@ const pillars = [
 const lifecycleStages = [
   "Procesos de licitación",
   "Revisión y negociación de contratos",
-  "Gestión estratégica de riesgos",
-  "Soporte técnico-legal en ejecución",
   "Cumplimiento contractual",
+  "Gestión de riesgos contractuales",
+  "Soporte técnico-legal en ejecución",
   "Ingeniería forense",
   "Reclamos, incumplimientos y multas",
   "Litigación y resolución de disputas",
@@ -167,7 +167,7 @@ export default function BaMailingIngenieriaDerecho() {
               y protección económica.
             </Text>
 
-            <Text style={styles.categoryBar}>ÁMBITOS DE ASESORÍA</Text>
+            <Text style={styles.categoryBar}>ÁMBITOS ESTRATÉGICOS</Text>
 
             <Section style={styles.lifecyclePanel}>
               {lifecycleStages.map((item) => (
