@@ -5,6 +5,7 @@ export type ServicePage = {
   slug: string;
   title: string;
   navLabel: string;
+  icon?: string;
   summary: string;
   intro: string;
   body: string[];
@@ -26,6 +27,7 @@ export type ServicePage = {
 
 export type ArticlePage = {
   lang: Language;
+  kind?: 'external' | 'internal';
   slug: string;
   title: string;
   summary: string;
@@ -43,6 +45,7 @@ export type ArticlePage = {
     label: string;
     href: string;
   };
+  externalUrl?: string;
   body: string[];
 };
 
@@ -51,7 +54,7 @@ export const contact = {
   email: 'contacto@bachile.cl',
   phone: '+56 9 3100 7417',
   linkedin: 'https://www.linkedin.com/company/brightalliance/',
-  youtube: 'https://www.youtube.com/'
+  agendaHref: '/contacto/?agenda=pendiente'
 };
 
 export const nav = {
@@ -80,7 +83,7 @@ export const home = {
     servicesHeading: 'Áreas de especialidad',
     servicesSubheading: 'Asesoría empresarial organizada en frentes claros, con foco en gestión, proyectos y expansión.',
     founderHeading: 'Palabras del socio fundador',
-    founderQuote: 'Para asesorar adecuadamente a una organización empresarial, esta debe comprenderse como un sistema integrado, compuesto por unidades que interactúan de manera sinérgica e interdependiente.',
+    founderQuote: 'Para asesorar adecuadamente a una organización empresarial, esta debe comprenderse como un sistema integrado, compuesto por unidades que interactúan de manera sinérgica e interdependiente. En este contexto, una disfunción en cualquiera de sus componentes impacta inevitablemente en los demás, afectando el desempeño del sistema en su conjunto.',
     founderText: 'Una asesoría legal verdaderamente efectiva requiere comprender esta lógica sistémica y la capacidad de acompañar estratégicamente a la organización desde su interior, en conexión directa con sus operaciones y procesos de toma de decisiones.'
   },
   en: {
@@ -103,37 +106,65 @@ export const about = {
     lead: 'Bright Alliance | BA Chile es una firma jurídica estratégica que integra Derecho, Estrategia y Empresa para ofrecer soluciones jurídicas de alto nivel, diseñadas para fortalecer la gestión corporativa, prevenir riesgos y acompañar el desarrollo sostenible de nuestros clientes, tanto en Chile como en el extranjero.',
     proposal: [
       'Nuestra propuesta se basa en una comprensión profunda del negocio y en la convicción de que el Derecho debe ser una herramienta para crear valor, facilitar decisiones y potenciar la competitividad.',
-      'A través de una alianza inteligente entre conocimiento legal, visión empresarial y experiencia técnica, convertimos la complejidad jurídica en decisiones estratégicas claras, seguras y sostenibles.'
+      'A través de una alianza inteligente entre conocimiento legal, visión empresarial y experiencia técnica, convertimos la complejidad jurídica en decisiones estratégicas claras, seguras y sostenibles.',
+      'El equipo que respalda esta propuesta está conformado por profesionales de alto nivel —abogados, contadores, ingenieros y consultores especializados— que comparten una misma visión: ejercer el Derecho con excelencia, enfoque estratégico y compromiso con el desarrollo empresarial.',
+      'Bajo un estilo minimalista y sin protagonismos individuales, su trabajo se refleja en cada proyecto que lleva la firma Bright Alliance | BA Chile.'
     ],
-    mission: 'Acompañar a empresas nacionales e internacionales con asesoría jurídica, integrando Derecho, Estrategia y Empresa para construir estructuras sólidas, decisiones eficaces y modelos de negocio sostenibles.',
-    vision: 'Consolidar a Bright Alliance | BA Chile como una firma de referencia en asesoría jurídico-estratégica, reconocida por integrar el Derecho con la Estrategia y la gestión empresarial.',
+    mission: 'Acompañar a empresas nacionales e internacionales con asesoría jurídica, integrando Derecho, Estrategia y Empresa para construir estructuras sólidas, decisiones eficaces y modelos de negocio sostenibles, impulsando el crecimiento y la consolidación de las organizaciones que confían en nosotros.',
+    vision: 'Consolidar a Bright Alliance | BA Chile como una firma de referencia en asesoría jurídico-estratégica, reconocida por integrar el Derecho con la Estrategia y la gestión Empresarial para generar soluciones que trascienden lo legal, fortalecen la gestión corporativa y promueven un desarrollo empresarial sostenible, innovador, tanto en el plano nacional como internacional.',
+    goldenCircle: [
+      {
+        title: 'Por qué',
+        subtitle: 'Propósito',
+        text: 'Creemos que el Derecho, bien aplicado, es una herramienta de transformación. Cada decisión jurídica debe contribuir a construir empresas más sólidas, sostenibles y visionarias, capaces de adaptarse y trascender en entornos dinámicos y competitivos.'
+      },
+      {
+        title: 'Cómo',
+        subtitle: 'Método',
+        text: 'Integramos Derecho, Estrategia y Empresa en un modelo de asesoría interdisciplinario, flexible y cercano, diseñado para alinearse con la realidad de cada cliente. Trabajamos bajo tres modalidades —caso a caso, por proyecto y departamento jurídico externo— para ofrecer soluciones personalizadas que combinan técnica jurídica, gestión corporativa y visión estratégica.'
+      },
+      {
+        title: 'Qué',
+        subtitle: 'Propuesta concreta',
+        text: 'Prestamos asesoría legal estratégica a empresas, inversionistas y grupos empresariales a través de tres áreas de negocio: Derecho de la Empresa, Ingeniería y Derecho, y Comercio y Negocios Internacionales.'
+      }
+    ],
     values: ['Compromiso', 'Excelencia', 'Liderazgo', 'Innovación', 'Adaptabilidad', 'Integridad'],
     valueDetails: [
       {
         title: 'Compromiso',
-        text: 'Nos involucramos activamente en los objetivos de cada cliente, construyendo relaciones basadas en confianza, transparencia y responsabilidad compartida.'
+        text: 'Nos involucramos activamente en los objetivos de cada cliente, construyendo relaciones basadas en la confianza, la transparencia y la responsabilidad compartida.'
       },
       {
         title: 'Excelencia',
-        text: 'Buscamos rigor en cada detalle, con asesoría jurídica oportuna, precisa y de alto estándar profesional.'
+        text: 'Buscamos la perfección en cada detalle, entregando asesoría jurídica rigurosa, oportuna y de la más alta calidad profesional.'
       },
       {
         title: 'Liderazgo',
-        text: 'Anticipamos desafíos, orientamos decisiones estratégicas y transformamos riesgos en oportunidades de crecimiento.'
+        text: 'Ejercemos un liderazgo proactivo y ético, anticipando desafíos, orientando decisiones estratégicas y transformando riesgos en oportunidades de crecimiento.'
       },
       {
         title: 'Innovación',
-        text: 'Incorporamos pensamiento creativo, herramientas tecnológicas y modelos de gestión modernos para resolver problemas empresariales actuales.'
+        text: 'Incorporamos pensamiento creativo, herramientas tecnológicas y modelos de gestión modernos para ofrecer soluciones jurídicas eficientes y adaptadas a la realidad empresarial actual.'
       },
       {
         title: 'Adaptabilidad',
-        text: 'Ajustamos nuestro trabajo a la naturaleza, escala, ritmo y entorno competitivo de cada organización.'
+        text: 'Ajustamos nuestro trabajo a la naturaleza y escala de cada organización, adaptándonos a sus cambios, ritmo y entorno competitivo, sin perder rigor ni visión estratégica.'
       },
       {
         title: 'Integridad',
-        text: 'Actuamos con rectitud, coherencia y respeto por los principios que sostienen la práctica jurídica y la confianza.'
+        text: 'Actuamos con rectitud, coherencia y respeto por los principios que sustentan la práctica jurídica. La integridad es el eje que conecta nuestra labor técnica con la confianza de nuestros clientes y la sostenibilidad de sus proyectos.'
       }
-    ]
+    ],
+    founder: {
+      name: 'José Francisco Mazzei Alliende',
+      role: 'Abogado – MBA – LLM en Derecho de los Negocios. Socio Fundador | Bright Alliance | BA Chile',
+      paragraphs: [
+        'En Bright Alliance, José Francisco Mazzei Alliende lidera con una visión que trasciende la práctica jurídica tradicional, integrando estrategia, innovación y pensamiento empresarial en el ámbito del Derecho de los Negocios, tanto en el contexto nacional como internacional.',
+        'Su sólida experiencia en asesoría corporativa, estructuración de grupos empresariales y diseño estratégico de negocios, junto con su formación de posgrado (MBA y LLM en Derecho de los Negocios), le permite identificar oportunidades, anticipar riesgos y generar soluciones que vinculan lo jurídico con lo económico y lo organizacional.',
+        'Su compromiso con la excelencia profesional se refleja no solo en su práctica, sino también en su labor docente universitaria, donde comparte su enfoque interdisciplinario con futuras generaciones de abogados y emprendedores.'
+      ]
+    }
   },
   en: {
     slug: 'about-us',
@@ -163,14 +194,15 @@ export const services: ServicePage[] = [
     slug: 'derecho-de-la-empresa',
     title: '/ Derecho de la Empresa',
     navLabel: 'Derecho de la Empresa',
+    icon: 'corporate',
     summary: 'Asesoría jurídica estratégica para la gestión, estructura y crecimiento empresarial.',
-    intro: 'En Bright Alliance | BA Chile entendemos el Derecho de la Empresa como un soporte jurídico integral que permite a las organizaciones operar con solidez, eficiencia y visión de futuro.',
+    intro: 'En Bright Alliance BA Chile entendemos el Derecho de la Empresa como un soporte jurídico integral que permite a las organizaciones operar con solidez, eficiencia y visión de futuro.',
     heroImage: '/assets/services/corporate-law.webp',
     body: [
       'No se trata solo de cumplir la ley, sino de alinear las decisiones legales con la estrategia corporativa y el desarrollo sostenible del negocio.',
-      'El Derecho de la Empresa se estructura sobre múltiples áreas de práctica, adaptadas a las necesidades específicas de cada cliente.'
+      'El Derecho de la Empresa en Bright Alliance se estructura sobre múltiples áreas de práctica —Derecho Corporativo, Derecho Laboral, Derecho Tributario, Contratos Civiles y Comerciales, Propiedad Intelectual, Libre Competencia, Compliance, Derecho del Consumidor, Derecho Penal Económico, entre otras—, las cuales se adaptan a las necesidades específicas de cada cliente.'
     ],
-    models: ['Asesoría caso a caso', 'Asesoría por proyecto', 'Departamento jurídico externo'],
+    models: ['Asesoría Caso a Caso', 'Asesoría por Proyecto', 'Departamento jurídico externo'],
     pillars: [
       {
         title: 'Gestión corporativa',
@@ -189,17 +221,17 @@ export const services: ServicePage[] = [
       {
         title: 'Modalidades de asesoría',
         text: 'Tres modalidades complementarias permiten ajustar profundidad y continuidad del servicio jurídico a la realidad de cada empresa.',
-        items: ['Intervención puntual caso a caso en contratos, consultas, litigios o informes legales.', 'Acompañamiento integral por proyecto en reestructuraciones, expansiones, M&A, auditorías o procesos internacionales.', 'Departamento jurídico externo permanente, integrado como unidad funcional para gestión, prevención y toma de decisiones.']
+        items: ['Asesoría Caso a Caso: intervención puntual en materias jurídicas específicas, tales como contratos, consultas, litigios o informes legales, entregando soluciones precisas y ágiles.', 'Asesoría por Proyecto: acompañamiento integral en procesos con objetivos definidos, como reestructuraciones societarias, expansiones, fusiones y adquisiciones, implementación de programas de cumplimiento, auditorías legales o proyectos internacionales.', 'Departamento jurídico externo: servicio permanente que integra al equipo como unidad legal funcional dentro de la empresa, brindando apoyo continuo y actuando como aliado estratégico en gestión, prevención y toma de decisiones.']
       },
       {
         title: 'Áreas de práctica',
         text: 'La asesoría cubre materias jurídicas que sostienen la operación, estructura y crecimiento empresarial.',
-        items: ['Asesoría jurídico-corporativa y diseño estratégico de grupos empresariales.', 'Fusiones y adquisiciones, contratos, negociaciones complejas y litigación corporativa.', 'Derecho laboral, tributario, penal empresarial, consumidor, libre competencia, propiedad intelectual y compliance.']
+        items: ['Asesoría jurídico-corporativa, diseño estratégico de negocios y grupos empresariales, fusiones y adquisiciones.', 'Derecho laboral empresarial, contratos civiles y comerciales, negociaciones complejas, litigación y defensa corporativa.', 'Compliance corporativo, derecho tributario, derecho penal empresarial, licitaciones y UTP, propiedad intelectual, consumidor, libre competencia, reorganización y continuidad.']
       },
       {
         title: 'Riesgo, continuidad y gobierno',
         text: 'La práctica conecta decisiones jurídicas con continuidad operacional, reputación, patrimonio y calidad de gobierno corporativo.',
-        items: ['Programas de cumplimiento y prevención de delitos económicos.', 'Relación con organismos públicos, licitaciones, UTP y litigación administrativa.', 'Planificación del retiro, reorganización y procedimientos concursales.']
+        items: ['Programas integrales de cumplimiento normativo, incluyendo Ley N° 20.393, Ley N° 21.595, Ley N° 21.459 y Ley N° 21.719.', 'Relación con organismos públicos, licitaciones, UTP, consorcios y litigación administrativa.', 'Planificación del retiro, reorganización, procedimientos concursales y protección de continuidad empresarial.']
       }
     ],
     areas: ['Asesoría jurídico-corporativa', 'Diseño de grupos empresariales', 'Fusiones y adquisiciones', 'Derecho laboral empresarial', 'Contratos civiles y comerciales', 'Negociaciones complejas', 'Litigación y defensa corporativa', 'Compliance corporativo', 'Derecho tributario', 'Derecho penal empresarial', 'Licitaciones y UTP', 'Propiedad intelectual', 'Consumidor y libre competencia', 'Reorganización y continuidad'],
@@ -210,21 +242,22 @@ export const services: ServicePage[] = [
     slug: 'ingenieria-y-derecho',
     title: '/ Ingeniería y Derecho',
     navLabel: 'Ingeniería y Derecho',
-    summary: 'Soluciones jurídico-estratégicas para empresas, proyectos y estructuras patrimoniales complejas.',
-    intro: 'Área especializada para empresas que desarrollan proyectos de alta complejidad técnica, contractual y patrimonial.',
+    icon: 'engineering',
+    summary: 'Soluciones jurídico-estratégicas para empresas y proyectos complejos.',
+    intro: 'En Bright Alliance contamos con un área especializada en Ingeniería y Derecho, enfocada en empresas que desarrollan proyectos de alta complejidad técnica, contractual y patrimonial.',
     heroImage: '/assets/services/engineering-law.webp',
     body: [
-      'Integramos visión legal, comprensión operativa y enfoque preventivo para proteger la posición contractual, acompañar decisiones críticas y resguardar el patrimonio empresarial.',
-      'La asesoría transforma el contrato en una herramienta activa de gestión, control de riesgos, protección patrimonial y defensa del resultado económico del negocio.'
+      'Integramos visión legal, comprensión operativa y enfoque preventivo para proteger la posición contractual, acompañar decisiones críticas y resguardar el patrimonio empresarial, mediante soporte permanente, gestión estratégica y estructuras de protección.',
+      'En proyectos de cierta complejidad, el contrato no es solo un documento legal, sino una herramienta estratégica de gestión, control de riesgos, protección patrimonial y resguardo del resultado económico del negocio.'
     ],
     models: ['Departamento jurídico externo permanente', 'Asesoría por proyecto', 'Intervención en etapas críticas', 'Diagnóstico estratégico de contratos en ejecución'],
     pillars: [
       {
         title: 'Departamento jurídico externo',
-        text: 'Soporte legal continuo, especializado y alineado con la operación real, sin necesidad de internalizar una estructura jurídica completa.'
+        text: 'Servicio para empresas que requieren soporte legal continuo, especializado y alineado con su operación real, sin necesidad de internalizar una estructura jurídica completa.'
       },
       {
-        title: 'Ciclo de vida del proyecto',
+        title: 'Ciclo de vida completo',
         text: 'Acompañamiento desde etapa preliminar hasta cierre, con gestión estratégica del contrato, evidencia, hitos y riesgos.'
       },
       {
@@ -236,20 +269,20 @@ export const services: ServicePage[] = [
       {
         title: 'Inicio y estructuración contractual',
         text: 'Intervenimos antes de la firma o adjudicación, cuando se define buena parte del riesgo futuro del proyecto.',
-        items: ['Revisión estratégica de bases, ofertas y condiciones comerciales.', 'Apoyo en licitaciones públicas y privadas.', 'Identificación temprana de riesgos críticos en plazos, alcance, pagos, garantías y responsabilidades.'],
+        items: ['Revisión estratégica de bases, ofertas, condiciones comerciales y riesgos previos a la adjudicación.', 'Apoyo en licitaciones públicas y privadas.', 'Definición de estrategia de negociación contractual e identificación temprana de riesgos críticos en plazo, alcance, pagos, penalidades, garantías y responsabilidades.'],
         result: 'Contratos más sólidos, mejor posición negociadora y menor exposición durante la ejecución.'
       },
       {
         title: 'Ejecución y administración contractual',
         text: 'Una vez iniciado el proyecto, el foco pasa a administrar estratégicamente derechos, obligaciones, hitos, cambios y evidencia.',
-        items: ['Plan estratégico de gestión contractual del proyecto.', 'Protocolos de gestión de cambios, variaciones y administración documental.', 'Gobernanza contractual, trazabilidad y monitoreo de cumplimiento.'],
+        items: ['Diseño del Plan Estratégico de Gestión Contractual del Proyecto.', 'Protocolos de gestión de cambios, variaciones, administración documental y resguardo de evidencia contractual.', 'Gobernanza contractual, trazabilidad de decisiones, monitoreo de cumplimiento y alertas tempranas de riesgo.'],
         result: 'El contrato pasa de factor pasivo de riesgo a herramienta de control, dirección y defensa.'
       },
       {
-        title: 'Riesgos, claims y cierre',
-        text: 'En proyectos complejos, muchos conflictos nacen de acumulaciones progresivas de brechas, omisiones o registros deficientes.',
-        items: ['Priorización de riesgos contractuales críticos y estrategias de mitigación.', 'Estructuración técnica y jurídica de claims y controversias.', 'Preparación estratégica de cierre contractual, liberación de garantías y resolución de reclamos.'],
-        result: 'Mayor recuperación económica, reducción del costo de controversias y cierre ordenado.'
+        title: 'Riesgos, claims y contratos en curso',
+        text: 'En proyectos complejos, muchos conflictos relevantes nacen de acumulaciones progresivas de brechas, omisiones, cambios mal administrados o registros deficientes.',
+        items: ['Identificación y priorización de riesgos contractuales críticos y estrategias de mitigación.', 'Diagnóstico y recuperación de contratos en curso con señales de desorden, pérdida de control o baja trazabilidad.', 'Estructuración técnica y jurídica de claims, controversias, negociación o defensa.'],
+        result: 'Mayor recuperación económica, reducción del costo de controversias y recuperación de control.'
       },
       {
         title: 'Protección patrimonial',
@@ -265,14 +298,15 @@ export const services: ServicePage[] = [
     slug: 'comercio-y-negocios-internacionales',
     title: '/ Comercio y Negocios Internacionales',
     navLabel: 'Comercio y Negocios Internacionales',
+    icon: 'international',
     summary: 'Asesoría jurídica y estratégica para conectar empresas, mercados y oportunidades.',
     intro: 'El comercio internacional requiere estructuras jurídicas sólidas, visión estratégica y conocimiento de las normas que regulan las operaciones entre distintos países.',
     heroImage: '/assets/services/international-trade.webp',
     body: [
-      'Acompañamos a empresas chilenas y extranjeras en procesos de expansión, representación o inversión, integrando Derecho, Estrategia y Empresa.',
-      'Nuestra práctica combina una base jurídica local con alianzas profesionales en Europa, América y Oceanía.'
+      'En Bright Alliance | BA Chile, acompañamos a empresas chilenas y extranjeras en sus procesos de expansión, representación o inversión, integrando Derecho, Estrategia y Empresa para facilitar decisiones seguras, sostenibles y alineadas con los objetivos de negocio.',
+      'Nuestra práctica combina una sólida base jurídica local con alianzas profesionales en Europa (Italia), América (Perú, México y Estados Unidos) y Oceanía (Australia), lo que permite ofrecer soluciones integradas en proyectos transfronterizos, tanto en su fase de estructuración como en su ejecución contractual y tributaria.'
     ],
-    models: ['Expansión internacional', 'Representación comercial', 'Estructuración contractual y tributaria'],
+    models: ['Asesoría Caso a Caso', 'Asesoría por Proyecto', 'Departamento jurídico externo'],
     pillars: [
       {
         title: 'Expansión e inversión',
@@ -296,12 +330,12 @@ export const services: ServicePage[] = [
       {
         title: 'Estructuración internacional',
         text: 'Diseñamos estructuras corporativas, fiscales y contractuales eficientes para inversión, crecimiento y operación entre jurisdicciones.',
-        items: ['Inversión extranjera y repatriación de capitales.', 'Fusiones, adquisiciones y joint ventures internacionales.', 'Holdings, subholdings, SPV y planificación tributaria internacional.']
+        items: ['Inversión extranjera, repatriación de capitales y mecanismos de protección de inversiones.', 'Fusiones, adquisiciones, joint ventures internacionales y coordinación multinacional de procesos.', 'Holdings, subholdings, SPV, planificación tributaria internacional y cumplimiento regulatorio entre jurisdicciones.']
       },
       {
         title: 'Comercio, representación y controversias',
         text: 'Acompañamos relaciones comerciales internacionales desde contrato hasta resolución de controversias.',
-        items: ['Compraventa, agencia, distribución, franquicia, licencias, suministro y servicios internacionales.', 'Propiedad intelectual, transferencia tecnológica y compliance internacional.', 'Arbitrajes, mediaciones o litigios transfronterizos con estudios aliados.']
+        items: ['Negociación y redacción de contratos de compraventa, agencia, distribución, franquicia, licencias, suministro y servicios internacionales.', 'Propiedad intelectual, transferencia tecnológica, compliance, regulaciones internacionales, anticorrupción, lavado de activos, aduanas y control de exportaciones.', 'Arbitrajes, mediaciones o litigios transfronterizos con estudios aliados en Europa, América y Oceanía.']
       }
     ],
     areas: ['Constitución y representación de empresas extranjeras', 'Inversión extranjera y repatriación de capitales', 'M&A y joint ventures internacionales', 'Contratos internacionales de comercio', 'Agenciamiento y representación comercial', 'Arquitectura societaria y tributaria internacional', 'Propiedad intelectual y transferencia tecnológica', 'Compliance y regulaciones internacionales', 'Controversias internacionales'],
@@ -384,97 +418,105 @@ export const clientLogos = Array.from({ length: 25 }, (_, index) => ({
   alt: `Cliente BA Chile ${index + 1}`
 }));
 
-export const articles: ArticlePage[] = [
+export const externalNews: ArticlePage[] = [
   {
     lang: 'es',
-    slug: 'ley-de-datos-personales-en-chile-que-cambia-como-afecta-a-las-empresas-y-por-que-prepararse-ahora',
-    title: 'Ley de Datos Personales en Chile: qué cambia, cómo afecta a las empresas y por qué prepararse ahora',
-    summary: 'La nueva regulación obliga a revisar datos, procesos, contratos y controles internos.',
-    image: '/assets/news/data-privacy-server.jpg',
-    category: 'Regulación',
-    publishedAt: '2026',
-    readTime: '5 min',
-    keyPoints: ['Gobernanza de datos', 'Contratos y encargados', 'Seguridad y trazabilidad', 'Riesgo reputacional'],
-    source: {
-      label: 'Biblioteca del Congreso Nacional de Chile',
-      href: 'https://www.bcn.cl/leychile/'
-    },
-    body: [
-      'La protección de datos personales dejó de ser un asunto aislado del área tecnológica. Para las empresas, hoy exige gobierno interno, contratos claros, trazabilidad de procesos y una lectura estratégica del riesgo.',
-      'El desafío no consiste únicamente en actualizar documentos. Requiere entender qué datos se tratan, para qué se usan, quién accede a ellos, cómo se resguardan y qué controles permiten demostrar una gestión responsable.'
-    ],
-    sections: [
-      {
-        title: 'Qué cambia para la empresa',
-        paragraphs: [
-          'La regulación empuja a las organizaciones a ordenar la forma en que capturan, almacenan, comparten y eliminan información personal. Esto impacta procesos comerciales, recursos humanos, proveedores, sistemas internos y canales digitales.',
-          'Una empresa que no conoce su flujo de datos opera con exposición legal y reputacional. La primera decisión estratégica es mapear tratamientos, responsables, finalidades, riesgos y brechas de control.'
-        ],
-        items: ['Inventario de datos personales tratados por la organización.', 'Revisión de bases legales, finalidades y consentimiento cuando corresponda.', 'Evaluación de proveedores que acceden o procesan datos por cuenta de la empresa.']
-      },
-      {
-        title: 'Contratos, proveedores y responsabilidad',
-        paragraphs: [
-          'La gestión de datos no termina dentro de la empresa. Muchos riesgos se originan en proveedores tecnológicos, plataformas comerciales, servicios de marketing, payroll, software de gestión o almacenamiento externo.',
-          'Por eso, los contratos deben definir roles, obligaciones de seguridad, confidencialidad, subcontratación, respuesta ante incidentes y condiciones de término del servicio.'
-        ],
-        items: ['Cláusulas de tratamiento de datos y confidencialidad.', 'Estándares mínimos de seguridad y reporte de incidentes.', 'Derechos de auditoría o mecanismos de verificación razonables.']
-      },
-      {
-        title: 'Prepararse con criterio ejecutivo',
-        paragraphs: [
-          'Un plan de cumplimiento efectivo debe priorizar riesgos reales. No todas las empresas tienen la misma exposición ni requieren el mismo nivel de intervención inicial.',
-          'El enfoque recomendable es avanzar por etapas: diagnóstico, priorización, contratos críticos, políticas internas, capacitación y seguimiento periódico.'
-        ],
-        items: ['Diagnóstico inicial de brechas.', 'Plan de implementación por criticidad.', 'Evidencia documental para demostrar cumplimiento progresivo.']
-      }
-    ]
-  },
-  {
-    lang: 'es',
-    slug: 'ley-fintec-chile-2025-como-impacta-a-las-empresas-y-por-que-es-clave-prepararse-ahora',
-    title: 'Ley Fintec Chile 2025: cómo impacta a las empresas y por qué es clave prepararse ahora',
-    summary: 'La regulación Fintech transforma obligaciones en una oportunidad de ordenar operación y escalar con mayor solidez.',
+    kind: 'external',
+    slug: 'cmf-modifica-normativa-sistema-finanzas-abiertas',
+    title: 'CMF modifica normativa del Sistema de Finanzas Abiertas',
+    summary: 'La CMF publicó una modificación a la NCG N°514 e incorporó especificaciones técnicas para la implementación del Sistema de Finanzas Abiertas.',
     image: '/assets/news/fintech-payment.jpg',
-    category: 'Fintech',
-    publishedAt: '2026',
-    readTime: '5 min',
-    keyPoints: ['Modelo de negocio', 'Riesgo operacional', 'Gobierno corporativo', 'Relación con reguladores'],
+    category: 'Regulación financiera',
+    publishedAt: '01/06/2026',
+    readTime: 'Fuente externa',
+    keyPoints: ['Ley Fintec', 'Sistema de Finanzas Abiertas', 'Anexo técnico', 'Gradualidad regulatoria'],
     source: {
       label: 'Comisión para el Mercado Financiero',
-      href: 'https://www.cmfchile.cl/'
+      href: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110881.html'
     },
-    body: [
-      'La regulación Fintech obliga a mirar el negocio financiero digital con una perspectiva integral: jurídica, operacional, tecnológica y comercial.',
-      'Para las empresas, el cumplimiento no debe abordarse como una carga documental separada del negocio. Bien implementado, puede ordenar procesos, mejorar la confianza de usuarios e inversionistas y fortalecer la escalabilidad.'
-    ],
-    sections: [
-      {
-        title: 'Una regulación conectada al modelo de negocio',
-        paragraphs: [
-          'Las compañías vinculadas a servicios financieros tecnológicos deben revisar cómo se estructura su propuesta de valor, qué actividades realizan, qué riesgos asumen y qué obligaciones regulatorias pueden activar.',
-          'El punto crítico es evitar lecturas genéricas. Dos empresas que parecen similares desde la interfaz pueden tener estructuras jurídicas, flujos de dinero, terceros involucrados y riesgos completamente distintos.'
-        ],
-        items: ['Identificación de actividades reguladas o sensibles.', 'Análisis de flujos operacionales y participantes.', 'Revisión de contratos con usuarios, comercios, proveedores y partners.']
-      },
-      {
-        title: 'Cumplimiento como ventaja de confianza',
-        paragraphs: [
-          'En mercados financieros digitales, la confianza es parte del producto. Los controles legales, tecnológicos y operacionales deben sostener la promesa comercial.',
-          'Una estructura robusta puede facilitar conversaciones con inversionistas, alianzas comerciales, entidades financieras y potenciales procesos de expansión.'
-        ],
-        items: ['Gobierno interno y roles de control.', 'Gestión de riesgos operacionales y tecnológicos.', 'Trazabilidad documental para auditorías o revisiones regulatorias.']
-      },
-      {
-        title: 'Preparación práctica',
-        paragraphs: [
-          'La recomendación inicial es trabajar desde un diagnóstico ejecutivo. Antes de implementar documentos aislados, conviene entender el mapa del negocio y sus puntos de exposición.',
-          'Desde ahí, la empresa puede priorizar contratos, procesos internos, reportabilidad, continuidad operacional y relación con autoridades o contrapartes relevantes.'
-        ],
-        items: ['Diagnóstico jurídico-operacional.', 'Hoja de ruta regulatoria por prioridad.', 'Acompañamiento en implementación y actualización periódica.']
-      }
-    ]
+    externalUrl: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110881.html',
+    body: ['Ficha de actualidad externa basada en la publicación oficial de la Comisión para el Mercado Financiero.'],
+    sections: [{ title: 'Relevancia empresarial', paragraphs: ['La noticia es relevante para entidades financieras, fintechs y empresas que deban planificar desarrollos técnicos, cumplimiento y adaptación operativa frente al calendario regulatorio.'] }]
   },
+  {
+    lang: 'es',
+    kind: 'external',
+    slug: 'cmf-consulta-envio-informacion-intermediarios-valores',
+    title: 'CMF consulta normas de envío de información para intermediarios',
+    summary: 'La propuesta define forma, periodicidad y medios para remitir información de fiscalización aplicable a intermediarios de valores y corredores de bolsa de productos.',
+    image: '/assets/news/fintech-payment.jpg',
+    category: 'Mercado de valores',
+    publishedAt: '01/06/2026',
+    readTime: 'Fuente externa',
+    keyPoints: ['Fiscalización', 'Intermediarios de valores', 'Corredores de bolsa de productos', 'Información regulatoria'],
+    source: {
+      label: 'Comisión para el Mercado Financiero',
+      href: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110871.html'
+    },
+    externalUrl: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110871.html',
+    body: ['Ficha de actualidad externa basada en la publicación oficial de la Comisión para el Mercado Financiero.'],
+    sections: [{ title: 'Relevancia empresarial', paragraphs: ['La noticia puede impactar planificación de cumplimiento, gobierno de datos regulatorios y procesos internos de reporte en entidades sujetas a supervisión.'] }]
+  },
+  {
+    lang: 'es',
+    kind: 'external',
+    slug: 'corte-suprema-confirma-relacion-laboral-honorarios',
+    title: 'Corte Suprema confirma fallo sobre relación laboral en contratación a honorarios',
+    summary: 'El Poder Judicial informó una decisión que declaró la existencia de relación laboral y ordenó prestaciones asociadas.',
+    image: '/assets/news/data-privacy-server.jpg',
+    category: 'Laboral',
+    publishedAt: '01/06/2026',
+    readTime: 'Fuente externa',
+    keyPoints: ['Primacía de la realidad', 'Relación laboral', 'Honorarios', 'Corte Suprema'],
+    source: {
+      label: 'Poder Judicial',
+      href: 'https://www.pjud.cl/prensa-y-comunicaciones/noticias-del-poder-judicial/145575'
+    },
+    externalUrl: 'https://www.pjud.cl/prensa-y-comunicaciones/noticias-del-poder-judicial/145575',
+    body: ['Ficha de actualidad externa basada en la comunicación del Poder Judicial.'],
+    sections: [{ title: 'Relevancia empresarial', paragraphs: ['La noticia es relevante para revisar contratos, formas de prestación de servicios y criterios de subordinación o dependencia en organizaciones públicas y privadas.'] }]
+  },
+  {
+    lang: 'es',
+    kind: 'external',
+    slug: 'ley-21719-proteccion-datos-personales-chile',
+    title: 'Ley N° 21.719 regula la protección y tratamiento de datos personales',
+    summary: 'La Biblioteca del Congreso Nacional mantiene disponible el texto de la Ley N° 21.719, que regula el tratamiento de datos personales y crea nueva institucionalidad de protección.',
+    image: '/assets/news/data-privacy-server.jpg',
+    category: 'Datos personales',
+    publishedAt: 'Vigencia 01/12/2026',
+    readTime: 'Fuente externa',
+    keyPoints: ['Ley N° 21.719', 'Datos personales', 'Agencia de Protección de Datos', 'Cumplimiento empresarial'],
+    source: {
+      label: 'Biblioteca del Congreso Nacional de Chile',
+      href: 'https://www.bcn.cl/leychile/navegar?idNorma=1209272'
+    },
+    externalUrl: 'https://www.bcn.cl/leychile/navegar?idNorma=1209272',
+    body: ['Ficha de actualidad externa basada en el texto oficial disponible en Ley Chile de la Biblioteca del Congreso Nacional.'],
+    sections: [{ title: 'Relevancia empresarial', paragraphs: ['La noticia es relevante para empresas que tratan datos de clientes, trabajadores, proveedores o usuarios, y que deben preparar procesos, contratos y controles antes de la plena exigibilidad del nuevo marco.'] }]
+  }
+];
+
+export const internalPosts: ArticlePage[] = [
+  {
+    lang: 'es',
+    kind: 'internal',
+    slug: 'estructura-blog-institucional-ba-chile',
+    title: 'Blog institucional BA Chile',
+    summary: 'Espacio preparado para novedades internas, hitos de la oficina, publicaciones institucionales y noticias propias.',
+    image: '/assets/office/office-boardroom-wide.webp',
+    category: 'Institucional',
+    publishedAt: 'Pendiente',
+    readTime: 'Estructura preparada',
+    keyPoints: ['Título', 'Slug', 'Categoría', 'Resumen', 'Contenido', 'Foto principal', 'Fuente externa opcional'],
+    body: ['Esta entrada funciona como estructura editorial inicial para el blog interno de BA Chile.', 'Cuando exista una noticia real, se debe reemplazar por contenido institucional aprobado: apertura de sucursal, nuevo corresponsal, hito de la oficina o publicación propia.'],
+    sections: [{ title: 'Campos mínimos', paragraphs: ['Cada publicación interna debe definir título, slug, categoría, resumen, contenido, foto principal y fuente o URL externa opcional.'] }]
+  }
+];
+
+export const articles: ArticlePage[] = [
+  ...externalNews,
+  ...internalPosts,
   {
     lang: 'en',
     slug: 'personal-data-in-chile',
@@ -541,6 +583,7 @@ export const visibleRoutes = [
   '/ingenieria-y-derecho/',
   '/comercio-y-negocios-internacionales/',
   '/noticias-blog/',
+  '/estructura-blog-institucional-ba-chile/',
   '/contacto/',
   '/en/',
   '/en/about-us/',

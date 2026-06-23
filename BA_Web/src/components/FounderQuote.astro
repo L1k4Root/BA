@@ -10,9 +10,6 @@ const { heading, quote, text } = Astro.props;
 
 <section class="ba-section light quote-band">
   <div class="ba-container quote-layout reveal-up">
-    <div class="founder-portrait">
-      <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende, socio fundador de BA Chile" loading="lazy" />
-    </div>
     <div class="founder-copy">
       <span class="ba-label ba-eyebrow">{heading}</span>
       <blockquote>
@@ -21,6 +18,9 @@ const { heading, quote, text } = Astro.props;
       <p class="founder-copy__text">{text}</p>
       <p class="founder">José Francisco Mazzei Alliende</p>
       <span class="founder-role">Abogado · MBA · LLM en Derecho de los Negocios · Socio Fundador</span>
+    </div>
+    <div class="founder-portrait">
+      <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende, socio fundador de BA Chile" loading="lazy" />
     </div>
   </div>
 </section>
@@ -37,9 +37,9 @@ const { heading, quote, text } = Astro.props;
 
   .quote-layout {
     display: grid;
-    grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+    grid-template-columns: minmax(0, 1fr) 180px;
     gap: var(--ba-space-8);
-    align-items: center;
+    align-items: end;
   }
 
   .founder-portrait {
@@ -47,7 +47,7 @@ const { heading, quote, text } = Astro.props;
     overflow: hidden;
     border: 1px solid var(--ba-gray-200);
     background: var(--ba-offwhite);
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 4;
   }
 
   .founder-portrait::after {
@@ -115,7 +115,7 @@ const { heading, quote, text } = Astro.props;
     }
 
     .founder-portrait {
-      max-width: 420px;
+      max-width: 220px;
     }
   }
 

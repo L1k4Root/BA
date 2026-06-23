@@ -4,9 +4,11 @@ type Props = {
   text: string;
   href: string;
   label: string;
+  agendaHref?: string;
+  agendaLabel?: string;
 };
 
-const { title, text, href, label } = Astro.props;
+const { title, text, href, label, agendaHref, agendaLabel = 'Agenda' } = Astro.props;
 ---
 
 <section class="cta-band">
@@ -16,7 +18,10 @@ const { title, text, href, label } = Astro.props;
       <h2 class="ba-heading-xl">{title}</h2>
       <p class="ba-body-lg">{text}</p>
     </div>
-    <a class="ba-btn ba-btn-primary" href={href}>{label}</a>
+    <div class="cta-band__actions">
+      <a class="ba-btn ba-btn-primary" href={href}>{label}</a>
+      {agendaHref && <a class="ba-btn ba-btn-agenda" href={agendaHref}>{agendaLabel}</a>}
+    </div>
   </div>
 </section>
 
@@ -77,10 +82,34 @@ const { title, text, href, label } = Astro.props;
     color: var(--ba-navy-900);
   }
 
+  .cta-band__actions {
+    display: flex;
+    flex: none;
+    flex-wrap: wrap;
+    gap: var(--ba-space-3);
+    justify-content: flex-end;
+  }
+
+  .cta-band .ba-btn-agenda {
+    border-color: var(--ba-gold-500);
+    background: var(--ba-gold-500);
+    color: var(--ba-navy-900);
+  }
+
+  .cta-band .ba-btn-agenda:hover {
+    border-color: var(--ba-navy-900);
+    background: var(--ba-white);
+    color: var(--ba-navy-900);
+  }
+
   @media (max-width: 760px) {
     .cta-band__inner {
       align-items: flex-start;
       flex-direction: column;
+    }
+
+    .cta-band__actions {
+      justify-content: flex-start;
     }
   }
 </style>

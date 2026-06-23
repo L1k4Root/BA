@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CTA from '../components/CTA.astro';
-import { about } from '../content/site';
+import { about, contact } from '../content/site';
 
 const content = about.es;
 ---
@@ -15,7 +15,7 @@ const content = about.es;
         <a class="ba-btn ba-btn-outline-dark" href="/contacto/">Contactar</a>
       </div>
       <div class="ba-frame portrait">
-        <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende" />
+        <img src="/assets/office/office-lounge-wide.webp" alt="Oficina Bright Alliance | BA Chile" />
       </div>
     </div>
   </section>
@@ -33,6 +33,22 @@ const content = about.es;
           <h3>Visión</h3>
           <p>{content.vision}</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section navy golden-section">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Golden Circle" title="Bright Alliance | BA Chile" lead="Propósito, método y propuesta concreta de la firma." />
+      <div class="golden-grid">
+        {content.goldenCircle.map((item, index) => (
+          <article class="golden-card">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <strong>{item.subtitle}</strong>
+            <p>{item.text}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -59,7 +75,21 @@ const content = about.es;
     </div>
   </section>
 
-  <CTA title="Conversemos sobre su necesidad legal" text="BA Chile trabaja bajo una lógica técnica, sobria y orientada a decisiones empresariales relevantes." href="/contacto/" label="Contactar" />
+  <section class="ba-section offwhite founder-section">
+    <div class="ba-container founder-layout">
+      <div class="founder-copy">
+        <span class="ba-label ba-eyebrow">Socio fundador</span>
+        <h2>{content.founder.name}</h2>
+        <p class="founder-role">{content.founder.role}</p>
+        {content.founder.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <figure class="founder-small">
+        <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <CTA title="Conversemos sobre su próximo proyecto" text="BA Chile trabaja bajo una lógica técnica, sobria y orientada a decisiones empresariales relevantes." href="/contacto/" label="Contactar" agendaHref={contact.agendaHref} />
 </BaseLayout>
 
 <style>
@@ -68,7 +98,7 @@ const content = about.es;
   }
 
   .portrait {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 5 / 4;
   }
 
   .mission-card {
@@ -87,6 +117,44 @@ const content = about.es;
 
   .mission-card p {
     margin: 0 0 var(--ba-space-6);
+  }
+
+  .golden-section :global(.section-header h2),
+  .golden-section :global(.section-header p),
+  .golden-section :global(.ba-label) {
+    color: var(--ba-white);
+  }
+
+  .golden-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ba-space-5);
+  }
+
+  .golden-card {
+    min-height: 320px;
+    padding: var(--ba-space-7);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.045);
+  }
+
+  .golden-card span,
+  .golden-card strong {
+    color: var(--ba-gold-400);
+    font-family: var(--ba-font-head);
+    font-weight: 700;
+  }
+
+  .golden-card h3 {
+    margin: var(--ba-space-5) 0 var(--ba-space-2);
+    color: var(--ba-white);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-heading-lg);
+  }
+
+  .golden-card p {
+    margin: var(--ba-space-5) 0 0;
+    color: rgba(255, 255, 255, 0.78);
   }
 
   .values-section {
@@ -127,6 +195,45 @@ const content = about.es;
   .values-accordion {
     display: grid;
     gap: var(--ba-space-3);
+  }
+
+  .founder-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: var(--ba-space-8);
+    align-items: end;
+  }
+
+  .founder-copy h2 {
+    margin: var(--ba-space-5) 0 var(--ba-space-3);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-heading-xl);
+  }
+
+  .founder-copy p {
+    max-width: 78ch;
+  }
+
+  .founder-role {
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-weight: 700;
+  }
+
+  .founder-small {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+    aspect-ratio: 4 / 5;
+  }
+
+  .founder-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
   }
 
   .value-card {
@@ -212,7 +319,12 @@ const content = about.es;
   }
 
   @media (max-width: 860px) {
+    .golden-grid,
     .values-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .founder-layout {
       grid-template-columns: 1fr;
     }
 

@@ -5,32 +5,39 @@ import { contact } from '../content/site';
 ---
 
 <BaseLayout title="Contacto - Bright Alliance | BA Chile" description="Contacto de Bright Alliance | BA Chile." lang="es">
-  <section class="ba-section light">
+  <section class="ba-section light contact-hero">
     <div class="ba-container ba-grid-2 contact-grid">
-      <div>
-        <SectionHeader eyebrow="Contacto" title="/ Contacto" lead={`Dirección: ${contact.address}`} />
+      <div class="contact-copy">
+        <SectionHeader eyebrow="Contacto" title="/ Contacto" lead="Conversemos sobre sus inquietudes empresariales o sobre el próximo proyecto que necesita ordenar jurídicamente." />
         <ul class="ba-list">
+          <li>Dirección: {contact.address}</li>
           <li>Correo electrónico: <a href={`mailto:${contact.email}`}>{contact.email}</a></li>
           <li>Teléfono: <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a></li>
         </ul>
-        <a class="ba-btn ba-btn-primary" href={`mailto:${contact.email}`}>Contactar ahora</a>
+        <div class="contact-actions">
+          <a class="ba-btn ba-btn-primary" href={`mailto:${contact.email}`}>Contactar ahora</a>
+          <a class="ba-btn ba-btn-agenda" href={contact.agendaHref}>Agenda</a>
+        </div>
+        <figure class="contact-media">
+          <img src="/assets/office/office-boardroom-wide.webp" alt="Sala de reuniones Bright Alliance | BA Chile" loading="lazy" />
+        </figure>
       </div>
-      <form class="contact-form">
+      <form class="contact-form" action={`mailto:${contact.email}`} method="post" enctype="text/plain">
         <h2>Contacto</h2>
         <label>
           Nombre
-          <input type="text" name="name" autocomplete="name" />
+          <input type="text" name="name" autocomplete="name" required />
         </label>
         <label>
           Correo electrónico
-          <input type="email" name="email" autocomplete="email" />
+          <input type="email" name="email" autocomplete="email" required />
         </label>
         <label>
           Mensaje o motivo de contacto
-          <textarea name="message" rows="6"></textarea>
+          <textarea name="message" rows="6" required></textarea>
         </label>
         <p>En Bright Alliance utilizaremos tus datos de contacto sólo para comunicarnos contigo.</p>
-        <button class="ba-btn ba-btn-primary" type="button">Enviar</button>
+        <button class="ba-btn ba-btn-primary" type="submit">Enviar</button>
       </form>
     </div>
   </section>
@@ -41,8 +48,45 @@ import { contact } from '../content/site';
     align-items: start;
   }
 
-  .contact-grid .ba-btn {
+  .contact-copy .ba-list {
+    max-width: 62ch;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ba-space-3);
     margin-top: var(--ba-space-6);
+  }
+
+  .ba-btn-agenda {
+    border-color: var(--ba-gold-500);
+    background: var(--ba-gold-500);
+    color: var(--ba-navy-900);
+  }
+
+  .contact-media {
+    position: relative;
+    margin: var(--ba-space-8) 0 0;
+    overflow: hidden;
+    border: 1px solid var(--ba-gray-200);
+    aspect-ratio: 16 / 9;
+  }
+
+  .contact-media::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 96px;
+    height: 4px;
+    background: var(--ba-gold-500);
+    content: '';
+  }
+
+  .contact-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .contact-form {
@@ -51,6 +95,7 @@ import { contact } from '../content/site';
     padding: var(--ba-space-7);
     border: 1px solid var(--ba-gray-200);
     background: var(--ba-white);
+    box-shadow: 0 30px 70px -56px rgba(16, 47, 75, 0.72);
   }
 
   .contact-form h2 {
@@ -77,6 +122,13 @@ import { contact } from '../content/site';
     padding: 14px 16px;
     color: var(--ba-gray-700);
     font: inherit;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: var(--ba-gold-500);
+    outline: 2px solid rgba(179, 146, 89, 0.18);
+    outline-offset: 0;
   }
 
   .contact-form p {

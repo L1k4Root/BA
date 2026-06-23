@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CTA from '../components/CTA.astro';
 import ArticleDetail from '../components/ArticleDetail.astro';
-import { articles, services } from '../content/site';
+import { articles, contact, services } from '../content/site';
 
 export function getStaticPaths() {
   return [
@@ -115,7 +115,7 @@ const isArticle = kind === 'article';
     </>
   )}
 
-  <CTA title={isArticle ? 'Conversemos sobre el impacto en su empresa' : page.cta} text="Bright Alliance integra Derecho, Estrategia y Empresa para convertir complejidad jurídica en decisiones claras." href="/contacto/" label="Contactar" />
+  <CTA title={isArticle ? 'Conversemos sobre el impacto en su empresa' : page.cta} text="Bright Alliance integra Derecho, Estrategia y Empresa para convertir complejidad jurídica en decisiones claras." href="/contacto/" label="Contactar" agendaHref={contact.agendaHref} />
 </BaseLayout>
 
 <style>
@@ -189,6 +189,14 @@ const isArticle = kind === 'article';
     border-left: 4px solid var(--ba-gold-500);
     background: var(--ba-navy-900);
     color: var(--ba-white);
+    box-shadow: 0 28px 70px -50px rgba(16, 47, 75, 0.72);
+  }
+
+  .model-card .ba-list li {
+    margin-bottom: var(--ba-space-4);
+    color: rgba(255, 255, 255, 0.88);
+    font-family: var(--ba-font-head);
+    font-weight: 600;
   }
 
   .pillar-grid {

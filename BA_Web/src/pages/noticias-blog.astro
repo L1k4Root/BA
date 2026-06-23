@@ -1,24 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { articlesByLang } from '../content/site';
+import { externalNews, internalPosts } from '../content/site';
 
-const articles = articlesByLang('es');
+const externalArticles = externalNews.filter((article) => article.lang === 'es');
+const internalArticles = internalPosts.filter((article) => article.lang === 'es');
 ---
 
-<BaseLayout title="Noticias & Blog - Bright Alliance | BA Chile" description="Actualidad legal y artículos relacionados con leyes para empresas y regulación jurídica." lang="es">
+<BaseLayout title="Noticias & Blog - Bright Alliance | BA Chile" description="Actualidad jurídica externa y noticias internas de Bright Alliance | BA Chile." lang="es">
   <section class="ba-section light">
     <div class="ba-container">
-      <SectionHeader eyebrow="Noticias" title="/ Noticias & Blog" lead="Actualidad legal y artículos relacionados con leyes para empresas y regulación jurídica." />
+      <SectionHeader eyebrow="Actualidad jurídica externa" title="/ Noticias & Blog" lead="Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales." />
       <div class="article-list">
-        {articles.map((article) => (
+        {externalArticles.map((article) => (
           <article class="article-card">
             <img src={article.image} alt={article.title} loading="lazy" />
             <div>
               <span class="ba-label">{article.category}</span>
               <h2 class="ba-heading-md">{article.title}</h2>
               <p>{article.summary}</p>
-              <a href={`/${article.slug}/`}>Leer artículo</a>
+              <span class="article-card__source">{article.source?.label}</span>
+              <a href={article.externalUrl || article.source?.href} target="_blank" rel="noreferrer">Ver fuente</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section offwhite">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Blog interno" title="Noticias propias de la oficina" lead="Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas." />
+      <div class="article-list">
+        {internalArticles.map((article) => (
+          <article class="article-card article-card--internal">
+            <img src={article.image} alt={article.title} loading="lazy" />
+            <div>
+              <span class="ba-label">{article.category}</span>
+              <h2 class="ba-heading-md">{article.title}</h2>
+              <p>{article.summary}</p>
+              <a href={`/${article.slug}/`}>Ver estructura</a>
             </div>
           </article>
         ))}
@@ -61,7 +82,16 @@ const articles = articlesByLang('es');
   }
 
   .article-card p {
-    margin: 0 0 var(--ba-space-6);
+    margin: 0 0 var(--ba-space-4);
+  }
+
+  .article-card__source {
+    display: block;
+    margin-bottom: var(--ba-space-5);
+    color: var(--ba-gray-700);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 600;
   }
 
   .article-card a {

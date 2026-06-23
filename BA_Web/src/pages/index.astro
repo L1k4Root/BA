@@ -7,12 +7,12 @@ import ClientTrustMarquee from '../components/ClientTrustMarquee.astro';
 import NewsPreview from '../components/NewsPreview.astro';
 import FounderQuote from '../components/FounderQuote.astro';
 import CTA from '../components/CTA.astro';
-import { articlesByLang, clientLogos, home, servicesByLang } from '../content/site';
+import { clientLogos, contact, externalNews, home, servicesByLang } from '../content/site';
 
 const lang = 'es';
 const content = home[lang];
 const services = servicesByLang(lang).filter((service) => !service.slug.startsWith('landing') && service.slug !== 'compliance');
-const articles = articlesByLang(lang);
+const articles = externalNews.filter((article) => article.lang === lang).slice(0, 4);
 ---
 
 <BaseLayout title="Inicio - Bright Alliance | BA Chile" description={content.lead} lang={lang}>
@@ -36,5 +36,5 @@ const articles = articlesByLang(lang);
 
   <FounderQuote heading={content.founderHeading} quote={content.founderQuote} text={content.founderText} />
 
-  <CTA title="Conversemos sobre su próximo proyecto" text="Ordenamos contratos, riesgos, cumplimiento y decisiones críticas con criterio jurídico y visión de negocio." href="/contacto/" label="Contactar" />
+  <CTA title="Conversemos sobre su próximo proyecto" text="Ordenamos contratos, riesgos, cumplimiento y decisiones críticas con criterio jurídico y visión de negocio." href="/contacto/" label="Contactar" agendaHref={contact.agendaHref} />
 </BaseLayout>

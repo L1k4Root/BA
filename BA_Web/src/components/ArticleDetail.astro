@@ -22,6 +22,7 @@ const isEs = lang === 'es';
           {page.readTime && <span>{page.readTime}</span>}
           {page.source && <a href={page.source.href} target="_blank" rel="noreferrer">{page.source.label}</a>}
         </div>
+        {page.externalUrl && <a class="ba-btn ba-btn-primary article-detail__source-link" href={page.externalUrl} target="_blank" rel="noreferrer">Ver fuente original</a>}
       </div>
       <figure class="article-detail__media">
         <img src={page.image} alt={page.title} />
@@ -115,6 +116,10 @@ const isEs = lang === 'es';
   .article-detail__meta a {
     border-color: rgba(179, 146, 89, 0.55);
     color: var(--ba-gold-500);
+  }
+
+  .article-detail__source-link {
+    margin-top: var(--ba-space-6);
   }
 
   .article-detail__media {

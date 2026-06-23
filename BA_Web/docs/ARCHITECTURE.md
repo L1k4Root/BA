@@ -25,9 +25,10 @@ Responsabilidades:
 
 - Navegación.
 - Contacto.
+- Link configurable de agenda.
 - Copy de home.
 - Servicios.
-- Noticias.
+- Actualidad externa y blog interno.
 - Logos de clientes.
 - Contenido de nosotros y valores.
 
@@ -53,9 +54,9 @@ Cada componente debe tener una responsabilidad visible concreta.
 - `Hero.astro`: hero del home y carrusel de imágenes de Chile.
 - `HomeIntro.astro`: presentación institucional inicial.
 - `HomeServices.astro`: entrada de especialidades del home.
-- `ServiceAccordion.astro`: acordeón reusable de servicios con imagen activa por especialidad, imagen base sin selección y estado inicial parametrizable.
-- `ClientTrustMarquee.astro`: muro institucional de logos de clientes.
-- `NewsPreview.astro`: noticias resumidas.
+- `ServiceAccordion.astro`: componente heredado disponible, pero no usado en home ni `/servicios/`.
+- `ClientTrustMarquee.astro`: carrusel continuo de logos de clientes.
+- `NewsPreview.astro`: actualidad jurídica externa resumida con fuente original.
 - `ArticleDetail.astro`: detalle editorial de noticias.
 - `FounderQuote.astro`: bloque editorial del fundador.
 - `ServiceCard.astro`: tarjeta de servicio reusable.
@@ -78,22 +79,26 @@ Las páginas deben componer componentes y evitar acumular estilos largos.
 
 ## Contratos de componentes
 
-### ServiceAccordion
+### Servicios
 
-Responsabilidad: presentar servicios, abrir/cerrar contenido y sincronizar imagen activa.
-
-Entradas:
-
-- `services`: lista de servicios desde `src/content/site.ts`.
-- `defaultOpenIndex`: índice inicial abierto o `null` para partir cerrado.
+Responsabilidad: presentar las tres áreas principales con acceso directo a su página de detalle.
 
 Reglas:
 
-- No decide copy, rutas ni orden de servicios; eso pertenece a `site.ts`.
-- No decide el estado inicial de negocio; cada página lo pasa explícitamente.
-- Permite cerrar el item activo para no bloquear la interacción del usuario.
-- Si no hay servicio activo, muestra una imagen base institucional.
-- El mensaje de estado vacío se renderiza fuera de la imagen para evitar texto flotando sobre fotografía.
+- Home y `/servicios/` no usan acordeones.
+- Cada tarjeta usa `navLabel`, `summary`, `intro`, `slug` e `icon` desde `src/content/site.ts`.
+- El detalle de modalidad, áreas y alcance vive en las rutas de servicio generadas por `src/pages/[slug].astro`.
+- No duplicar detalle extenso en la home.
+
+### Noticias
+
+`src/content/site.ts` separa:
+
+- `externalNews`: actualidad externa con `source.href` y `externalUrl`.
+- `internalPosts`: noticias institucionales propias con campos mínimos editoriales.
+- `articles`: lista combinada para conservar las rutas dinámicas.
+
+La automatización futura debe definir fuente, credenciales, frecuencia, deduplicación y revisión editorial antes de escribir en el sitio.
 
 ### Header
 
@@ -178,6 +183,8 @@ Los estilos específicos de una sección deben vivir en el componente de esa sec
 - Preferir componentes pequeños y explícitos.
 - Mantener copy editable en `site.ts`.
 - No agregar dependencias para interacciones simples.
+- Cambiar Agenda solo en `contact.agendaHref`.
+- Cambiar LinkedIn solo en `contact.linkedin`.
 - Respetar `prefers-reduced-motion`.
 - Evitar duplicar secciones completas entre páginas.
 - Antes de agregar backend, definir contrato y ownership.

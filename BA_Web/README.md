@@ -87,6 +87,7 @@ BA_Web/
 - `public/assets/clients/`: logos de clientes extraídos del sitio actual.
 - `src/styles/global.css`: tokens de color, tipografía, spacing, header responsive y componentes base.
 - `src/content/site.ts`: estructura de páginas, navegación, servicios y posts.
+- `contact.agendaHref` en `src/content/site.ts`: placeholder configurable para el botón Agenda.
 
 ## Modularidad frontend
 
@@ -94,10 +95,10 @@ La regla base es que cada componente tenga una responsabilidad principal:
 
 - `Hero.astro`: primer viewport, carrusel de imágenes de Chile y CTAs principales.
 - `HomeIntro.astro`: presentación breve de la firma y foto de oficina como apoyo.
-- `HomeServices.astro`: entrada de especialidades del home, compuesta con el acordeón reusable.
+- `HomeServices.astro`: entrada de especialidades del home y `/servicios/` con tres tarjetas enlazadas a cada página de servicio.
 - `ServiceAccordion.astro`: acordeón modular de servicios con apertura animada, CTA, imagen por especialidad, imagen base sin selección y estado inicial configurable por página.
-- `ClientTrustMarquee.astro`: muro institucional de logos y señales de confianza.
-- `NewsPreview.astro`: vista resumida de noticias.
+- `ClientTrustMarquee.astro`: carrusel continuo de logos y señales de confianza.
+- `NewsPreview.astro`: vista resumida de actualidad jurídica externa con enlaces a fuente.
 - `FounderQuote.astro`: bloque editorial del socio fundador.
 - `ServiceCard.astro`: tarjeta reusable para áreas de servicio.
 - `Header.astro` / `Footer.astro`: navegación global y cierre institucional.
@@ -107,16 +108,17 @@ La regla base es que cada componente tenga una responsabilidad principal:
 
 Las páginas deben componer componentes, no concentrar todo el markup y CSS. El contenido editable debe vivir en `src/content/site.ts` salvo que sea copy estrictamente estructural de un componente.
 
-### Contrato de `ServiceAccordion`
+### Servicios sin acordeón en home
 
-`ServiceAccordion.astro` recibe `services` y `defaultOpenIndex`.
+La home y `/servicios/` usan tarjetas directas por servicio. Cada tarjeta toma datos desde `src/content/site.ts`:
 
-- Home usa `defaultOpenIndex={0}` para mostrar contexto inicial.
-- `/servicios/` usa `defaultOpenIndex={null}` para partir cerrado.
-- El usuario puede cerrar el item abierto; el componente no fuerza reapertura.
-- Cuando no hay selección activa, muestra una imagen base institucional.
+- `navLabel`
+- `summary`
+- `intro`
+- `slug`
+- `icon`
 
-Esto mantiene responsabilidad única: el componente controla interacción visual; cada página decide su estado inicial.
+El detalle vive en cada página de servicio generada por `src/pages/[slug].astro`.
 
 El footer incluye crédito externo a `https://automize.cl/`.
 
@@ -155,6 +157,30 @@ Responsabilidades:
 Estado actual: persistencia local con `localStorage`.
 
 Opción persistente futura: reemplazar el bloque comentado en `NewsDraftWorkbench.astro` por `POST /api/news-drafts` o una integración CMS/DB, validando DTOs antes de escribir.
+
+### Actualidad externa y blog interno
+
+`src/content/site.ts` separa:
+
+- `externalNews`: contingencia jurídica/empresarial externa. Cada item debe incluir `source.href` y `externalUrl`.
+- `internalPosts`: noticias propias de BA Chile. Campos mínimos: `title`, `slug`, `category`, `summary`, `body`, `image` y `source` opcional.
+- `articles`: combinación usada por las rutas dinámicas existentes.
+
+No automatizar Diario Financiero, LinkedIn ni otras fuentes sin credenciales/API y contrato de datos.
+
+### Agenda y LinkedIn
+
+- Cambiar el link de Agenda en `contact.agendaHref`.
+- Cambiar LinkedIn en `contact.linkedin`.
+- La integración automática con LinkedIn queda pendiente: requiere credenciales, permisos de página/cuenta y decisión de flujo web→LinkedIn o LinkedIn→web.
+
+### Logos de clientes
+
+Para agregar logos:
+
+1. Agregar el archivo optimizado en `public/assets/clients/`.
+2. Actualizar `clientLogos` en `src/content/site.ts` si se deja de usar la secuencia `client-1.png` a `client-25.png`.
+3. Verificar el carrusel en desktop y mobile.
 
 ## Páginas públicas principales
 
