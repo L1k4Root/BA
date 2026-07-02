@@ -1,0 +1,51 @@
+---
+type Props = {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  tone?: 'light' | 'dark';
+};
+
+const { eyebrow, title, lead, align = 'left', tone = 'light' } = Astro.props;
+---
+
+<div class:list={['section-header', `align-${align}`, tone === 'dark' && 'is-dark']}>
+  {eyebrow && <span class="ba-label ba-eyebrow">{eyebrow}</span>}
+  <h2 class="ba-heading-xl">{title}</h2>
+  {lead && <p class="ba-body-lg">{lead}</p>}
+</div>
+
+<style>
+  .section-header {
+    max-width: 760px;
+    margin-bottom: var(--ba-space-8);
+  }
+
+  .section-header.align-center {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .section-header.align-center .ba-eyebrow {
+    justify-content: center;
+  }
+
+  .section-header h2 {
+    margin: var(--ba-space-4) 0 0;
+  }
+
+  .section-header p {
+    margin: var(--ba-space-4) 0 0;
+    color: var(--ba-gray-700);
+  }
+
+  .section-header.is-dark h2,
+  .section-header.is-dark p {
+    color: var(--ba-white);
+  }
+
+  .section-header.is-dark p {
+    color: rgba(255, 255, 255, 0.78);
+  }
+</style>

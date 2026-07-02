@@ -1,0 +1,23 @@
+---
+type Props = {
+  variant?: 'navy' | 'white' | 'current';
+  class?: string;
+};
+
+const { variant = 'navy', class: className = '' } = Astro.props;
+const src =
+  variant === 'white'
+    ? '/assets/brand-source/logo-ba-white.svg'
+    : variant === 'current'
+      ? '/assets/brand-source/logo-ba.svg'
+      : '/assets/brand-source/logo-ba-navy.svg';
+---
+
+<img class:list={['ba-logo', className]} src={src} alt="Bright Alliance | BA Chile" loading="eager" />
+
+<style>
+  .ba-logo {
+    width: 152px;
+    height: auto;
+  }
+</style>

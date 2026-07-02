@@ -14,10 +14,16 @@ dist/
 build/
 .next/
 out/
+email-marketing/.react-email/
 
 # Environment
 .env
 .env.*
+!.env.deploy.example
+.env.deploy
+
+# Local deployment artifacts
+website/dist.zip
 
 # IDE
 .vscode/

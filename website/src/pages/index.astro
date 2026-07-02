@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import HomeIntro from '../components/HomeIntro.astro';
+import HomeServices from '../components/HomeServices.astro';
+import ClientTrustMarquee from '../components/ClientTrustMarquee.astro';
+import NewsPreview from '../components/NewsPreview.astro';
+import CTA from '../components/CTA.astro';
+import { clientLogos, contact, externalNews, home, servicesByLang } from '../content/site';
+
+const lang = 'es';
+const content = home[lang];
+const services = servicesByLang(lang).filter((service) => !service.slug.startsWith('landing') && service.slug !== 'compliance');
+const articles = externalNews.filter((article) => article.lang === lang).slice(0, 4);
+---
+
+<BaseLayout title="Inicio - Bright Alliance | BA Chile" description={content.lead} lang={lang}>
+  <Hero
+    lang={lang}
+    title={content.title}
+    subtitle={content.subtitle}
+    primaryLabel="Ver áreas de especialidad"
+    primaryHref="#servicios"
+    secondaryLabel="Conversemos"
+    secondaryHref="/contacto/"
+  />
+
+  <HomeIntro approach={content.approach} />
+
+  <HomeServices heading={content.servicesHeading} subheading={content.servicesSubheading} services={services} />
+
+  <ClientTrustMarquee logos={clientLogos} />
+
+  <NewsPreview articles={articles} />
+
+  <CTA title="Conversemos sobre su próximo proyecto" text="Ordenamos contratos, riesgos, cumplimiento y decisiones críticas con criterio jurídico y visión de negocio." href="/contacto/" label="Contactar" agendaHref={contact.agendaHref} />
+</BaseLayout>

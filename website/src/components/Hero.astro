@@ -1,0 +1,241 @@
+---
+import type { Language } from '../content/site';
+
+type Props = {
+  lang?: Language;
+  title: string;
+  subtitle: string;
+  lead?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  image?: string;
+  imageAlt?: string;
+  slides?: Array<{
+    src: string;
+    alt: string;
+  }>;
+};
+
+const {
+  lang = 'es',
+  title,
+  subtitle,
+  lead,
+  primaryHref = lang === 'es' ? '/contacto/' : '/en/contact/',
+  primaryLabel = lang === 'es' ? 'Contactar' : 'Contact',
+  secondaryHref = lang === 'es' ? '#servicios' : '#services',
+  secondaryLabel = lang === 'es' ? 'Ver áreas' : 'View services',
+  image = '/assets/hero/santiago-andes-optimized.jpg',
+  imageAlt = 'Cordillera de los Andes y skyline de Santiago',
+  slides = [
+    { src: image, alt: imageAlt },
+    { src: '/assets/hero/chile-torres-paine.jpg', alt: 'Torres del Paine, Chile' },
+    { src: '/assets/hero/chile-lago-pehoe.jpg', alt: 'Lago Pehoe en Torres del Paine, Chile' },
+    { src: '/assets/hero/chile-puerto-valparaiso.jpg', alt: 'Puerto de Valparaiso, Chile' }
+  ]
+} = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero__carousel" aria-hidden="true">
+    {slides.map((slide, index) => (
+      <img
+        class:list={['hero__bg', index === 0 && 'is-active']}
+        src={slide.src}
+        alt=""
+        loading={index === 0 ? 'eager' : 'lazy'}
+        data-hero-slide
+      />
+    ))}
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <span class="ba-label">Bright Alliance</span>
+    <h1>{title}</h1>
+    <p class="hero__subtitle">{subtitle}</p>
+    {lead && <p class="hero__lead">{lead}</p>}
+    <div class="hero__actions">
+      <a class="ba-btn ba-btn-primary" href={primaryHref}>{primaryLabel}</a>
+      <a class="ba-btn ba-btn-secondary" href={secondaryHref}>{secondaryLabel}</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('[data-hero-slide]'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let currentSlide = 0;
+
+  if (slides.length > 1 && !reduceMotion) {
+    window.setInterval(() => {
+      slides[currentSlide]?.classList.remove('is-active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide]?.classList.add('is-active');
+    }, 6200);
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 156px var(--ba-space-6) var(--ba-space-9);
+    background: var(--ba-navy-900);
+    text-align: center;
+  }
+
+  .hero__carousel,
+  .hero__bg,
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__carousel {
+    overflow: hidden;
+  }
+
+  .hero__bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 1100ms ease, transform 6200ms ease;
+  }
+
+  .hero__bg.is-active {
+    opacity: 1;
+    transform: scale(1.10);
+  }
+
+  .hero__overlay {
+    z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(9, 24, 38, 0.60) 0%, rgba(9, 24, 38, 0.30) 43%, rgba(9, 24, 38, 0.90) 100%),
+      linear-gradient(90deg, rgba(9, 24, 38, 0.40) 0%, rgba(9, 24, 38, 0.04) 48%, rgba(9, 24, 38, 0.46) 100%);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 1120px);
+    margin-inline: auto;
+  }
+
+  .hero__content .ba-label {
+    display: inline-block;
+    color: var(--ba-gold-400);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    max-width: none;
+    margin: var(--ba-space-4) auto 0;
+    color: var(--ba-white);
+    font-family: var(--ba-font-head);
+    font-size: 58px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: none;
+    text-shadow: 0 26px 58px rgba(0, 0, 0, 0.42);
+    white-space: nowrap;
+  }
+
+  .hero__subtitle {
+    max-width: 54ch;
+    margin: var(--ba-space-4) auto 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.55;
+    text-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero__lead {
+    max-width: 64ch;
+    margin: var(--ba-space-5) auto 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: var(--ba-body-lg);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: var(--ba-space-4);
+    margin-top: var(--ba-space-7);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__bg {
+      transition: none;
+    }
+
+    .hero__bg:not(:first-child) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .hero {
+      padding: 130px var(--ba-space-5) var(--ba-space-8);
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      white-space: normal;
+    }
+
+    .hero__subtitle {
+      font-size: 21px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .hero {
+      min-height: auto;
+      padding: 124px var(--ba-space-4) var(--ba-space-8);
+      text-align: left;
+    }
+
+    .hero__content .ba-label {
+      letter-spacing: 0;
+    }
+
+    .hero h1,
+    .hero__subtitle,
+    .hero__lead {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+    }
+
+    .hero__subtitle {
+      font-size: 19px;
+      line-height: 1.45;
+    }
+
+    .hero__actions {
+      justify-content: flex-start;
+    }
+
+    .hero__actions .ba-btn {
+      width: auto;
+    }
+  }
+</style>

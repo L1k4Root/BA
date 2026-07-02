@@ -1,0 +1,115 @@
+---
+type Props = {
+  title: string;
+  text: string;
+  href: string;
+  label: string;
+  agendaHref?: string;
+  agendaLabel?: string;
+};
+
+const { title, text, href, label, agendaHref, agendaLabel = 'Agenda' } = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="ba-container cta-band__inner">
+    <div>
+      <span class="ba-label ba-eyebrow">Contacto</span>
+      <h2 class="ba-heading-xl">{title}</h2>
+      <p class="ba-body-lg">{text}</p>
+    </div>
+    <div class="cta-band__actions">
+      <a class="ba-btn ba-btn-primary" href={href}>{label}</a>
+      {agendaHref && <a class="ba-btn ba-btn-agenda" href={agendaHref}>{agendaLabel}</a>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    position: relative;
+    overflow: hidden;
+    padding: var(--ba-space-8) 0;
+    border-top: 1px solid var(--ba-gray-200);
+    border-bottom: 1px solid var(--ba-gray-200);
+    background: var(--ba-offwhite);
+    color: var(--ba-navy-900);
+  }
+
+  .cta-band::after {
+    position: absolute;
+    top: -30%;
+    right: 8%;
+    width: 180px;
+    height: 180px;
+    color: var(--ba-navy-900);
+    background-image: radial-gradient(currentColor 1.5px, transparent 1.6px);
+    background-size: 14px 14px;
+    opacity: 0.12;
+    content: '';
+  }
+
+  .cta-band__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ba-space-7);
+  }
+
+  .cta-band h2 {
+    max-width: 720px;
+    margin: var(--ba-space-4) 0 0;
+    color: var(--ba-navy-900);
+  }
+
+  .cta-band p {
+    max-width: 720px;
+    margin: var(--ba-space-4) 0 0;
+    color: var(--ba-gray-700);
+  }
+
+  .cta-band .ba-btn-primary {
+    border-color: var(--ba-navy-900);
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+  }
+
+  .cta-band .ba-btn-primary:hover {
+    border-color: var(--ba-gold-500);
+    background: var(--ba-gold-500);
+    color: var(--ba-navy-900);
+  }
+
+  .cta-band__actions {
+    display: flex;
+    flex: none;
+    flex-wrap: wrap;
+    gap: var(--ba-space-3);
+    justify-content: flex-end;
+  }
+
+  .cta-band .ba-btn-agenda {
+    border-color: var(--ba-gold-500);
+    background: var(--ba-gold-500);
+    color: var(--ba-navy-900);
+  }
+
+  .cta-band .ba-btn-agenda:hover {
+    border-color: var(--ba-navy-900);
+    background: var(--ba-white);
+    color: var(--ba-navy-900);
+  }
+
+  @media (max-width: 760px) {
+    .cta-band__inner {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .cta-band__actions {
+      justify-content: flex-start;
+    }
+  }
+</style>

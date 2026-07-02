@@ -1,0 +1,113 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+type Props = {
+  approach: string;
+};
+
+const { approach } = Astro.props;
+---
+
+<section class="ba-section light intro-section">
+  <div class="ba-container ba-grid-2">
+    <div class="reveal-up">
+      <SectionHeader eyebrow="Quiénes somos" title="En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa." lead={approach} />
+      <a class="ba-btn ba-btn-outline-dark" href="/nosotros/">Leer más</a>
+    </div>
+    <figure class="intro-media reveal-up">
+      <div class="intro-media__image">
+        <img src="/assets/office/office-private-room.webp" alt="Oficina Bright Alliance | BA Chile" loading="lazy" />
+      </div>
+      <div class="intro-media__caption">
+        <span>Bright Alliance | BA Chile</span>
+        <strong>Derecho · Estrategia · Empresa</strong>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .intro-section {
+    position: relative;
+    border-bottom: 1px solid var(--ba-gray-200);
+  }
+
+  .intro-media {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid rgba(16, 47, 75, 0.12);
+    background: var(--ba-white);
+    box-shadow: 0 28px 70px -56px rgba(16, 47, 75, 0.72);
+  }
+
+  .intro-media__image {
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
+    background: var(--ba-navy-900);
+  }
+
+  .intro-media__image::after {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(16, 47, 75, 0.02) 0%, rgba(16, 47, 75, 0.12) 64%, rgba(16, 47, 75, 0.42) 100%),
+      linear-gradient(90deg, rgba(16, 47, 75, 0.16), rgba(16, 47, 75, 0));
+    content: '';
+  }
+
+  .intro-media__image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    object-fit: cover;
+    opacity: 0.9;
+    filter: grayscale(0.08) contrast(1.02);
+  }
+
+  .intro-media__caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ba-space-4);
+    padding: var(--ba-space-5) var(--ba-space-6);
+    border-top: 4px solid var(--ba-gold-500);
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+  }
+
+  .intro-media__caption span,
+  .intro-media__caption strong {
+    font-family: var(--ba-font-head);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .intro-media__caption span {
+    color: var(--ba-gold-500);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .intro-media__caption strong {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  @media (max-width: 760px) {
+    .intro-media__image {
+      min-height: 340px;
+    }
+
+    .intro-media__caption {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
