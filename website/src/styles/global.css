@@ -27,9 +27,9 @@
   --ba-label: 14px;
 
   --ba-header-expanded: 160px;
-  --ba-header-compact: 160px;
+  --ba-header-compact: 96px;
   --ba-header-logo-expanded: clamp(74px, 7.3vw, 105px);
-  --ba-header-logo-compact: clamp(74px, 7.3vw, 105px);
+  --ba-header-logo-compact: clamp(68px, 5.4vw, 78px);
   --ba-header-nav-size: 12px;
   --ba-page-top-offset: calc(var(--ba-header-compact) + var(--ba-space-9));
 
