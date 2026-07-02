@@ -12,8 +12,11 @@ const { approach, secondary } = Astro.props;
 <section class="ba-section light intro-section">
   <div class="ba-container ba-grid-2">
     <div class="reveal-up">
-      <SectionHeader eyebrow="Quiénes somos" title="En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa." lead={approach} />
-      {secondary && <p class="intro-section__secondary">{secondary}</p>}
+      <SectionHeader eyebrow="Quiénes somos" title="En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa." />
+      <div class="intro-section__copy">
+        <p class="ba-body-lg">{approach}</p>
+        {secondary && <p class="ba-body-lg">{secondary}</p>}
+      </div>
       <a class="ba-btn ba-btn-outline-dark" href="/nosotros/">Leer más</a>
     </div>
     <figure class="intro-media reveal-up">
@@ -34,12 +37,22 @@ const { approach, secondary } = Astro.props;
     border-bottom: 1px solid var(--ba-gray-200);
   }
 
-  .intro-section__secondary {
-    max-width: 62ch;
-    margin: calc(-1 * var(--ba-space-4)) 0 var(--ba-space-6);
+  .intro-section :global(.section-header) {
+    margin-bottom: var(--ba-space-5);
+  }
+
+  .intro-section__copy {
+    max-width: 760px;
+    margin: 0 0 var(--ba-space-6);
+  }
+
+  .intro-section__copy p {
+    margin: 0;
     color: var(--ba-gray-700);
-    font-size: var(--ba-body-md);
-    line-height: 1.65;
+  }
+
+  .intro-section__copy p + p {
+    margin-top: var(--ba-space-5);
   }
 
   .intro-media {
