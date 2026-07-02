@@ -463,8 +463,8 @@ export const externalNews: ArticlePage[] = [
     slug: 'corte-suprema-confirma-relacion-laboral-honorarios',
     title: 'Corte Suprema confirma fallo sobre relación laboral en contratación a honorarios',
     summary: 'El Poder Judicial informó una decisión que declaró la existencia de relación laboral y ordenó prestaciones asociadas.',
-    // Placeholder temporal hasta contar con una imagen licenciada de la Corte Suprema o del Poder Judicial.
-    image: '/assets/news/poder-judicial-placeholder.svg',
+    // Foto de dominio público: Corte Suprema de Justicia de Chile, Palacio de los Tribunales. Fuente: Wikimedia Commons, File:CorteSupremaChile.JPG.
+    image: '/assets/news/corte-suprema-chile.jpg',
     category: 'Laboral',
     publishedAt: '01/06/2026',
     readTime: 'Fuente externa',
