@@ -20,10 +20,10 @@ const { heading, subheading, services } = Astro.props;
           <div class="home-service-card__icon" aria-hidden="true">
             {service.icon === 'engineering' ? (
               <svg viewBox="0 0 32 32">
-                <path d="M7 17h18M9 17c0-4.8 3.1-8 7-8s7 3.2 7 8M16 9v8M12 11.2v4M20 11.2v4" />
-                <path d="M10 25h12" />
-                <path d="M14 22.5l5.8-5.8M18.4 15.1l3.5 3.5M20.4 13.1l3.5 3.5" />
-                <path d="M13 23.8l-1.8-1.8 2.8-2.8 1.8 1.8-2.8 2.8Z" />
+                <path d="M7 18h18" />
+                <path d="M9 18c0-5.2 3.1-8.7 7-8.7s7 3.5 7 8.7" />
+                <path d="M16 9.3V18M12.2 11.4v5.2M19.8 11.4v5.2" />
+                <path d="M9.5 18v2.5h13V18" />
               </svg>
             ) : service.icon === 'international' ? (
               <svg viewBox="0 0 32 32">
@@ -31,10 +31,10 @@ const { heading, subheading, services } = Astro.props;
               </svg>
             ) : (
               <svg viewBox="0 0 32 32">
-                <path d="M8 26h17M10 26V9h10v17M20 14h5v12" />
-                <path d="M13 13h4M13 17h4M13 21h4M22 17h1M22 21h1" />
-                <path d="M14 9V6h7v3M12 6h11" />
-                <path d="M7 20h5v6H7z" />
+                <path d="M9 26h14M11 26V8h10v18" />
+                <path d="M14 12h4M14 16h4M14 20h4" />
+                <path d="M13 8V5h6v3" />
+                <path d="M15 26v-3h2v3" />
               </svg>
             )}
           </div>
