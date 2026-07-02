@@ -1,6 +1,4 @@
 ---
-import SectionHeader from './SectionHeader.astro';
-
 type Props = {
   approach: string;
   secondary?: string;
@@ -12,7 +10,10 @@ const { approach, secondary } = Astro.props;
 <section class="ba-section light intro-section">
   <div class="ba-container ba-grid-2">
     <div class="reveal-up">
-      <SectionHeader eyebrow="Quiénes somos" title="En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa." />
+      <div class="intro-section__heading">
+        <span class="ba-label ba-eyebrow">Quiénes somos</span>
+        <h2>En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa.</h2>
+      </div>
       <div class="intro-section__copy">
         <p class="ba-body-lg">{approach}</p>
         {secondary && <p class="ba-body-lg">{secondary}</p>}
@@ -37,8 +38,21 @@ const { approach, secondary } = Astro.props;
     border-bottom: 1px solid var(--ba-gray-200);
   }
 
-  .intro-section :global(.section-header) {
+  .intro-section__heading {
+    max-width: 720px;
     margin-bottom: var(--ba-space-5);
+  }
+
+  .intro-section__heading h2 {
+    max-width: 680px;
+    margin: var(--ba-space-4) 0 0;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: clamp(34px, 2.85vw, 42px);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.12;
+    text-wrap: balance;
   }
 
   .intro-section__copy {
@@ -124,6 +138,10 @@ const { approach, secondary } = Astro.props;
   }
 
   @media (max-width: 760px) {
+    .intro-section__heading h2 {
+      font-size: 31px;
+    }
+
     .intro-media__image {
       min-height: 340px;
     }
