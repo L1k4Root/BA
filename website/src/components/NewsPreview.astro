@@ -32,6 +32,10 @@ const { articles } = Astro.props;
 </section>
 
 <style>
+  #noticias {
+    scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
+  }
+
   .news-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));

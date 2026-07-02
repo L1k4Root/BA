@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder Poder Judicial</title>
+  <desc id="desc">Ilustracion sobria de edificio institucional para noticia judicial.</desc>
+  <rect width="1200" height="675" fill="#f5f3ee"/>
+  <rect y="0" width="1200" height="675" fill="url(#wash)"/>
+  <path d="M600 96 210 248h780L600 96Z" fill="#102f4b"/>
+  <path d="M260 284h680v52H260z" fill="#b39259"/>
+  <path d="M285 542h630v54H285z" fill="#102f4b"/>
+  <path d="M245 602h710v34H245z" fill="#b39259"/>
+  <g fill="#102f4b">
+    <path d="M326 360h64v166h-64z"/>
+    <path d="M459 360h64v166h-64z"/>
+    <path d="M568 360h64v166h-64z"/>
+    <path d="M677 360h64v166h-64z"/>
+    <path d="M810 360h64v166h-64z"/>
+  </g>
+  <g fill="#b39259">
+    <path d="M310 336h96v24h-96z"/>
+    <path d="M443 336h96v24h-96z"/>
+    <path d="M552 336h96v24h-96z"/>
+    <path d="M661 336h96v24h-96z"/>
+    <path d="M794 336h96v24h-96z"/>
+    <path d="M310 526h96v16h-96z"/>
+    <path d="M443 526h96v16h-96z"/>
+    <path d="M552 526h96v16h-96z"/>
+    <path d="M661 526h96v16h-96z"/>
+    <path d="M794 526h96v16h-96z"/>
+  </g>
+  <path d="M390 236h420" fill="none" stroke="#f5f3ee" stroke-linecap="round" stroke-width="10" opacity=".72"/>
+  <circle cx="600" cy="206" r="32" fill="#f5f3ee" opacity=".92"/>
+  <text x="600" y="645" fill="#102f4b" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" letter-spacing="4" text-anchor="middle">PODER JUDICIAL</text>
+  <defs>
+    <linearGradient id="wash" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+      <stop offset=".58" stop-color="#ffffff" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#102f4b" stop-opacity=".08"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -3,15 +3,17 @@ import SectionHeader from './SectionHeader.astro';
 
 type Props = {
   approach: string;
+  secondary?: string;
 };
 
-const { approach } = Astro.props;
+const { approach, secondary } = Astro.props;
 ---
 
 <section class="ba-section light intro-section">
   <div class="ba-container ba-grid-2">
     <div class="reveal-up">
       <SectionHeader eyebrow="Quiénes somos" title="En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa." lead={approach} />
+      {secondary && <p class="intro-section__secondary">{secondary}</p>}
       <a class="ba-btn ba-btn-outline-dark" href="/nosotros/">Leer más</a>
     </div>
     <figure class="intro-media reveal-up">
@@ -30,6 +32,14 @@ const { approach } = Astro.props;
   .intro-section {
     position: relative;
     border-bottom: 1px solid var(--ba-gray-200);
+  }
+
+  .intro-section__secondary {
+    max-width: 62ch;
+    margin: calc(-1 * var(--ba-space-4)) 0 var(--ba-space-6);
+    color: var(--ba-gray-700);
+    font-size: var(--ba-body-md);
+    line-height: 1.65;
   }
 
   .intro-media {

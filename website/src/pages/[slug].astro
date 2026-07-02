@@ -20,20 +20,13 @@ const isArticle = kind === 'article';
   {isArticle ? (
     <ArticleDetail page={page} lang="es" />
   ) : (
-    <section class:list={['ba-section', 'page-hero', 'service-hero']}>
-      <div class="ba-container">
-        <div class="service-hero__grid">
-          <div>
-            <span class="ba-label ba-eyebrow">Servicio</span>
-            <h1>{page.title.replace('/ ', '')}</h1>
-            <p class="service-hero__summary">{page.summary}</p>
-            <p class="service-hero__intro">{page.intro}</p>
-            <a class="ba-btn ba-btn-outline-dark" href="/contacto/">{page.cta}</a>
-          </div>
-          <div class="service-hero__media">
-            <img src={page.heroImage || '/assets/office/office-private-room.webp'} alt={`Bright Alliance | BA Chile - ${page.navLabel}`} />
-          </div>
-        </div>
+    <section class="service-hero">
+      <img class="service-hero__image" src={page.heroImage || '/assets/office/office-private-room.webp'} alt={`Bright Alliance | BA Chile - ${page.navLabel}`} />
+      <div class="service-hero__overlay"></div>
+      <div class="ba-container service-hero__content">
+        <h1>{page.title}</h1>
+        <p class="service-hero__summary">{page.summary}</p>
+        <p class="service-hero__intro">{page.intro}</p>
       </div>
     </section>
   )}
@@ -43,7 +36,7 @@ const isArticle = kind === 'article';
       <section class="ba-section light">
         <div class="ba-container ba-grid-2">
           <div>
-            <h2 class="ba-heading-xl">Enfoque</h2>
+            <h2 class="ba-heading-xl">{page.slug === 'derecho-de-la-empresa' ? 'Derecho, Estrategia y Empresa' : page.slug === 'comercio-y-negocios-internacionales' ? 'Acompañamos tu proceso de expansión' : 'Nuestros pilares'}</h2>
             {page.body.map((paragraph) => <p class="ba-body-lg">{paragraph}</p>)}
           </div>
           {page.models && (
@@ -85,6 +78,7 @@ const isArticle = kind === 'article';
                   <div>
                     <h3>{section.title}</h3>
                     <p>{section.text}</p>
+                    {section.paragraphs && section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
                     {section.items && (
                       <ul class="ba-list">
                         {section.items.map((item) => <li>{item}</li>)}
@@ -119,69 +113,66 @@ const isArticle = kind === 'article';
 </BaseLayout>
 
 <style>
-  .page-hero {
-    padding-top: calc(var(--ba-space-9) + 96px);
-  }
-
   .service-hero {
-    background:
-      linear-gradient(180deg, rgba(16, 47, 75, 0.04), rgba(16, 47, 75, 0)),
-      var(--ba-white);
+    position: relative;
+    display: grid;
+    min-height: 720px;
+    overflow: hidden;
+    color: var(--ba-white);
   }
 
-  .service-hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
-    gap: var(--ba-space-8);
-    align-items: center;
+  .service-hero__image,
+  .service-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .service-hero__image {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .service-hero__overlay {
+    background:
+      linear-gradient(90deg, rgba(5, 14, 23, 0.72) 0%, rgba(16, 47, 75, 0.50) 46%, rgba(16, 47, 75, 0.32) 100%),
+      linear-gradient(180deg, rgba(5, 14, 23, 0.22) 0%, rgba(5, 14, 23, 0.54) 100%);
+  }
+
+  .service-hero__content {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    padding-top: var(--ba-header-expanded);
   }
 
   .service-hero h1 {
-    max-width: 11ch;
-    margin: var(--ba-space-5) 0 0;
-    color: var(--ba-navy-900);
+    max-width: 920px;
+    margin: 0 0 var(--ba-space-5);
+    color: var(--ba-white);
     font-family: var(--ba-font-head);
     font-size: var(--ba-display-xl);
     font-weight: 700;
-    line-height: 1.06;
+    line-height: 1.08;
   }
 
   .service-hero__summary {
-    max-width: 48ch;
-    margin: var(--ba-space-5) 0 0;
-    color: var(--ba-navy-900);
+    max-width: 760px;
+    margin: 0 0 var(--ba-space-4);
+    color: var(--ba-white);
     font-family: var(--ba-font-head);
-    font-size: 24px;
-    font-weight: 500;
+    font-size: clamp(19px, 1.65vw, 25px);
+    font-weight: 700;
     line-height: 1.45;
   }
 
   .service-hero__intro {
-    max-width: 62ch;
-    margin: var(--ba-space-5) 0 var(--ba-space-6);
-  }
-
-  .service-hero__media {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 5 / 4;
-    border: 1px solid var(--ba-gray-200);
-  }
-
-  .service-hero__media::after {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 96px;
-    height: 4px;
-    background: var(--ba-gold-500);
-    content: '';
-  }
-
-  .service-hero__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 900px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: clamp(17px, 1.35vw, 21px);
+    line-height: 1.65;
   }
 
   .model-card {
@@ -308,7 +299,6 @@ const isArticle = kind === 'article';
   }
 
   @media (max-width: 860px) {
-    .service-hero__grid,
     .pillar-grid {
       grid-template-columns: 1fr;
     }
@@ -323,12 +313,16 @@ const isArticle = kind === 'article';
   }
 
   @media (max-width: 620px) {
+    .service-hero {
+      min-height: 640px;
+    }
+
     .service-hero h1 {
-      font-size: 46px;
+      font-size: 40px;
     }
 
     .service-hero__summary {
-      font-size: 22px;
+      font-size: 19px;
     }
   }
 </style>

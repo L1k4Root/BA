@@ -8,120 +8,112 @@ type Props = {
 const { heading, quote, text } = Astro.props;
 ---
 
-<section class="ba-section light quote-band">
-  <div class="ba-container quote-layout reveal-up">
-    <div class="founder-copy">
-      <span class="ba-label ba-eyebrow">{heading}</span>
+<section class="ba-section light founder-quote-band">
+  <div class="ba-container-xl founder-quote reveal-up">
+    <span class="founder-quote__mark founder-quote__mark--open" aria-hidden="true"></span>
+    <div class="founder-quote__content">
+      <h2>{heading}</h2>
       <blockquote>
         <p>{quote}</p>
+        <p>{text}</p>
       </blockquote>
-      <p class="founder-copy__text">{text}</p>
-      <p class="founder">José Francisco Mazzei Alliende</p>
-      <span class="founder-role">Abogado · MBA · LLM en Derecho de los Negocios · Socio Fundador</span>
+      <p class="founder-quote__signature">— José Francisco Mazzei Alliende</p>
     </div>
-    <div class="founder-portrait">
-      <img src="/assets/website/jose-francisco-mazzei.png" alt="José Francisco Mazzei Alliende, socio fundador de BA Chile" loading="lazy" />
-    </div>
+    <span class="founder-quote__mark founder-quote__mark--close" aria-hidden="true"></span>
   </div>
 </section>
 
 <style>
-  .quote-band {
+  .founder-quote-band {
     position: relative;
     overflow: hidden;
+    scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
     border-top: 1px solid var(--ba-gray-200);
-    background:
-      linear-gradient(180deg, rgba(16, 47, 75, 0.035), rgba(16, 47, 75, 0)),
-      var(--ba-white);
+    border-bottom: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
   }
 
-  .quote-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 180px;
-    gap: var(--ba-space-8);
-    align-items: end;
-  }
-
-  .founder-portrait {
+  .founder-quote {
     position: relative;
-    overflow: hidden;
-    border: 1px solid var(--ba-gray-200);
-    background: var(--ba-offwhite);
-    aspect-ratio: 3 / 4;
+    display: grid;
+    grid-template-columns: minmax(120px, 0.28fr) minmax(0, 1fr) minmax(120px, 0.28fr);
+    gap: var(--ba-space-7);
+    align-items: center;
+    min-height: 420px;
   }
 
-  .founder-portrait::after {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 86px;
-    height: 4px;
-    background: var(--ba-gold-400);
-    content: '';
+  .founder-quote__content {
+    max-width: 860px;
+    margin-inline: auto;
+    color: var(--ba-charcoal);
+    text-align: center;
   }
 
-  .founder-portrait img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    filter: grayscale(0.08) contrast(1.03);
+  .founder-quote h2 {
+    margin: 0 0 var(--ba-space-5);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: clamp(32px, 3vw, 48px);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.15;
   }
 
-  .founder-copy .ba-label {
-    color: var(--ba-gold-500);
-  }
-
-  .founder-copy blockquote {
-    margin: var(--ba-space-5) 0 0;
+  .founder-quote blockquote {
+    margin: 0;
     padding: 0;
   }
 
-  .founder-copy blockquote p {
-    margin: 0;
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.42;
+  .founder-quote blockquote p {
+    margin: 0 auto var(--ba-space-5);
+    color: #181818;
+    font-size: clamp(18px, 1.5vw, 24px);
+    line-height: 1.75;
   }
 
-  .founder-copy__text {
-    max-width: 65ch;
-    margin: var(--ba-space-5) 0 0;
-    color: var(--ba-gray-700);
-    font-size: var(--ba-body-md);
+  .founder-quote__signature {
+    margin: var(--ba-space-8) 0 0;
+    color: #181818;
+    font-size: clamp(18px, 1.45vw, 24px);
+    line-height: 1.4;
   }
 
-  .founder {
-    margin: var(--ba-space-6) 0 0;
-    color: var(--ba-gold-500);
-    font-family: var(--ba-font-head);
-    font-size: 18px;
-    font-weight: 600;
-  }
-
-  .founder-role {
+  .founder-quote__mark {
     display: block;
-    margin-top: var(--ba-space-2);
-    color: var(--ba-gray-700);
-    font-family: var(--ba-font-head);
-    font-size: 14px;
+    color: var(--ba-navy-900);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(170px, 18vw, 300px);
+    font-weight: 700;
+    line-height: 0.72;
+    opacity: 0.98;
+  }
+
+  .founder-quote__mark--open::before {
+    content: "\201C";
+  }
+
+  .founder-quote__mark--close::before {
+    content: "\201D";
   }
 
   @media (max-width: 920px) {
-    .quote-layout {
+    .founder-quote {
       grid-template-columns: 1fr;
+      gap: var(--ba-space-3);
+      min-height: auto;
     }
 
-    .founder-portrait {
-      max-width: 220px;
+    .founder-quote__mark {
+      justify-self: center;
+      font-size: 120px;
+      line-height: 0.5;
     }
   }
 
   @media (max-width: 620px) {
-    .founder-copy blockquote p {
-      font-size: 23px;
+    .founder-quote blockquote p {
+      font-size: 17px;
+      line-height: 1.65;
     }
   }
 </style>

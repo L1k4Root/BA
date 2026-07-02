@@ -19,6 +19,7 @@ export type ServicePage = {
   sections?: Array<{
     title: string;
     text: string;
+    paragraphs?: string[];
     items?: string[];
     result?: string;
   }>;
@@ -79,12 +80,13 @@ export const home = {
     title: 'Derecho, Empresa y Estrategia',
     subtitle: 'Un lenguaje clave para visiones que trascienden.',
     lead: 'Acompañamos a empresas, inversionistas y grupos empresariales con criterio jurídico, visión de negocio y una lectura estratégica de sus riesgos y oportunidades.',
-    approach: 'Nuestro enfoque combina experiencia legal, visión de negocio e inteligencia organizacional, para que cada decisión empresarial sea sólida, eficiente y alineada con los objetivos estratégicos de la compañía.',
+    approach: 'En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa para ofrecer soluciones legales de alto nivel diseñadas para fortalecer el gobierno corporativo, mitigar riesgos y apoyar el crecimiento sostenible de nuestros clientes en Chile y en el extranjero.',
+    approachFollowup: 'Nuestro enfoque combina experiencia legal, visión de negocio e inteligencia organizacional, para que cada decisión empresarial sea sólida, eficiente y alineada con los objetivos estratégicos de la compañía.',
     servicesHeading: 'Áreas de especialidad',
     servicesSubheading: 'Asesoría empresarial organizada en frentes claros, con foco en gestión, proyectos y expansión.',
-    founderHeading: 'Palabras del socio fundador',
-    founderQuote: 'Para asesorar adecuadamente a una organización empresarial, esta debe comprenderse como un sistema integrado, compuesto por unidades que interactúan de manera sinérgica e interdependiente. En este contexto, una disfunción en cualquiera de sus componentes impacta inevitablemente en los demás, afectando el desempeño del sistema en su conjunto.',
-    founderText: 'Una asesoría legal verdaderamente efectiva requiere comprender esta lógica sistémica y la capacidad de acompañar estratégicamente a la organización desde su interior, en conexión directa con sus operaciones y procesos de toma de decisiones.'
+    founderHeading: 'Palabras del Socio Fundador',
+    founderQuote: 'Para asesorar adecuadamente a una organización empresarial, esta debe comprenderse como un sistema integrado, compuesto por unidades que interactúan de manera sinérgica e interdependiente. En este contexto, una disfunción en cualquiera de sus componentes impacta inevitablemente a los demás, afectando el desempeño del sistema en su conjunto.',
+    founderText: 'Una asesoría legal verdaderamente efectiva requiere, por lo tanto, comprender esta lógica sistémica y la capacidad de acompañar estratégicamente a la organización desde su interior, en conexión directa con sus operaciones y procesos de toma de decisiones.'
   },
   en: {
     title: 'Law, Business, and Strategy',
@@ -195,9 +197,9 @@ export const services: ServicePage[] = [
     title: '/ Derecho de la Empresa',
     navLabel: 'Derecho de la Empresa',
     icon: 'corporate',
-    summary: 'Asesoría legal estratégica para la gestión, estructura y crecimiento empresarial.',
+    summary: 'Asesoría jurídica estratégica para la gestión, estructura y crecimiento empresarial.',
     intro: 'En Bright Alliance BA Chile entendemos el Derecho de la Empresa como un soporte jurídico integral que permite a las organizaciones operar con solidez, eficiencia y visión de futuro.',
-    heroImage: '/assets/services/corporate-law.webp',
+    heroImage: '/assets/office/office-private-room.webp',
     body: [
       'No se trata solo de cumplir la ley, sino de alinear las decisiones legales con la estrategia corporativa y el desarrollo sostenible del negocio.',
       'El Derecho de la Empresa en Bright Alliance se estructura sobre múltiples áreas de práctica —Derecho Corporativo, Derecho Laboral, Derecho Tributario, Contratos Civiles y Comerciales, Propiedad Intelectual, Libre Competencia, Compliance, Derecho del Consumidor, Derecho Penal Económico, entre otras—, las cuales se adaptan a las necesidades específicas de cada cliente.'
@@ -205,36 +207,36 @@ export const services: ServicePage[] = [
     models: ['Asesoría Caso a Caso', 'Asesoría por Proyecto', 'Departamento jurídico externo'],
     pillars: [
       {
-        title: 'Gestión corporativa',
-        text: 'Acompañamiento en estructura societaria, gobierno corporativo, administración, juntas, directorios y operaciones habituales.'
+        title: 'Asesoría Caso a Caso',
+        text: 'Intervención puntual en materias jurídicas específicas, tales como contratos, consultas, litigios o informes legales, entregando soluciones precisas y ágiles.'
       },
       {
-        title: 'Contratos y negociación',
-        text: 'Redacción, revisión y negociación de contratos civiles, comerciales y estructuras contractuales alineadas al negocio.'
+        title: 'Asesoría por Proyecto',
+        text: 'Acompañamiento integral en procesos con objetivos definidos, como reestructuraciones societarias, expansiones, fusiones y adquisiciones, implementación de programas de cumplimiento, auditorías legales o proyectos internacionales.'
       },
       {
-        title: 'Prevención y cumplimiento',
-        text: 'Diseño de controles legales, laborales, tributarios, de compliance y defensa corporativa ante contingencias.'
+        title: 'Departamento jurídico externo',
+        text: 'Servicio permanente que integra a nuestro equipo como una unidad legal funcional dentro de la empresa, brindando apoyo continuo en todas las áreas de su entorno jurídico, y actuando como un aliado estratégico en la gestión, prevención y toma de decisiones, aportando eficiencia, ahorro, continuidad y valor al negocio.'
       }
     ],
     sections: [
       {
-        title: 'Modalidades de asesoría',
-        text: 'Tres modalidades complementarias permiten ajustar profundidad y continuidad del servicio jurídico a la realidad de cada empresa.',
-        items: ['Asesoría Caso a Caso: intervención puntual en materias jurídicas específicas, tales como contratos, consultas, litigios o informes legales, entregando soluciones precisas y ágiles.', 'Asesoría por Proyecto: acompañamiento integral en procesos con objetivos definidos, como reestructuraciones societarias, expansiones, fusiones y adquisiciones, implementación de programas de cumplimiento, auditorías legales o proyectos internacionales.', 'Departamento jurídico externo: servicio permanente que integra al equipo como unidad legal funcional dentro de la empresa, brindando apoyo continuo y actuando como aliado estratégico en gestión, prevención y toma de decisiones.']
+        title: 'Modalidades de Asesoría',
+        text: 'Ofrecemos tres modalidades complementarias, que permiten ajustar la profundidad y continuidad del servicio jurídico a la realidad de cada empresa.',
+        items: ['Asesoría Caso a Caso: intervención puntual en materias jurídicas específicas, tales como contratos, consultas, litigios o informes legales, entregando soluciones precisas y ágiles.', 'Asesoría por Proyecto: acompañamiento integral en procesos con objetivos definidos, como reestructuraciones societarias, expansiones, fusiones y adquisiciones, implementación de programas de cumplimiento, auditorías legales o proyectos internacionales.', 'Departamento jurídico externo: servicio permanente que integra a nuestro equipo como una unidad legal funcional dentro de la empresa, brindando apoyo continuo en todas las áreas de su entorno jurídico, y actuando como un aliado estratégico en la gestión, prevención y toma de decisiones, aportando eficiencia, ahorro, continuidad y valor al negocio.']
       },
       {
-        title: 'Áreas de práctica',
-        text: 'La asesoría cubre materias jurídicas que sostienen la operación, estructura y crecimiento empresarial.',
-        items: ['Asesoría jurídico-corporativa, diseño estratégico de negocios y grupos empresariales, fusiones y adquisiciones.', 'Derecho laboral empresarial, contratos civiles y comerciales, negociaciones complejas, litigación y defensa corporativa.', 'Compliance corporativo, derecho tributario, derecho penal empresarial, licitaciones y UTP, propiedad intelectual, consumidor, libre competencia, reorganización y continuidad.']
+        title: 'Áreas de Práctica',
+        text: 'Bajo cualquiera de estas tres modalidades, Bright Alliance | BA Chile presta asesoría jurídica especializada en las principales materias que conforman el Derecho de la Empresa.',
+        items: ['Asesoría jurídico-corporativa: creación, transformación, modificación y mantención de sociedades; pactos de accionistas; contratos de suscripción o cesión de acciones; gobierno corporativo, administración, directorios y juntas de accionistas.', 'Diseño estratégico de negocios y grupos empresariales: consultoría jurídica para modelos de negocio, holdings y subholdings, filiales y SPV, acuerdos entre relacionadas, protocolos de gobierno, matrices de control y reporte.', 'Fusiones y adquisiciones: estructuración, due diligence legal, negociación y ejecución de transacciones, coordinación regulatoria y plan de integración postadquisición.', 'Derecho laboral empresarial: contratación, sanciones, desvinculación, cumplimiento normativo y fortalecimiento de relaciones laborales estratégicas, con enfoque preventivo.', 'Contratos civiles y comerciales: revisión, redacción y negociación de contratos; elaboración de contratos a la medida; estructuración contractual conforme a las particularidades del negocio.', 'Compliance corporativo: programas integrales de cumplimiento normativo, políticas internas, canales de denuncia, mapas de riesgo, auditorías, capacitaciones y actualización normativa continua.']
       },
       {
-        title: 'Riesgo, continuidad y gobierno',
-        text: 'La práctica conecta decisiones jurídicas con continuidad operacional, reputación, patrimonio y calidad de gobierno corporativo.',
-        items: ['Programas integrales de cumplimiento normativo, incluyendo Ley N° 20.393, Ley N° 21.595, Ley N° 21.459 y Ley N° 21.719.', 'Relación con organismos públicos, licitaciones, UTP, consorcios y litigación administrativa.', 'Planificación del retiro, reorganización, procedimientos concursales y protección de continuidad empresarial.']
+        title: 'Gestión de riesgos y continuidad',
+        text: 'La asesoría integra materias que sostienen la operación, la reputación, el patrimonio y la continuidad de la empresa.',
+        items: ['Derecho tributario: planificación y cumplimiento tributario, estructuración fiscal eficiente y defensa ante fiscalizaciones, incluyendo planificación del retiro y planificación hereditaria.', 'Derecho penal empresarial: prevención y litigación penal en materias corporativas, delitos económicos, ambientales, laborales o tributarios.', 'Licitaciones y UTP: asesoría en licitaciones públicas y privadas; constitución, regulación y funcionamiento de Uniones Temporales de Proveedores y consorcios.', 'Propiedad intelectual: registro, renovación, cesión y licenciamiento de marcas, patentes, derechos de autor y dominios.', 'Consumidor y libre competencia: cumplimiento de la Ley N° 19.496, programas preventivos, defensa ante fiscalizaciones y cumplimiento preventivo del DL N° 211.', 'Reorganización y continuidad empresarial: acompañamiento jurídico y estratégico en procesos de sucesión, continuidad, crisis financiera, reorganización, protección patrimonial o liquidación ordenada.']
       }
     ],
-    areas: ['Asesoría jurídico-corporativa', 'Diseño de grupos empresariales', 'Fusiones y adquisiciones', 'Derecho laboral empresarial', 'Contratos civiles y comerciales', 'Negociaciones complejas', 'Litigación y defensa corporativa', 'Compliance corporativo', 'Derecho tributario', 'Derecho penal empresarial', 'Licitaciones y UTP', 'Propiedad intelectual', 'Consumidor y libre competencia', 'Reorganización y continuidad'],
+    areas: ['Asesoría jurídico-corporativa', 'Diseño estratégico de negocios y grupos empresariales', 'Fusiones y adquisiciones', 'Derecho laboral empresarial', 'Contratos civiles y comerciales', 'Negociaciones complejas', 'Litigación y defensa corporativa', 'Compliance corporativo', 'Derecho tributario', 'Derecho penal empresarial', 'Licitaciones y UTP', 'Propiedad intelectual', 'Derecho del consumidor', 'Libre competencia', 'Reorganización y continuidad empresarial'],
     cta: 'Solicitar asesoría corporativa'
   },
   {
@@ -243,7 +245,7 @@ export const services: ServicePage[] = [
     title: '/ Ingeniería y Derecho',
     navLabel: 'Ingeniería y Derecho',
     icon: 'engineering',
-    summary: 'Soluciones jurídico-estratégicas para empresas, proyectos y estructuras patrimoniales complejas.',
+    summary: 'Soluciones jurídico-estratégicas para empresas y proyectos complejos.',
     intro: 'En Bright Alliance contamos con un área especializada en Ingeniería y Derecho, enfocada en empresas que desarrollan proyectos de alta complejidad técnica, contractual y patrimonial.',
     heroImage: '/assets/services/engineering-law.webp',
     body: [
@@ -267,27 +269,25 @@ export const services: ServicePage[] = [
     ],
     sections: [
       {
-        title: 'Inicio y estructuración contractual',
-        text: 'Intervenimos antes de la firma o adjudicación, cuando se define buena parte del riesgo futuro del proyecto.',
-        items: ['Revisión estratégica de bases, ofertas, condiciones comerciales y riesgos previos a la adjudicación.', 'Apoyo en licitaciones públicas y privadas.', 'Definición de estrategia de negociación contractual e identificación temprana de riesgos críticos en plazo, alcance, pagos, penalidades, garantías y responsabilidades.'],
-        result: 'Contratos más sólidos, mejor posición negociadora y menor exposición durante la ejecución.'
+        title: 'Departamento Jurídico Externo',
+        text: 'Este servicio permite contar con respaldo preventivo y estratégico en la operación diaria de la empresa, sin necesidad de crear un departamento interno completo.',
+        items: ['Asesoría continua en contratos, cumplimiento, licitaciones, relaciones comerciales y decisiones operativas relevantes.', 'Soporte legal alineado con la realidad técnica y económica del negocio.', 'Acompañamiento preventivo para reducir exposición contractual, operacional y patrimonial.']
       },
       {
-        title: 'Ejecución y administración contractual',
-        text: 'Una vez iniciado el proyecto, el foco pasa a administrar estratégicamente derechos, obligaciones, hitos, cambios y evidencia.',
-        items: ['Diseño del Plan Estratégico de Gestión Contractual del Proyecto.', 'Protocolos de gestión de cambios, variaciones, administración documental y resguardo de evidencia contractual.', 'Gobernanza contractual, trazabilidad de decisiones, monitoreo de cumplimiento y alertas tempranas de riesgo.'],
-        result: 'El contrato pasa de factor pasivo de riesgo a herramienta de control, dirección y defensa.'
+        title: 'Acompañamiento en el ciclo de vida completo de proyectos públicos y privados',
+        text: 'El acompañamiento se extiende desde la preparación contractual hasta el cierre del proyecto, con foco en gestión estratégica, control de riesgos, evidencia y defensa de la posición contractual.',
+        items: ['Preparación y estructuración contractual antes de la firma o adjudicación.', 'Ejecución y administración contractual mediante protocolos de cambios, trazabilidad, cumplimiento y resguardo documental.', 'Gestión de riesgos contractuales, recuperación de contratos en curso, claims, controversias, análisis forense contractual y cierre del proyecto.'],
+        result: 'El contrato pasa de ser un factor pasivo de riesgo a una herramienta de control, dirección y defensa.'
       },
       {
-        title: 'Riesgos, claims y contratos en curso',
-        text: 'En proyectos complejos, muchos conflictos relevantes nacen de acumulaciones progresivas de brechas, omisiones, cambios mal administrados o registros deficientes.',
-        items: ['Identificación y priorización de riesgos contractuales críticos y estrategias de mitigación.', 'Diagnóstico y recuperación de contratos en curso con señales de desorden, pérdida de control o baja trazabilidad.', 'Estructuración técnica y jurídica de claims, controversias, negociación o defensa.'],
-        result: 'Mayor recuperación económica, reducción del costo de controversias y recuperación de control.'
+        title: 'Protección patrimonial de socios, directores y representantes legales',
+        text: 'Complementamos la gestión jurídica de la empresa con revisión de exposición patrimonial y estructuras de resguardo para quienes toman decisiones o representan a la organización.',
+        items: ['Revisión de exposición de socios, directores, gerentes y representantes legales.', 'Separación y ordenamiento de activos personales y empresariales.', 'Prevención de contingencias derivadas de garantías, responsabilidad de administradores, insolvencia o proyectos de alta exposición.']
       },
       {
-        title: 'Protección patrimonial',
-        text: 'Complementamos la gestión jurídica de la empresa con revisión de exposición patrimonial y estructuras de resguardo.',
-        items: ['Revisión de exposición de socios y controladores.', 'Separación y ordenamiento de activos personales y empresariales.', 'Prevención de contingencias por garantías, responsabilidad de administradores o insolvencia.']
+        title: 'Modalidades de servicio',
+        text: 'La práctica permite ajustar el servicio al nivel de continuidad, criticidad y exposición de cada empresa o proyecto.',
+        items: ['Departamento Jurídico Externo permanente.', 'Asesoría por proyecto.', 'Intervención en etapas críticas o controversias específicas.', 'Diagnóstico estratégico de contratos en ejecución.', 'Diseño de estructuras de protección patrimonial.']
       }
     ],
     areas: ['Departamento jurídico externo', 'Contratos de ingeniería y construcción', 'Licitaciones públicas y privadas', 'Gestión contractual', 'Control de riesgos', 'Diagnóstico de contratos en curso', 'Claims y controversias', 'Análisis forense contractual', 'Cierre contractual', 'Protección patrimonial'],
@@ -299,7 +299,7 @@ export const services: ServicePage[] = [
     title: '/ Comercio y Negocios Internacionales',
     navLabel: 'Comercio y Negocios Internacionales',
     icon: 'international',
-    summary: 'Servicios de asesoría legal y estratégica diseñados para conectar empresas, mercados y oportunidades globales.',
+    summary: 'Asesoría jurídica y estratégica para conectar empresas, mercados y oportunidades.',
     intro: 'El comercio internacional requiere estructuras jurídicas sólidas, visión estratégica y conocimiento de las normas que regulan las operaciones entre distintos países.',
     heroImage: '/assets/services/international-trade.webp',
     body: [
@@ -323,19 +323,19 @@ export const services: ServicePage[] = [
     ],
     sections: [
       {
-        title: 'Acompañamos tu proceso de expansión',
-        text: 'Facilitamos decisiones seguras, sostenibles y alineadas con objetivos de negocio para empresas chilenas y extranjeras.',
-        items: ['Constitución y representación de empresas extranjeras en Chile.', 'Instalación de agencias, filiales, sucursales o joint ventures.', 'Obtención de RUT, representantes legales y cumplimiento normativo integral.']
+        title: 'Modalidades de Asesoría',
+        text: 'Ofrecemos tres modalidades complementarias, que permiten ajustar la profundidad y continuidad del servicio jurídico a la realidad de cada empresa.',
+        items: ['Asesoría Caso a Caso: intervención puntual en materias jurídicas específicas, tales como contratos, consultas, litigios o informes legales, entregando soluciones precisas y ágiles.', 'Asesoría por Proyecto: acompañamiento integral en procesos con objetivos definidos, como expansiones, inversión extranjera, representación comercial, estructuras contractuales internacionales o coordinación multijurisdiccional.', 'Departamento jurídico externo: servicio permanente que integra a nuestro equipo como una unidad legal funcional dentro de la empresa, con apoyo continuo para decisiones comerciales, contractuales, tributarias y regulatorias vinculadas a operaciones internacionales.']
       },
       {
-        title: 'Estructuración internacional',
-        text: 'Diseñamos estructuras corporativas, fiscales y contractuales eficientes para inversión, crecimiento y operación entre jurisdicciones.',
-        items: ['Inversión extranjera, repatriación de capitales y mecanismos de protección de inversiones.', 'Fusiones, adquisiciones, joint ventures internacionales y coordinación multinacional de procesos.', 'Holdings, subholdings, SPV, planificación tributaria internacional y cumplimiento regulatorio entre jurisdicciones.']
+        title: 'Áreas de especialización',
+        text: 'Bajo cualquiera de estas tres modalidades, Bright Alliance | BA Chile presta asesoría jurídica especializada en las principales materias del comercio y los negocios internacionales.',
+        items: ['Asistencia en la instalación de agencias, filiales, sucursales o joint ventures, incluyendo constitución y representación de empresas extranjeras en Chile.', 'Asesoría en ingreso y salida de inversiones, repatriación de capitales, mecanismos de protección de inversiones y cumplimiento regulatorio.', 'Estructuración de transacciones internacionales, fusiones, adquisiciones, joint ventures y coordinación multinacional de procesos.', 'Contratos internacionales de comercio, incluyendo compraventa, agencia, distribución, franquicia, licencias, suministro y prestación de servicios internacionales.']
       },
       {
-        title: 'Comercio, representación y controversias',
-        text: 'Acompañamos relaciones comerciales internacionales desde contrato hasta resolución de controversias.',
-        items: ['Negociación y redacción de contratos de compraventa, agencia, distribución, franquicia, licencias, suministro y servicios internacionales.', 'Propiedad intelectual, transferencia tecnológica, compliance, regulaciones internacionales, anticorrupción, lavado de activos, aduanas y control de exportaciones.', 'Arbitrajes, mediaciones o litigios transfronterizos con estudios aliados en Europa, América y Oceanía.']
+        title: 'Arquitectura internacional y controversias',
+        text: 'La asesoría combina conocimiento jurídico local con coordinación profesional internacional para ordenar estructuras, contratos, cumplimiento y controversias transfronterizas.',
+        items: ['Diseño de estructuras corporativas y fiscales eficientes para operaciones internacionales, holdings, subholdings, SPV y planificación tributaria internacional.', 'Protección, licenciamiento y registro de marcas, propiedad intelectual, transferencia tecnológica y acuerdos de confidencialidad.', 'Implementación de políticas anticorrupción, prevención de lavado de activos, cumplimiento aduanero, control de exportaciones y regulaciones internacionales.', 'Representación y coordinación en arbitrajes, mediaciones o litigios transfronterizos con estudios aliados en Europa, América y Oceanía.']
       }
     ],
     areas: ['Constitución y representación de empresas extranjeras', 'Inversión extranjera y repatriación de capitales', 'M&A y joint ventures internacionales', 'Contratos internacionales de comercio', 'Agenciamiento y representación comercial', 'Arquitectura societaria y tributaria internacional', 'Propiedad intelectual y transferencia tecnológica', 'Compliance y regulaciones internacionales', 'Controversias internacionales'],
@@ -463,7 +463,8 @@ export const externalNews: ArticlePage[] = [
     slug: 'corte-suprema-confirma-relacion-laboral-honorarios',
     title: 'Corte Suprema confirma fallo sobre relación laboral en contratación a honorarios',
     summary: 'El Poder Judicial informó una decisión que declaró la existencia de relación laboral y ordenó prestaciones asociadas.',
-    image: '/assets/office/office-boardroom-wide.webp',
+    // Placeholder temporal hasta contar con una imagen licenciada de la Corte Suprema o del Poder Judicial.
+    image: '/assets/news/poder-judicial-placeholder.svg',
     category: 'Laboral',
     publishedAt: '01/06/2026',
     readTime: 'Fuente externa',
