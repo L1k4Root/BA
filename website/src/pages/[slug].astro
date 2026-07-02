@@ -14,6 +14,13 @@ export function getStaticPaths() {
 
 const { page, kind } = Astro.props;
 const isArticle = kind === 'article';
+const serviceOpening = !isArticle ? page.body[0] : '';
+const serviceBody = !isArticle ? page.body.slice(1) : [];
+const hasServiceBody = serviceBody.length > 0;
+const serviceIntroTitle = !isArticle && page.slug === 'derecho-de-la-empresa' ? 'Derecho, Estrategia y Empresa' : !isArticle && page.slug === 'comercio-y-negocios-internacionales' ? 'Acompañamos tu proceso de expansión' : 'Nuestros pilares';
+const getAreaTitle = (area) => (typeof area === 'string' ? area : area.title);
+const getAreaText = (area) => (typeof area === 'string' ? '' : area.text);
+const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []);
 ---
 
 <BaseLayout title={`${page.title} - Bright Alliance | BA Chile`} description={page.summary} lang="es">
@@ -27,33 +34,41 @@ const isArticle = kind === 'article';
         <h1>{page.title}</h1>
         <p class="service-hero__summary">{page.summary}</p>
         <p class="service-hero__intro">{page.intro}</p>
+        {serviceOpening && <p class="service-hero__body">{serviceOpening}</p>}
       </div>
     </section>
   )}
 
   {!isArticle && (
     <>
-      <section class="ba-section light">
-        <div class="ba-container ba-grid-2">
-          <div>
-            <h2 class="ba-heading-xl">{page.slug === 'derecho-de-la-empresa' ? 'Derecho, Estrategia y Empresa' : page.slug === 'comercio-y-negocios-internacionales' ? 'Acompañamos tu proceso de expansión' : 'Nuestros pilares'}</h2>
-            {page.body.map((paragraph) => <p class="ba-body-lg">{paragraph}</p>)}
-          </div>
-          {page.models && (
-            <div class="model-card">
-              <h3>Modalidades de Asesoría</h3>
-              <ul class="ba-list">
-                {page.models.map((model) => <li>{model}</li>)}
-              </ul>
+      {hasServiceBody && (
+        <section class="ba-section light">
+          <div class="ba-container ba-grid-2">
+            <div>
+              <h2 class="ba-heading-xl">{serviceIntroTitle}</h2>
+              {serviceBody.map((paragraph) => <p class="ba-body-lg">{paragraph}</p>)}
             </div>
-          )}
-        </div>
-      </section>
+            {page.models && (
+              <div class="model-card">
+                <h3>Modalidades de Asesoría</h3>
+                <ul class="ba-list">
+                  {page.models.map((model) => <li>{model}</li>)}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {page.pillars && (
         <section class="ba-section offwhite service-pillars">
           <div class="ba-container">
-            <SectionHeader eyebrow="Criterio de trabajo" title="Una práctica orientada a decisiones empresariales" lead="Cada línea de servicio se organiza desde una lectura legal, estratégica y operativa." />
+            <div class="service-pillars__intro">
+              <SectionHeader eyebrow="Criterio de trabajo" title="Una práctica orientada a decisiones empresariales" lead="Cada línea de servicio se organiza desde una lectura legal, estratégica y operativa." />
+              <figure class="service-pillars__media">
+                <img src={page.supportImage || page.heroImage || '/assets/office/office-boardroom-wide.webp'} alt={`Criterio de trabajo - ${page.navLabel}`} loading="lazy" />
+              </figure>
+            </div>
             <div class="pillar-grid">
               {page.pillars.map((pillar, index) => (
                 <article class="pillar-card">
@@ -96,12 +111,20 @@ const isArticle = kind === 'article';
       <section class="ba-section offwhite">
         <div class="ba-container">
           <SectionHeader eyebrow="Áreas" title={page.slug.includes('landing') ? 'Ámbitos de asesoría' : 'Áreas de especialización'} lead="Materias organizadas para una lectura ejecutiva y accionable." />
-          <div class="area-grid">
+          <div class="area-accordion">
             {page.areas.map((area, index) => (
-              <div class="area-item">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <p>{area}</p>
-              </div>
+              <details class="area-item" open={index === 0}>
+                <summary>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h3>{getAreaTitle(area)}</h3>
+                </summary>
+                {getAreaText(area) && <p>{getAreaText(area)}</p>}
+                {getAreaItems(area).length > 0 && (
+                  <ul class="ba-list">
+                    {getAreaItems(area).map((item) => <li>{item}</li>)}
+                  </ul>
+                )}
+              </details>
             ))}
           </div>
         </div>
@@ -169,9 +192,17 @@ const isArticle = kind === 'article';
 
   .service-hero__intro {
     max-width: 900px;
-    margin: 0;
+    margin: 0 0 var(--ba-space-4);
     color: rgba(255, 255, 255, 0.92);
     font-size: clamp(17px, 1.35vw, 21px);
+    line-height: 1.65;
+  }
+
+  .service-hero__body {
+    max-width: 900px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(17px, 1.25vw, 20px);
     line-height: 1.65;
   }
 
@@ -194,6 +225,44 @@ const isArticle = kind === 'article';
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--ba-space-5);
+  }
+
+  .service-pillars__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1fr);
+    gap: var(--ba-space-8);
+    align-items: end;
+    margin-bottom: var(--ba-space-8);
+  }
+
+  .service-pillars__intro :global(.section-header) {
+    margin-bottom: 0;
+  }
+
+  .service-pillars__media {
+    position: relative;
+    min-height: 300px;
+    margin: 0;
+    overflow: hidden;
+    border-left: 4px solid var(--ba-gold-500);
+    background: var(--ba-navy-900);
+    box-shadow: 0 28px 80px -56px rgba(16, 47, 75, 0.72);
+  }
+
+  .service-pillars__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(16, 47, 75, 0.04), rgba(16, 47, 75, 0.22));
+  }
+
+  .service-pillars__media img {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    max-width: none;
+    object-fit: cover;
+    filter: saturate(0.82) contrast(1.03);
   }
 
   .pillar-card {
@@ -257,22 +326,53 @@ const isArticle = kind === 'article';
     text-transform: uppercase;
   }
 
-  .area-grid {
+  .area-accordion {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--ba-space-5);
+    gap: var(--ba-space-4);
   }
 
   .area-item {
-    min-height: 150px;
-    padding: var(--ba-space-6);
+    padding: 0;
     border: 1px solid var(--ba-gray-200);
     background: var(--ba-white);
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .area-item[open] {
+    border-color: rgba(181, 143, 81, 0.5);
+    box-shadow: 0 24px 70px -58px rgba(16, 47, 75, 0.72);
+  }
+
+  .area-item summary {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) 24px;
+    gap: var(--ba-space-4);
+    align-items: center;
+    min-height: 104px;
+    padding: var(--ba-space-5) var(--ba-space-6);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .area-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .area-item summary::after {
+    content: '+';
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .area-item[open] summary::after {
+    content: '-';
   }
 
   .area-item span {
     display: block;
-    margin-bottom: var(--ba-space-4);
     color: var(--ba-gold-500);
     font-family: var(--ba-font-head);
     font-size: 30px;
@@ -280,12 +380,26 @@ const isArticle = kind === 'article';
     line-height: 1;
   }
 
-  .area-item p {
+  .area-item h3 {
     margin: 0;
     color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
     font-weight: 700;
     line-height: 1.35;
+    font-size: clamp(18px, 1.4vw, 23px);
+  }
+
+  .area-item p,
+  .area-item .ba-list {
+    max-width: 900px;
+    margin: 0;
+    padding: 0 var(--ba-space-6) var(--ba-space-5) calc(72px + var(--ba-space-10));
+  }
+
+  .area-item .ba-list {
+    display: grid;
+    gap: var(--ba-space-2);
+    margin-top: calc(var(--ba-space-3) * -1);
   }
 
   .article-body img {
@@ -303,12 +417,21 @@ const isArticle = kind === 'article';
       grid-template-columns: 1fr;
     }
 
-    .area-grid {
+    .service-pillars__intro {
       grid-template-columns: 1fr;
     }
 
     .detail-item {
       grid-template-columns: 1fr;
+    }
+
+    .area-item summary {
+      grid-template-columns: 54px minmax(0, 1fr) 24px;
+    }
+
+    .area-item p,
+    .area-item .ba-list {
+      padding-left: var(--ba-space-6);
     }
   }
 
