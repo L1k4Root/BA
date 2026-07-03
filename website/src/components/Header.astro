@@ -1,0 +1,490 @@
+---
+import Logo from './Logo.astro';
+import type { Language } from '../content/site';
+import { nav, servicesByLang } from '../content/site';
+
+type Props = {
+  lang?: Language;
+  tone?: 'navy' | 'light';
+  overlay?: boolean;
+};
+
+const { lang = 'es', tone = 'navy', overlay = false } = Astro.props;
+const items = nav[lang];
+const serviceItems = servicesByLang(lang).filter((item) => !item.slug.startsWith('landing') && item.slug !== 'compliance').slice(0, 3);
+const isDark = tone === 'navy';
+const switchHref = lang === 'es' ? '/en/' : '/';
+const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
+---
+
+<header class:list={['site-header', isDark && 'is-dark', overlay && 'is-overlay', !overlay && 'is-scrolled']} data-site-header data-overlay={overlay ? 'true' : 'false'}>
+  <div class="site-header__inner">
+    <a class="site-header__brand" href={lang === 'es' ? '/' : '/en/'} aria-label="Bright Alliance | BA Chile">
+      <Logo variant={isDark ? 'white' : 'navy'} />
+    </a>
+
+    <button class="site-header__toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-menu-toggle>
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-header__nav" aria-label="Principal" data-menu>
+      {items.map((item) => (
+        item.label === (lang === 'es' ? 'Servicios' : 'Services') ? (
+          <div class="site-header__dropdown">
+            <a class="site-header__dropdown-trigger" href={item.href} aria-haspopup="true">
+              {item.label}
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <div class="site-header__dropdown-menu" aria-label={lang === 'es' ? 'Servicios' : 'Services'}>
+              {serviceItems.map((service) => (
+                <a class="site-header__dropdown-link" href={`${lang === 'en' ? '/en/' : '/'}${service.slug}/`}>
+                  <span>{service.navLabel}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href}>{item.label}</a>
+        )
+      ))}
+      <a class="site-header__lang" href={switchHref}>
+        {lang === 'es' ? (
+          <svg class="site-header__flag" viewBox="0 0 27 18" aria-hidden="true" focusable="false">
+            <rect width="27" height="18" fill="#fff" />
+            <rect y="9" width="27" height="9" fill="#d52b1e" />
+            <rect width="9" height="9" fill="#0039a6" />
+            <path d="M4.5 2.05 5.06 3.8h1.84L5.41 4.88l.56 1.75L4.5 5.55 3.03 6.63l.56-1.75L2.1 3.8h1.84L4.5 2.05Z" fill="#fff" />
+          </svg>
+        ) : (
+          <svg class="site-header__flag" viewBox="0 0 38 20" aria-hidden="true" focusable="false">
+            <rect width="38" height="20" fill="#fff" />
+            {Array.from({ length: 7 }).map((_, index) => <rect y={index * 3} width="38" height="1.55" fill="#b22234" />)}
+            <rect width="15.2" height="10.8" fill="#3c3b6e" />
+            {Array.from({ length: 4 }).map((_, row) => (
+              Array.from({ length: 5 }).map((_, col) => (
+                <circle cx={2 + col * 2.8} cy={1.8 + row * 2.2} r="0.38" fill="#fff" />
+              ))
+            ))}
+          </svg>
+        )}
+        <span>{switchLabel}</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const menu = document.querySelector('[data-menu]');
+  const header = document.querySelector('[data-site-header]');
+  const isOverlay = header?.getAttribute('data-overlay') === 'true';
+
+  const syncHeader = () => {
+    if (!header || !isOverlay) return;
+    header.classList.toggle('is-scrolled', window.scrollY > 28);
+  };
+
+  syncHeader();
+  window.addEventListener('scroll', syncHeader, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    document.body.classList.toggle('is-menu-open', !open);
+    menu?.classList.toggle('is-open', !open);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    z-index: 50;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    background: var(--ba-navy-900);
+    backdrop-filter: blur(14px);
+    transition: background 520ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 520ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 520ms cubic-bezier(0.2, 0.7, 0.2, 1), backdrop-filter 520ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .site-header.is-dark {
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+    background: rgba(16, 47, 75, 0.96);
+  }
+
+  .site-header.is-overlay:not(.is-scrolled) {
+    border-bottom-color: rgba(255, 255, 255, 0);
+    background: linear-gradient(180deg, rgba(10, 25, 39, 0.36), rgba(10, 25, 39, 0));
+    backdrop-filter: none;
+  }
+
+  .site-header.is-scrolled {
+    box-shadow: 0 18px 40px rgba(8, 24, 38, 0.16);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    min-height: var(--ba-header-expanded);
+    margin-inline: 0;
+    padding-left: clamp(32px, 2.65vw, 38px);
+    padding-right: 20px;
+    gap: clamp(var(--ba-space-4), 2vw, var(--ba-space-6));
+    transition: min-height 860ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .site-header.is-scrolled .site-header__inner {
+    align-items: center;
+    min-height: var(--ba-header-compact);
+  }
+
+  .site-header__brand {
+    display: flex;
+    align-items: center;
+    flex: none;
+    justify-content: flex-start;
+    margin-top: 18px;
+    transform-origin: left center;
+    transition: margin-top 860ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .site-header.is-scrolled .site-header__brand {
+    margin-top: 0;
+  }
+
+  .site-header__brand :global(.ba-logo) {
+    width: var(--ba-header-logo-expanded);
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    transition: width 860ms cubic-bezier(0.16, 1, 0.3, 1), max-height 860ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .site-header.is-scrolled .site-header__brand :global(.ba-logo) {
+    width: var(--ba-header-logo-compact);
+    max-height: none;
+  }
+
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(17px, 1.8vw, 26px);
+    justify-content: flex-end;
+    margin-left: auto;
+    margin-top: clamp(49px, 4.45vw, 64px);
+    transition: gap 520ms cubic-bezier(0.2, 0.7, 0.2, 1), margin-top 860ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .site-header.is-scrolled .site-header__nav {
+    gap: clamp(17px, 1.8vw, 26px);
+    margin-top: 0;
+  }
+
+  .site-header__nav a:not(.ba-btn):not(.site-header__dropdown-link) {
+    position: relative;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.88);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-header-nav-size);
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .site-header__dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-header__dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .site-header__dropdown-trigger svg {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--ba-ease);
+  }
+
+  .site-header__dropdown-menu {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: 50%;
+    display: block;
+    width: min(310px, calc(100vw - 48px));
+    padding: 0;
+    border: 1px solid rgba(16, 47, 75, 0.10);
+    background: var(--ba-white);
+    box-shadow: 0 22px 48px rgba(8, 24, 38, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 8px);
+    transition: opacity 120ms ease-out, transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .site-header__dropdown-menu::before {
+    position: absolute;
+    top: -18px;
+    right: 0;
+    left: 0;
+    height: 18px;
+    content: '';
+  }
+
+  .site-header__dropdown:hover .site-header__dropdown-menu,
+  .site-header__dropdown:focus-within .site-header__dropdown-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+
+  .site-header__dropdown:hover .site-header__dropdown-trigger svg,
+  .site-header__dropdown:focus-within .site-header__dropdown-trigger svg {
+    transform: rotate(180deg);
+  }
+
+  .site-header__dropdown-menu .site-header__dropdown-link {
+    position: relative;
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    padding: 0 18px;
+    border-bottom: 1px solid rgba(16, 47, 75, 0.08);
+    color: var(--ba-navy-900);
+    text-decoration: none;
+    text-transform: none;
+    transition: background 220ms ease, color 220ms ease;
+  }
+
+  .site-header__dropdown-menu .site-header__dropdown-link:last-child {
+    border-bottom: 0;
+  }
+
+  .is-dark .site-header__dropdown-menu .site-header__dropdown-link {
+    color: var(--ba-navy-900);
+  }
+
+  .site-header__dropdown-menu .site-header__dropdown-link::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: block;
+    height: 2px;
+    background: var(--ba-gold-500);
+    content: '';
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: opacity var(--ba-ease), transform var(--ba-ease);
+  }
+
+  .site-header__dropdown-menu span {
+    max-width: none;
+    color: inherit;
+    font-family: var(--ba-font-head);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.28;
+  }
+
+  .site-header__dropdown-menu .site-header__dropdown-link:hover {
+    background: rgba(179, 146, 89, 0.08);
+    color: var(--ba-navy-900);
+  }
+
+  .is-dark .site-header__dropdown-menu .site-header__dropdown-link:hover {
+    color: var(--ba-navy-900);
+  }
+
+  .site-header__dropdown-menu .site-header__dropdown-link:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .is-dark .site-header__nav a:not(.ba-btn):not(.site-header__dropdown-link) {
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .site-header__nav a:not(.ba-btn):not(.site-header__dropdown-link)::after {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--ba-gold-500);
+    content: '';
+    transition: width var(--ba-ease);
+  }
+
+  .site-header__nav a:not(.ba-btn):not(.site-header__dropdown-link):hover::after {
+    width: 100%;
+  }
+
+  .site-header__lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: var(--ba-space-4);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .site-header__flag {
+    width: 18px;
+    height: 13px;
+    overflow: hidden;
+    border: 1px solid var(--ba-gold-400);
+    box-shadow: 0 0 0 1px rgba(179, 146, 89, 0.22);
+  }
+
+  .is-dark .site-header__lang {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .site-header__toggle {
+    display: none;
+    width: 52px;
+    height: 52px;
+    margin-top: 14px;
+    margin-left: auto;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: transparent;
+  }
+
+  .site-header.is-scrolled .site-header__toggle {
+    margin-top: 0;
+  }
+
+  .site-header__toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin: 5px 0;
+    background: var(--ba-white);
+  }
+
+  .is-dark .site-header__toggle {
+    border-color: rgba(255, 255, 255, 0.24);
+  }
+
+  .is-dark .site-header__toggle span {
+    background: var(--ba-white);
+  }
+
+  @media (max-width: 980px) {
+    .site-header__inner {
+      align-items: flex-start;
+      width: 100%;
+      padding-inline: 14px;
+      min-height: var(--ba-header-compact);
+    }
+
+    .site-header__brand {
+      margin-top: 12px;
+    }
+
+    .site-header__toggle {
+      display: block;
+    }
+
+    .site-header__nav {
+      position: fixed;
+      top: var(--ba-header-compact);
+      right: 0;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      padding: var(--ba-space-6);
+      border-top: 1px solid var(--ba-gray-200);
+      background: var(--ba-navy-900);
+      box-shadow: 0 20px 40px rgba(16, 47, 75, 0.14);
+      transform: none;
+      margin-left: 0;
+      margin-top: 0;
+    }
+
+    .site-header__nav.is-open {
+      display: flex;
+    }
+
+    .is-dark .site-header__nav {
+      border-top-color: rgba(255, 255, 255, 0.12);
+      background: var(--ba-navy-900);
+    }
+
+    .site-header__nav a:not(.ba-btn):not(.site-header__dropdown-link) {
+      padding: var(--ba-space-3) 0;
+    }
+
+    .site-header__dropdown {
+      display: grid;
+      gap: var(--ba-space-2);
+    }
+
+    .site-header__dropdown-trigger {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .site-header__dropdown-menu {
+      position: static;
+      width: 100%;
+      display: block;
+      padding: 0 0 0 var(--ba-space-4);
+      border: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      background: transparent;
+      box-shadow: none;
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+
+    .site-header__dropdown-menu::before {
+      display: none;
+    }
+
+    .site-header__dropdown-menu .site-header__dropdown-link {
+      min-height: auto;
+      padding: var(--ba-space-3) 0;
+      border-bottom: 0;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .is-dark .site-header__dropdown-menu .site-header__dropdown-link {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .site-header__dropdown-menu span {
+      max-width: none;
+      color: inherit;
+    }
+
+    .site-header__dropdown-menu .site-header__dropdown-link:hover {
+      background: transparent;
+      color: var(--ba-gold-400);
+      transform: none;
+    }
+
+    .site-header__dropdown-menu .site-header__dropdown-link::after {
+      display: none;
+    }
+  }
+ </style>

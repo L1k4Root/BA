@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { externalNews, internalPosts } from '../content/site';
+
+const externalArticles = externalNews.filter((article) => article.lang === 'es');
+const internalArticles = internalPosts.filter((article) => article.lang === 'es');
+---
+
+<BaseLayout title="Noticias & Blog - Bright Alliance | BA Chile" description="Actualidad jurídica externa y noticias internas de Bright Alliance | BA Chile." lang="es">
+  <section class="ba-section light">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Actualidad jurídica externa" title="/ Noticias & Blog" lead="Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales." />
+      <div class="article-list">
+        {externalArticles.map((article) => (
+          <article class="article-card">
+            <img src={article.image} alt={article.title} loading="lazy" />
+            <div>
+              <span class="ba-label">{article.category}</span>
+              <h2 class="ba-heading-md">{article.title}</h2>
+              <p>{article.summary}</p>
+              <span class="article-card__source">{article.source?.label}</span>
+              <a href={article.externalUrl || article.source?.href} target="_blank" rel="noreferrer">Ver fuente</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-section offwhite">
+    <div class="ba-container">
+      <SectionHeader eyebrow="Blog interno" title="Noticias propias de la oficina" lead="Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas." />
+      <div class="article-list">
+        {internalArticles.map((article) => (
+          <article class="article-card article-card--internal">
+            <img src={article.image} alt={article.title} loading="lazy" />
+            <div>
+              <span class="ba-label">{article.category}</span>
+              <h2 class="ba-heading-md">{article.title}</h2>
+              <p>{article.summary}</p>
+              <a href={`/${article.slug}/`}>Ver estructura</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .article-list {
+    display: grid;
+    gap: var(--ba-space-6);
+  }
+
+  .article-card {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.42fr) minmax(0, 1fr);
+    overflow: hidden;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+  }
+
+  .article-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+  }
+
+  .article-card div {
+    padding: var(--ba-space-7);
+  }
+
+  .article-card .ba-label {
+    color: var(--ba-gold-500);
+  }
+
+  .article-card h2 {
+    margin: var(--ba-space-3) 0;
+  }
+
+  .article-card p {
+    margin: 0 0 var(--ba-space-4);
+  }
+
+  .article-card__source {
+    display: block;
+    margin-bottom: var(--ba-space-5);
+    color: var(--ba-gray-700);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .article-card a {
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .article-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,119 @@
+---
+type Props = {
+  heading: string;
+  quote: string;
+  text: string;
+};
+
+const { heading, quote, text } = Astro.props;
+---
+
+<section class="ba-section light founder-quote-band">
+  <div class="ba-container-xl founder-quote reveal-up">
+    <span class="founder-quote__mark founder-quote__mark--open" aria-hidden="true"></span>
+    <div class="founder-quote__content">
+      <h2>{heading}</h2>
+      <blockquote>
+        <p>{quote}</p>
+        <p>{text}</p>
+      </blockquote>
+      <p class="founder-quote__signature">— José Francisco Mazzei Alliende</p>
+    </div>
+    <span class="founder-quote__mark founder-quote__mark--close" aria-hidden="true"></span>
+  </div>
+</section>
+
+<style>
+  .founder-quote-band {
+    position: relative;
+    overflow: hidden;
+    scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
+    border-top: 1px solid var(--ba-gray-200);
+    border-bottom: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+  }
+
+  .founder-quote {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(120px, 0.28fr) minmax(0, 1fr) minmax(120px, 0.28fr);
+    gap: var(--ba-space-7);
+    align-items: center;
+    min-height: 420px;
+  }
+
+  .founder-quote__content {
+    max-width: 860px;
+    margin-inline: auto;
+    color: var(--ba-charcoal);
+    text-align: center;
+  }
+
+  .founder-quote h2 {
+    margin: 0 0 var(--ba-space-5);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: clamp(32px, 3vw, 48px);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.15;
+  }
+
+  .founder-quote blockquote {
+    margin: 0;
+    padding: 0;
+  }
+
+  .founder-quote blockquote p {
+    margin: 0 auto var(--ba-space-5);
+    color: #181818;
+    font-size: clamp(18px, 1.5vw, 24px);
+    line-height: 1.75;
+  }
+
+  .founder-quote__signature {
+    margin: var(--ba-space-8) 0 0;
+    color: #181818;
+    font-size: clamp(18px, 1.45vw, 24px);
+    line-height: 1.4;
+  }
+
+  .founder-quote__mark {
+    display: block;
+    color: var(--ba-navy-900);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(170px, 18vw, 300px);
+    font-weight: 700;
+    line-height: 0.72;
+    opacity: 0.98;
+  }
+
+  .founder-quote__mark--open::before {
+    content: "\201C";
+  }
+
+  .founder-quote__mark--close::before {
+    content: "\201D";
+  }
+
+  @media (max-width: 920px) {
+    .founder-quote {
+      grid-template-columns: 1fr;
+      gap: var(--ba-space-3);
+      min-height: auto;
+    }
+
+    .founder-quote__mark {
+      justify-self: center;
+      font-size: 120px;
+      line-height: 0.5;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .founder-quote blockquote p {
+      font-size: 17px;
+      line-height: 1.65;
+    }
+  }
+</style>

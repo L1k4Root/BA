@@ -1,0 +1,451 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CTA from '../components/CTA.astro';
+import ArticleDetail from '../components/ArticleDetail.astro';
+import { articles, contact, services } from '../content/site';
+
+export function getStaticPaths() {
+  return [
+    ...services.filter((item) => item.lang === 'es' && !item.slug.startsWith('landing') && item.slug !== 'compliance').map((page) => ({ params: { slug: page.slug }, props: { page, kind: 'service' } })),
+    ...articles.filter((item) => item.lang === 'es').map((page) => ({ params: { slug: page.slug }, props: { page, kind: 'article' } }))
+  ];
+}
+
+const { page, kind } = Astro.props;
+const isArticle = kind === 'article';
+const serviceOpening = !isArticle ? page.body[0] : '';
+const serviceBody = !isArticle ? page.body.slice(1) : [];
+const hasServiceBody = serviceBody.length > 0;
+const serviceIntroTitle = !isArticle && page.slug === 'derecho-de-la-empresa' ? 'Derecho, Estrategia y Empresa' : !isArticle && page.slug === 'comercio-y-negocios-internacionales' ? 'Acompañamos tu proceso de expansión' : 'Nuestros pilares';
+const getAreaTitle = (area) => (typeof area === 'string' ? area : area.title);
+const getAreaText = (area) => (typeof area === 'string' ? '' : area.text);
+const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []);
+---
+
+<BaseLayout title={`${page.title} - Bright Alliance | BA Chile`} description={page.summary} lang="es">
+  {isArticle ? (
+    <ArticleDetail page={page} lang="es" />
+  ) : (
+    <section class="service-hero">
+      <img class="service-hero__image" src={page.heroImage || '/assets/office/office-private-room.webp'} alt={`Bright Alliance | BA Chile - ${page.navLabel}`} />
+      <div class="service-hero__overlay"></div>
+      <div class="ba-container service-hero__content">
+        <h1>{page.title}</h1>
+        <p class="service-hero__summary">{page.summary}</p>
+        <p class="service-hero__intro">{page.intro}</p>
+        {serviceOpening && <p class="service-hero__body">{serviceOpening}</p>}
+      </div>
+    </section>
+  )}
+
+  {!isArticle && (
+    <>
+      {hasServiceBody && (
+        <section class="ba-section light">
+          <div class="ba-container ba-grid-2">
+            <div>
+              <h2 class="ba-heading-xl">{serviceIntroTitle}</h2>
+              {serviceBody.map((paragraph) => <p class="ba-body-lg">{paragraph}</p>)}
+            </div>
+            {page.models && (
+              <div class="model-card">
+                <h3>Modalidades de Asesoría</h3>
+                <ul class="ba-list">
+                  {page.models.map((model) => <li>{model}</li>)}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {page.pillars && (
+        <section class="ba-section offwhite service-pillars">
+          <div class="ba-container">
+            <div class="service-pillars__intro">
+              <SectionHeader eyebrow="Criterio de trabajo" title="Una práctica orientada a decisiones empresariales" lead="Cada línea de servicio se organiza desde una lectura legal, estratégica y operativa." />
+              <figure class="service-pillars__media">
+                <img src={page.supportImage || page.heroImage || '/assets/office/office-boardroom-wide.webp'} alt={`Criterio de trabajo - ${page.navLabel}`} loading="lazy" />
+              </figure>
+            </div>
+            <div class="pillar-grid">
+              {page.pillars.map((pillar, index) => (
+                <article class="pillar-card">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h3>{pillar.title}</h3>
+                  <p>{pillar.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {page.sections && (
+        <section class="ba-section light service-detail">
+          <div class="ba-container">
+            <SectionHeader eyebrow="Alcance" title="Contenido del servicio" lead="Síntesis adaptada desde la información pública vigente de BA Chile." />
+            <div class="service-detail__list">
+              {page.sections.map((section, index) => (
+                <article class="detail-item">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3>{section.title}</h3>
+                    <p>{section.text}</p>
+                    {section.paragraphs && section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                    {section.items && (
+                      <ul class="ba-list">
+                        {section.items.map((item) => <li>{item}</li>)}
+                      </ul>
+                    )}
+                    {section.result && <p class="detail-item__result">{section.result}</p>}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="ba-section offwhite">
+        <div class="ba-container">
+          <SectionHeader eyebrow="Áreas" title={page.slug.includes('landing') ? 'Ámbitos de asesoría' : 'Áreas de especialización'} lead="Materias organizadas para una lectura ejecutiva y accionable." />
+          <div class="area-accordion">
+            {page.areas.map((area, index) => (
+              <details class="area-item" open={index === 0}>
+                <summary>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h3>{getAreaTitle(area)}</h3>
+                </summary>
+                {getAreaText(area) && <p>{getAreaText(area)}</p>}
+                {getAreaItems(area).length > 0 && (
+                  <ul class="ba-list">
+                    {getAreaItems(area).map((item) => <li>{item}</li>)}
+                  </ul>
+                )}
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  <CTA title={isArticle ? 'Conversemos sobre el impacto en su empresa' : page.cta} text="Bright Alliance integra Derecho, Estrategia y Empresa para convertir complejidad jurídica en decisiones claras." href="/contacto/" label="Contactar" agendaHref={contact.agendaHref} />
+</BaseLayout>
+
+<style>
+  .service-hero {
+    position: relative;
+    display: grid;
+    min-height: 720px;
+    overflow: hidden;
+    color: var(--ba-white);
+  }
+
+  .service-hero__image,
+  .service-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .service-hero__image {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .service-hero__overlay {
+    background:
+      linear-gradient(90deg, rgba(5, 14, 23, 0.72) 0%, rgba(16, 47, 75, 0.50) 46%, rgba(16, 47, 75, 0.32) 100%),
+      linear-gradient(180deg, rgba(5, 14, 23, 0.22) 0%, rgba(5, 14, 23, 0.54) 100%);
+  }
+
+  .service-hero__content {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    padding-top: var(--ba-header-expanded);
+  }
+
+  .service-hero h1 {
+    max-width: 920px;
+    margin: 0 0 var(--ba-space-5);
+    color: var(--ba-white);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-display-xl);
+    font-weight: 700;
+    line-height: 1.08;
+  }
+
+  .service-hero__summary {
+    max-width: 760px;
+    margin: 0 0 var(--ba-space-4);
+    color: var(--ba-white);
+    font-family: var(--ba-font-head);
+    font-size: clamp(19px, 1.65vw, 25px);
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .service-hero__intro {
+    max-width: 900px;
+    margin: 0 0 var(--ba-space-4);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: clamp(17px, 1.35vw, 21px);
+    line-height: 1.65;
+  }
+
+  .service-hero__body {
+    max-width: 900px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(17px, 1.25vw, 20px);
+    line-height: 1.65;
+  }
+
+  .model-card {
+    padding: var(--ba-space-7);
+    border-left: 4px solid var(--ba-gold-500);
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+    box-shadow: 0 28px 70px -50px rgba(16, 47, 75, 0.72);
+  }
+
+  .model-card .ba-list li {
+    margin-bottom: var(--ba-space-4);
+    color: rgba(255, 255, 255, 0.88);
+    font-family: var(--ba-font-head);
+    font-weight: 600;
+  }
+
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ba-space-5);
+  }
+
+  .service-pillars__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1fr);
+    gap: var(--ba-space-8);
+    align-items: end;
+    margin-bottom: var(--ba-space-8);
+  }
+
+  .service-pillars__intro :global(.section-header) {
+    margin-bottom: 0;
+  }
+
+  .service-pillars__media {
+    position: relative;
+    min-height: 300px;
+    margin: 0;
+    overflow: hidden;
+    border-left: 4px solid var(--ba-gold-500);
+    background: var(--ba-navy-900);
+    box-shadow: 0 28px 80px -56px rgba(16, 47, 75, 0.72);
+  }
+
+  .service-pillars__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(16, 47, 75, 0.04), rgba(16, 47, 75, 0.22));
+  }
+
+  .service-pillars__media img {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    max-width: none;
+    object-fit: cover;
+    filter: saturate(0.82) contrast(1.03);
+  }
+
+  .pillar-card {
+    min-height: 260px;
+    padding: var(--ba-space-7);
+    border: 1px solid rgba(16, 47, 75, 0.12);
+    background: var(--ba-white);
+  }
+
+  .pillar-card span,
+  .detail-item > span {
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .pillar-card h3,
+  .detail-item h3 {
+    margin: var(--ba-space-4) 0 var(--ba-space-3);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-heading-md);
+    font-weight: 600;
+  }
+
+  .pillar-card p,
+  .detail-item p {
+    margin: 0;
+  }
+
+  .service-detail__list {
+    display: grid;
+    gap: var(--ba-space-5);
+  }
+
+  .detail-item {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: var(--ba-space-5);
+    padding: var(--ba-space-7);
+    border-top: 1px solid var(--ba-gray-200);
+    background: linear-gradient(180deg, rgba(16, 47, 75, 0.018), rgba(16, 47, 75, 0));
+  }
+
+  .detail-item .ba-list {
+    margin-top: var(--ba-space-5);
+  }
+
+  .detail-item__result {
+    margin-top: var(--ba-space-5) !important;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-weight: 600;
+  }
+
+  .model-card h3 {
+    margin: 0 0 var(--ba-space-5);
+    color: var(--ba-gold-400);
+    font-family: var(--ba-font-head);
+    text-transform: uppercase;
+  }
+
+  .area-accordion {
+    display: grid;
+    gap: var(--ba-space-4);
+  }
+
+  .area-item {
+    padding: 0;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .area-item[open] {
+    border-color: rgba(181, 143, 81, 0.5);
+    box-shadow: 0 24px 70px -58px rgba(16, 47, 75, 0.72);
+  }
+
+  .area-item summary {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) 24px;
+    gap: var(--ba-space-4);
+    align-items: center;
+    min-height: 104px;
+    padding: var(--ba-space-5) var(--ba-space-6);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .area-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .area-item summary::after {
+    content: '+';
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .area-item[open] summary::after {
+    content: '-';
+  }
+
+  .area-item span {
+    display: block;
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .area-item h3 {
+    margin: 0;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-weight: 700;
+    line-height: 1.35;
+    font-size: clamp(18px, 1.4vw, 23px);
+  }
+
+  .area-item p,
+  .area-item .ba-list {
+    max-width: 900px;
+    margin: 0;
+    padding: 0 var(--ba-space-6) var(--ba-space-5) calc(72px + var(--ba-space-10));
+  }
+
+  .area-item .ba-list {
+    display: grid;
+    gap: var(--ba-space-2);
+    margin-top: calc(var(--ba-space-3) * -1);
+  }
+
+  .article-body img {
+    width: 100%;
+    margin-bottom: var(--ba-space-7);
+    border: 1px solid var(--ba-gray-200);
+  }
+
+  .article-body p {
+    font-size: var(--ba-body-lg);
+  }
+
+  @media (max-width: 860px) {
+    .pillar-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-pillars__intro {
+      grid-template-columns: 1fr;
+    }
+
+    .detail-item {
+      grid-template-columns: 1fr;
+    }
+
+    .area-item summary {
+      grid-template-columns: 54px minmax(0, 1fr) 24px;
+    }
+
+    .area-item p,
+    .area-item .ba-list {
+      padding-left: var(--ba-space-6);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .service-hero {
+      min-height: 640px;
+    }
+
+    .service-hero h1 {
+      font-size: 40px;
+    }
+
+    .service-hero__summary {
+      font-size: 19px;
+    }
+  }
+</style>

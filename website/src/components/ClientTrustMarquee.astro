@@ -1,0 +1,180 @@
+---
+import SectionHeader from './SectionHeader.astro';
+
+type ClientLogo = {
+  src: string;
+  alt: string;
+};
+
+type Props = {
+  logos: ClientLogo[];
+};
+
+const { logos } = Astro.props;
+const firstRow = logos.filter((_, index) => index % 2 === 0);
+const secondRow = logos.filter((_, index) => index % 2 === 1);
+---
+
+<section class="ba-section offwhite clients-section">
+  <div class="ba-container-xl">
+    <div class="clients-heading reveal-up">
+      <SectionHeader align="center" eyebrow="Confianza empresarial" title="Una selección de clientes que han confiado en nosotros" />
+      <div class="trust-points" aria-label="Criterios de confianza BA Chile">
+        <span>Confidencialidad</span>
+        <span>Continuidad</span>
+        <span>Criterio ejecutivo</span>
+      </div>
+    </div>
+    <div class="logo-marquee reveal-up" aria-label="Logos de clientes BA Chile">
+      <div class="logo-track">
+        {[...firstRow, ...firstRow].map((logo) => (
+          <div class="client-logo">
+            <img src={logo.src} alt={logo.alt} loading="lazy" />
+          </div>
+        ))}
+      </div>
+      <div class="logo-track logo-track--reverse">
+        {[...secondRow, ...secondRow].map((logo) => (
+          <div class="client-logo">
+            <img src={logo.src} alt={logo.alt} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients-section {
+    overflow: hidden;
+    border-top: 1px solid rgba(16, 47, 75, 0.08);
+    border-bottom: 1px solid rgba(16, 47, 75, 0.08);
+  }
+
+  .clients-heading {
+    margin-bottom: var(--ba-space-7);
+  }
+
+  .trust-points {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--ba-space-2);
+    margin-top: calc(-1 * var(--ba-space-6));
+  }
+
+  .trust-points span {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    border: 1px solid rgba(179, 146, 89, 0.36);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(247, 247, 245, 0.88));
+    box-shadow: 0 12px 28px -26px rgba(16, 47, 75, 0.42);
+    padding: 8px 16px;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .logo-marquee {
+    display: grid;
+    gap: var(--ba-space-3);
+    overflow: hidden;
+    border-top: 1px solid rgba(16, 47, 75, 0.10);
+    border-bottom: 1px solid rgba(16, 47, 75, 0.10);
+    background: var(--ba-white);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .logo-track {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    animation: logo-scroll 38s linear infinite;
+  }
+
+  .logo-track--reverse {
+    animation-direction: reverse;
+    animation-duration: 46s;
+  }
+
+  .client-logo {
+    position: relative;
+    display: flex;
+    width: 190px;
+    min-height: 110px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(16, 47, 75, 0.08);
+    background: var(--ba-white);
+    padding: var(--ba-space-5);
+    transition: background var(--ba-ease-slow), box-shadow var(--ba-ease-slow), transform var(--ba-ease-slow);
+  }
+
+  .client-logo::after {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    left: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(179, 146, 89, 0.50), transparent);
+    content: '';
+    opacity: 0;
+    transform: scaleX(0.6);
+    transition: opacity var(--ba-ease-slow), transform var(--ba-ease-slow);
+  }
+
+  .client-logo:hover {
+    background: rgba(255, 255, 255, 0.54);
+    box-shadow: 0 24px 50px -40px rgba(16, 47, 75, 0.42);
+    transform: translateY(-3px);
+  }
+
+  .client-logo:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .client-logo img {
+    width: min(100%, 126px);
+    max-height: 76px;
+    object-fit: contain;
+    filter: grayscale(1) saturate(0) contrast(1.05);
+    mix-blend-mode: multiply;
+    opacity: 0.72;
+    transition: filter var(--ba-ease), opacity var(--ba-ease);
+  }
+
+  .client-logo:hover img {
+    filter: grayscale(1) saturate(0) contrast(1.18);
+    opacity: 1;
+  }
+
+  @keyframes logo-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-track {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .client-logo {
+      width: 142px;
+      min-height: 88px;
+      padding: var(--ba-space-4);
+    }
+
+    .client-logo img {
+      max-height: 58px;
+    }
+  }
+</style>
