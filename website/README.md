@@ -16,7 +16,8 @@ La web se genera como HTML/CSS/JS estático con Astro. La única excepción serv
 
 - `POST /api/contact.php`: bootstrap PHP público copiado desde `public/api/contact.php`.
 - `server/`: runtime privado con validación, rate limiting y envío SMTP.
-- `/home/<DEPLOY_USER>/.local/share/ba-contact`: runtime instalado en Hostinger fuera de `public_html`.
+- `/home/<DEPLOY_USER>/.local/share/ba-contact/releases`: versiones instaladas en Hostinger fuera de `public_html`.
+- `/home/<DEPLOY_USER>/.local/share/ba-contact/current`: enlace a la versión activa, actualizado sólo después de instalar sus dependencias.
 - `/home/<DEPLOY_USER>/.config/ba-contact.php`: configuración SMTP privada, nunca versionada.
 
 No agregar CRM, analítica server-side, autenticación u otras APIs a este runtime. Esas capacidades requieren un backend separado y contratos propios.
@@ -35,7 +36,7 @@ La dependencia `phpmailer/phpmailer` se fija en `server/composer.lock`. Para ver
 
 ```bash
 docker run --rm -v "$PWD/server:/app" -w /app composer:2 install
-docker run --rm -v "$PWD/server:/app" -w /app php:8.3-cli php tests/run.php
+docker run --rm -v "$PWD/server:/app" -w /app composer:2 php tests/run.php
 ```
 
 Antes del primer deploy, crear en el servidor `/home/<DEPLOY_USER>/.config/ba-contact.php` a partir de `server/config.example.php`, reemplazar únicamente la contraseña de aplicación y aplicar permisos `600`. La cuenta Google debe tener verificación en dos pasos y permitir contraseñas de aplicación. La contraseña puede copiarse con o sin los espacios visuales de agrupación; el runtime los elimina antes de autenticar.

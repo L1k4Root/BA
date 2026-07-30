@@ -77,16 +77,21 @@ case "$REMOTE_HOME" in
   *) fail "Unexpected remote home directory: $REMOTE_HOME" ;;
 esac
 
-CONTACT_RUNTIME="$REMOTE_HOME/.local/share/ba-contact"
+CONTACT_ROOT="$REMOTE_HOME/.local/share/ba-contact"
+CONTACT_RELEASE_ID="$(date -u +%Y%m%d%H%M%S)-$(git rev-parse --short=12 HEAD)"
+CONTACT_RELEASE="$CONTACT_ROOT/releases/$CONTACT_RELEASE_ID"
 CONTACT_CONFIG="$REMOTE_HOME/.config/ba-contact.php"
-[[ "$CONTACT_RUNTIME" == "$REMOTE_HOME/.local/share/ba-contact" ]] \
-  || fail "Refusing unsafe contact runtime path: $CONTACT_RUNTIME"
+[[ "$CONTACT_ROOT" == "$REMOTE_HOME/.local/share/ba-contact" ]] \
+  || fail "Refusing unsafe contact runtime path: $CONTACT_ROOT"
+[[ "$CONTACT_RELEASE" == "$CONTACT_ROOT/releases/$CONTACT_RELEASE_ID" ]] \
+  || fail "Refusing unsafe contact release path: $CONTACT_RELEASE"
 
 log "Checking private contact runtime configuration"
-ssh -p "$DEPLOY_PORT" "$SSH_TARGET" bash -s -- "$CONTACT_RUNTIME" "$CONTACT_CONFIG" <<'REMOTE_SETUP'
+ssh -p "$DEPLOY_PORT" "$SSH_TARGET" bash -s -- "$CONTACT_ROOT" "$CONTACT_RELEASE" "$CONTACT_CONFIG" <<'REMOTE_SETUP'
 set -euo pipefail
-runtime_path="$1"
-config_path="$2"
+runtime_root="$1"
+release_path="$2"
+config_path="$3"
 
 if [[ ! -f "$config_path" ]]; then
   printf '[deploy] ERROR: Missing private contact configuration: %s\n' "$config_path" >&2
@@ -141,25 +146,43 @@ exit($valid ? 0 : 1);
   exit 1
 }
 
-mkdir -p "$runtime_path"
-chmod 700 "$runtime_path"
+mkdir -p "$runtime_root/releases" "$release_path"
+chmod 700 "$runtime_root" "$runtime_root/releases" "$release_path"
 REMOTE_SETUP
 
-log "Uploading private contact runtime"
+log "Uploading private contact runtime release $CONTACT_RELEASE_ID"
 rsync -az --delete \
   --exclude 'tests/' \
   --exclude 'vendor/' \
   -e "ssh -p $DEPLOY_PORT" \
   "$SERVER_DIR/" \
-  "$SSH_TARGET:$CONTACT_RUNTIME/"
+  "$SSH_TARGET:$CONTACT_RELEASE/"
 
 log "Installing locked contact runtime dependencies"
-ssh -p "$DEPLOY_PORT" "$SSH_TARGET" bash -s -- "$CONTACT_RUNTIME" <<'REMOTE_COMPOSER'
+ssh -p "$DEPLOY_PORT" "$SSH_TARGET" bash -s -- "$CONTACT_RELEASE" <<'REMOTE_COMPOSER'
 set -euo pipefail
-runtime_path="$1"
-cd "$runtime_path"
+release_path="$1"
+cd "$release_path"
 composer install --no-dev --prefer-dist --no-interaction --classmap-authoritative
 REMOTE_COMPOSER
+
+log "Activating private contact runtime release"
+ssh -p "$DEPLOY_PORT" "$SSH_TARGET" bash -s -- "$CONTACT_ROOT" "$CONTACT_RELEASE" <<'REMOTE_ACTIVATE'
+set -euo pipefail
+runtime_root="$1"
+release_path="$2"
+next_link="$runtime_root/.current-next"
+current_link="$runtime_root/current"
+
+[[ -d "$release_path/vendor" ]] || {
+  printf '[deploy] ERROR: Contact release is missing installed dependencies: %s\n' "$release_path" >&2
+  exit 1
+}
+
+rm -f "$next_link"
+ln -s "$release_path" "$next_link"
+mv -Tf "$next_link" "$current_link"
+REMOTE_ACTIVATE
 
 REMOTE="$SSH_TARGET:${DEPLOY_REMOTE_PATH%/}/"
 

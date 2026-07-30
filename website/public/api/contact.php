@@ -13,7 +13,7 @@ try {
         throw new RuntimeException('Unable to resolve the account home directory.');
     }
 
-    $runtimeDirectory = $homeDirectory . '/.local/share/ba-contact';
+    $runtimeDirectory = $homeDirectory . '/.local/share/ba-contact/current';
     $autoloadPath = $runtimeDirectory . '/vendor/autoload.php';
     $bootstrapPath = $runtimeDirectory . '/bootstrap.php';
     if (!is_file($autoloadPath) || !is_file($bootstrapPath)) {

@@ -110,8 +110,8 @@ El script:
 - ejecuta `npm run build` en `website/`;
 - verifica que exista `website/dist/`;
 - verifica que exista `/home/<DEPLOY_USER>/.config/ba-contact.php` en Hostinger;
-- sincroniza `website/server/` a `.local/share/ba-contact` fuera de `public_html`;
-- instala la version bloqueada de PHPMailer con Composer remoto;
+- sincroniza `website/server/` a una nueva version bajo `.local/share/ba-contact/releases` fuera de `public_html`;
+- instala la version bloqueada de PHPMailer con Composer remoto y, sólo si termina correctamente, actualiza el enlace `current`;
 - sube solo el contenido de `website/dist/` al path remoto;
 - usa `rsync --delete` para que el remoto refleje exactamente el build local.
 
