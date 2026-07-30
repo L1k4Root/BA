@@ -1,7 +1,7 @@
 ---
 type Props = {
   title: string;
-  text: string;
+  text?: string;
   href: string;
   label: string;
   agendaHref?: string;
@@ -16,7 +16,7 @@ const { title, text, href, label, agendaHref, agendaLabel = 'Agenda' } = Astro.p
     <div>
       <span class="ba-label ba-eyebrow">Contacto</span>
       <h2 class="ba-heading-xl">{title}</h2>
-      <p class="ba-body-lg">{text}</p>
+      {text && <p class="ba-body-lg">{text}</p>}
     </div>
     <div class="cta-band__actions">
       <a class="ba-btn ba-btn-primary" href={href}>{label}</a>

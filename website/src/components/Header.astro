@@ -47,6 +47,23 @@ const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
               ))}
             </div>
           </div>
+        ) : item.label === 'Noticias' ? (
+          <div class="site-header__dropdown">
+            <a class="site-header__dropdown-trigger" href={item.href} aria-haspopup="true">
+              {item.label}
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <div class="site-header__dropdown-menu" aria-label="Noticias">
+              <a class="site-header__dropdown-link" href="/noticias-blog/#noticias">
+                <span>Noticias</span>
+              </a>
+              <a class="site-header__dropdown-link" href="/noticias-blog/#blog-oficina">
+                <span>Blog oficina</span>
+              </a>
+            </div>
+          </div>
         ) : (
           <a href={item.href}>{item.label}</a>
         )

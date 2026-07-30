@@ -8,7 +8,7 @@ const internalArticles = internalPosts.filter((article) => article.lang === 'es'
 ---
 
 <BaseLayout title="Noticias & Blog - Bright Alliance | BA Chile" description="Actualidad jurídica externa y noticias internas de Bright Alliance | BA Chile." lang="es">
-  <section class="ba-section light">
+  <section class="ba-section light" id="noticias">
     <div class="ba-container">
       <SectionHeader eyebrow="Actualidad jurídica externa" title="/ Noticias & Blog" lead="Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales." />
       <div class="article-list">
@@ -28,7 +28,7 @@ const internalArticles = internalPosts.filter((article) => article.lang === 'es'
     </div>
   </section>
 
-  <section class="ba-section offwhite">
+  <section class="ba-section offwhite" id="blog-oficina">
     <div class="ba-container">
       <SectionHeader eyebrow="Blog interno" title="Noticias propias de la oficina" lead="Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas." />
       <div class="article-list">
@@ -49,6 +49,11 @@ const internalArticles = internalPosts.filter((article) => article.lang === 'es'
 </BaseLayout>
 
 <style>
+  #noticias,
+  #blog-oficina {
+    scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
+  }
+
   .article-list {
     display: grid;
     gap: var(--ba-space-6);

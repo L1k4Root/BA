@@ -37,22 +37,6 @@ const content = about.es;
     </div>
   </section>
 
-  <section class="ba-section navy golden-section">
-    <div class="ba-container">
-      <SectionHeader eyebrow="Golden Circle" title="Bright Alliance | BA Chile" lead="Propósito, método y propuesta concreta de la firma." />
-      <div class="golden-grid">
-        {content.goldenCircle.map((item, index) => (
-          <article class="golden-card">
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <h3>{item.title}</h3>
-            <strong>{item.subtitle}</strong>
-            <p>{item.text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <section class="ba-section light values-section">
     <div class="ba-container">
       <SectionHeader eyebrow="Valores" title="Nuestros Valores" lead="Principios que ordenan la relación con clientes, proyectos y decisiones." />
@@ -117,44 +101,6 @@ const content = about.es;
 
   .mission-card p {
     margin: 0 0 var(--ba-space-6);
-  }
-
-  .golden-section :global(.section-header h2),
-  .golden-section :global(.section-header p),
-  .golden-section :global(.ba-label) {
-    color: var(--ba-white);
-  }
-
-  .golden-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--ba-space-5);
-  }
-
-  .golden-card {
-    min-height: 320px;
-    padding: var(--ba-space-7);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.045);
-  }
-
-  .golden-card span,
-  .golden-card strong {
-    color: var(--ba-gold-400);
-    font-family: var(--ba-font-head);
-    font-weight: 700;
-  }
-
-  .golden-card h3 {
-    margin: var(--ba-space-5) 0 var(--ba-space-2);
-    color: var(--ba-white);
-    font-family: var(--ba-font-head);
-    font-size: var(--ba-heading-lg);
-  }
-
-  .golden-card p {
-    margin: var(--ba-space-5) 0 0;
-    color: rgba(255, 255, 255, 0.78);
   }
 
   .values-section {
@@ -319,7 +265,6 @@ const content = about.es;
   }
 
   @media (max-width: 860px) {
-    .golden-grid,
     .values-layout {
       grid-template-columns: 1fr;
     }
