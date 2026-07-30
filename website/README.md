@@ -12,13 +12,34 @@ Astro es la opción base porque el sitio actual es principalmente corporativo, S
 
 ## Estado backend
 
-No hay backend en este proyecto. La web se genera como HTML/CSS/JS estático con Astro.
+La web se genera como HTML/CSS/JS estático con Astro. La única excepción server-side es el formulario de contacto:
 
-Si luego se agrega backend, debe separarse explícitamente de este front:
+- `POST /api/contact.php`: bootstrap PHP público copiado desde `public/api/contact.php`.
+- `server/`: runtime privado con validación, rate limiting y envío SMTP.
+- `/home/<DEPLOY_USER>/.local/share/ba-contact/releases`: versiones instaladas en Hostinger fuera de `public_html`.
+- `/home/<DEPLOY_USER>/.local/share/ba-contact/current`: enlace a la versión activa, actualizado sólo después de instalar sus dependencias.
+- `/home/<DEPLOY_USER>/.config/ba-contact.php`: configuración SMTP privada, nunca versionada.
 
-- `website/`: front estático, componentes, estilos, assets y rutas.
-- `BA_API/` o servicio externo: formularios, CRM, email, analítica server-side o autenticación.
-- Contratos compartidos: DTOs, payloads de formularios, validaciones y variables de entorno documentadas antes de integrar.
+No agregar CRM, analítica server-side, autenticación u otras APIs a este runtime. Esas capacidades requieren un backend separado y contratos propios.
+
+### Formulario de contacto
+
+El formulario español y el inglés envían `name`, `email`, `message`, `locale` y el honeypot `website` al mismo endpoint. El servidor:
+
+- acepta sólo `POST` desde los orígenes configurados;
+- valida tamaños, email e idioma;
+- limita a cinco intentos por IP cada quince minutos;
+- envía con Google Workspace SMTP y conserva el correo del visitante como `Reply-To`;
+- no registra nombre, correo ni mensaje.
+
+La dependencia `phpmailer/phpmailer` se fija en `server/composer.lock`. Para verificarla localmente sin instalar PHP o Composer en el sistema:
+
+```bash
+docker run --rm -v "$PWD/server:/app" -w /app composer:2 install
+docker run --rm -v "$PWD/server:/app" -w /app composer:2 php tests/run.php
+```
+
+Antes del primer deploy, crear en el servidor `/home/<DEPLOY_USER>/.config/ba-contact.php` a partir de `server/config.example.php`, reemplazar únicamente la contraseña de aplicación y aplicar permisos `600`. La cuenta Google debe tener verificación en dos pasos y permitir contraseñas de aplicación. La contraseña puede copiarse con o sin los espacios visuales de agrupación; el runtime los elimina antes de autenticar.
 
 ## Comandos
 
@@ -232,6 +253,7 @@ Revisar al menos:
 - Acordeón de servicios e imagen activa por especialidad.
 - `/nosotros/`, especialmente valores y CTA.
 - `/dev/noticias/` en dev: crear draft, exportar JSON y limpiar drafts.
+- `/contacto/` y `/en/contact/`: validación del navegador, estado `Enviando`, éxito, error y conservación de campos ante fallo.
 
 Para E2E automatizada en Codex se usa el runtime de navegador incluido por el entorno, sin agregar dependencias al proyecto. Si se decide institucionalizar E2E en CI, agregar Playwright como `devDependency` en una tarea separada y documentar browsers, screenshots y umbrales visuales.
 - Las tres páginas de servicio.
