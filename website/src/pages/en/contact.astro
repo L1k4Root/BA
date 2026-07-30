@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import ContactForm from '../../components/ContactForm.astro';
 import { contact } from '../../content/site';
 ---
 
@@ -13,25 +14,9 @@ import { contact } from '../../content/site';
           <li>Email: <a href={`mailto:${contact.email}`}>{contact.email}</a></li>
           <li>Phone: <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a></li>
         </ul>
-        <a class="ba-btn ba-btn-primary" href={`mailto:${contact.email}`}>Contact now</a>
+        <a class="ba-btn ba-btn-primary" href="#contact-form">Contact now</a>
       </div>
-      <form class="contact-form">
-        <h2>Contact</h2>
-        <label>
-          Name
-          <input type="text" name="name" autocomplete="name" />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" autocomplete="email" />
-        </label>
-        <label>
-          Message or reason for contact
-          <textarea name="message" rows="6"></textarea>
-        </label>
-        <p>At Bright Alliance, we will use your contact information solely to communicate with you.</p>
-        <button class="ba-btn ba-btn-primary" type="button">Send</button>
-      </form>
+      <ContactForm locale="en" />
     </div>
   </section>
 </BaseLayout>
@@ -41,47 +26,7 @@ import { contact } from '../../content/site';
     align-items: start;
   }
 
-  .contact-grid .ba-btn {
+  .contact-grid > div > .ba-btn {
     margin-top: var(--ba-space-6);
-  }
-
-  .contact-form {
-    display: grid;
-    gap: var(--ba-space-5);
-    padding: var(--ba-space-7);
-    border: 1px solid var(--ba-gray-200);
-    background: var(--ba-white);
-  }
-
-  .contact-form h2 {
-    margin: 0;
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-  }
-
-  .contact-form label {
-    display: grid;
-    gap: var(--ba-space-2);
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    border: 1px solid var(--ba-gray-200);
-    padding: 14px 16px;
-    color: var(--ba-gray-700);
-    font: inherit;
-  }
-
-  .contact-form p {
-    margin: 0;
-    color: var(--ba-gray-700);
-    font-size: var(--ba-body-sm);
   }
 </style>

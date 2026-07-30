@@ -109,9 +109,23 @@ El script:
 - advierte o pide confirmacion si no estas en `main`;
 - ejecuta `npm run build` en `website/`;
 - verifica que exista `website/dist/`;
+- verifica que exista `/home/<DEPLOY_USER>/.config/ba-contact.php` en Hostinger;
+- sincroniza `website/server/` a `.local/share/ba-contact` fuera de `public_html`;
+- instala la version bloqueada de PHPMailer con Composer remoto;
 - sube solo el contenido de `website/dist/` al path remoto;
 - usa `rsync --delete` para que el remoto refleje exactamente el build local.
 
 `--delete` es intencional: elimina en el servidor archivos que ya no existen en `website/dist/`. No apunta al home del usuario ni a una carpeta compartida; `DEPLOY_REMOTE_PATH` debe ser la carpeta publica final del sitio.
 
 No guardar credenciales reales en Git. `.env.deploy` queda ignorado; solo se versiona `.env.deploy.example`.
+
+### Configuracion privada del formulario
+
+Antes del primer deploy:
+
+1. Crear una contraseña de aplicación para `contacto@bachile.cl` en Google Workspace.
+2. Copiar `website/server/config.example.php` a `/home/<DEPLOY_USER>/.config/ba-contact.php`.
+3. Reemplazar `REPLACE_WITH_GOOGLE_APP_PASSWORD` en el servidor.
+4. Aplicar permisos `600` al archivo y `700` al directorio `.config`.
+
+El deploy se detiene antes de modificar `public_html` si falta esta configuración. No copiar la contraseña de aplicación a `.env.deploy`, al repositorio ni al frontend.

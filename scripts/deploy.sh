@@ -65,7 +65,103 @@ npm run build
 LOCAL_DIR="$WEBSITE_DIR/$DEPLOY_LOCAL_DIR"
 [[ -d "$LOCAL_DIR" ]] || fail "Build output not found: $LOCAL_DIR"
 
-REMOTE="${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_REMOTE_PATH%/}/"
+SERVER_DIR="$WEBSITE_DIR/server"
+[[ -f "$SERVER_DIR/composer.json" ]] || fail "Contact runtime manifest not found: $SERVER_DIR/composer.json"
+[[ -f "$SERVER_DIR/composer.lock" ]] || fail "Contact runtime lockfile not found: $SERVER_DIR/composer.lock"
+
+SSH_TARGET="${DEPLOY_USER}@${DEPLOY_HOST}"
+REMOTE_HOME="$(ssh -p "$DEPLOY_PORT" "$SSH_TARGET" 'printf "%s" "$HOME"')"
+[[ -n "$REMOTE_HOME" && "$REMOTE_HOME" != "/" ]] || fail "Could not resolve a safe remote home directory."
+case "$REMOTE_HOME" in
+  /home/*) ;;
+  *) fail "Unexpected remote home directory: $REMOTE_HOME" ;;
+esac
+
+CONTACT_RUNTIME="$REMOTE_HOME/.local/share/ba-contact"
+CONTACT_CONFIG="$REMOTE_HOME/.config/ba-contact.php"
+[[ "$CONTACT_RUNTIME" == "$REMOTE_HOME/.local/share/ba-contact" ]] \
+  || fail "Refusing unsafe contact runtime path: $CONTACT_RUNTIME"
+
+log "Checking private contact runtime configuration"
+ssh -p "$DEPLOY_PORT" "$SSH_TARGET" bash -s -- "$CONTACT_RUNTIME" "$CONTACT_CONFIG" <<'REMOTE_SETUP'
+set -euo pipefail
+runtime_path="$1"
+config_path="$2"
+
+if [[ ! -f "$config_path" ]]; then
+  printf '[deploy] ERROR: Missing private contact configuration: %s\n' "$config_path" >&2
+  exit 1
+fi
+
+if [[ ! -O "$config_path" ]]; then
+  printf '[deploy] ERROR: Contact configuration is not owned by the deploy user: %s\n' "$config_path" >&2
+  exit 1
+fi
+
+config_mode="$(stat -c '%a' "$config_path")"
+if [[ "$config_mode" != "600" ]]; then
+  printf '[deploy] ERROR: Contact configuration must have mode 600, found %s: %s\n' "$config_mode" "$config_path" >&2
+  exit 1
+fi
+
+command -v php >/dev/null 2>&1 || {
+  printf '[deploy] ERROR: PHP is not available on the remote host.\n' >&2
+  exit 1
+}
+command -v composer >/dev/null 2>&1 || {
+  printf '[deploy] ERROR: Composer is not available on the remote host.\n' >&2
+  exit 1
+}
+
+php -l "$config_path" >/dev/null
+php -r '
+$config = require $argv[1];
+$smtp = is_array($config) && isset($config["smtp"]) && is_array($config["smtp"])
+    ? $config["smtp"]
+    : [];
+$valid = isset($smtp["host"], $smtp["port"], $smtp["username"], $smtp["app_password"])
+    && is_string($smtp["host"])
+    && trim($smtp["host"]) !== ""
+    && is_int($smtp["port"])
+    && $smtp["port"] > 0
+    && is_string($smtp["username"])
+    && filter_var($smtp["username"], FILTER_VALIDATE_EMAIL) !== false
+    && is_string($smtp["app_password"])
+    && trim(str_replace(" ", "", $smtp["app_password"])) !== ""
+    && $smtp["app_password"] !== "REPLACE_WITH_GOOGLE_APP_PASSWORD"
+    && isset($config["mail_to"], $config["allowed_origins"])
+    && is_string($config["mail_to"])
+    && filter_var($config["mail_to"], FILTER_VALIDATE_EMAIL) !== false
+    && is_array($config["allowed_origins"])
+    && $config["allowed_origins"] !== []
+    && count(array_filter($config["allowed_origins"], "is_string")) === count($config["allowed_origins"]);
+exit($valid ? 0 : 1);
+' "$config_path" || {
+  printf '[deploy] ERROR: Contact configuration is incomplete: %s\n' "$config_path" >&2
+  exit 1
+}
+
+mkdir -p "$runtime_path"
+chmod 700 "$runtime_path"
+REMOTE_SETUP
+
+log "Uploading private contact runtime"
+rsync -az --delete \
+  --exclude 'tests/' \
+  --exclude 'vendor/' \
+  -e "ssh -p $DEPLOY_PORT" \
+  "$SERVER_DIR/" \
+  "$SSH_TARGET:$CONTACT_RUNTIME/"
+
+log "Installing locked contact runtime dependencies"
+ssh -p "$DEPLOY_PORT" "$SSH_TARGET" bash -s -- "$CONTACT_RUNTIME" <<'REMOTE_COMPOSER'
+set -euo pipefail
+runtime_path="$1"
+cd "$runtime_path"
+composer install --no-dev --prefer-dist --no-interaction --classmap-authoritative
+REMOTE_COMPOSER
+
+REMOTE="$SSH_TARGET:${DEPLOY_REMOTE_PATH%/}/"
 
 log "Uploading $LOCAL_DIR/ to $REMOTE"
 rsync -az --delete -e "ssh -p $DEPLOY_PORT" "$LOCAL_DIR/" "$REMOTE"

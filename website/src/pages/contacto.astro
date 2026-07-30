@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import ContactForm from '../components/ContactForm.astro';
 import { contact } from '../content/site';
 ---
 
@@ -15,30 +16,14 @@ import { contact } from '../content/site';
           <li>Teléfono: <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a></li>
         </ul>
         <div class="contact-actions">
-          <a class="ba-btn ba-btn-primary" href={`mailto:${contact.email}`}>Contactar ahora</a>
+          <a class="ba-btn ba-btn-primary" href="#contact-form">Contactar ahora</a>
           <a class="ba-btn ba-btn-agenda" href={contact.agendaHref}>Agenda</a>
         </div>
         <figure class="contact-media">
           <img src="/assets/office/office-boardroom-wide.webp" alt="Sala de reuniones Bright Alliance | BA Chile" loading="lazy" />
         </figure>
       </div>
-      <form class="contact-form" action={`mailto:${contact.email}`} method="post" enctype="text/plain">
-        <h2>Contacto</h2>
-        <label>
-          Nombre
-          <input type="text" name="name" autocomplete="name" required />
-        </label>
-        <label>
-          Correo electrónico
-          <input type="email" name="email" autocomplete="email" required />
-        </label>
-        <label>
-          Mensaje o motivo de contacto
-          <textarea name="message" rows="6" required></textarea>
-        </label>
-        <p>En Bright Alliance utilizaremos tus datos de contacto sólo para comunicarnos contigo.</p>
-        <button class="ba-btn ba-btn-primary" type="submit">Enviar</button>
-      </form>
+      <ContactForm locale="es" />
     </div>
   </section>
 </BaseLayout>
@@ -89,51 +74,4 @@ import { contact } from '../content/site';
     object-fit: cover;
   }
 
-  .contact-form {
-    display: grid;
-    gap: var(--ba-space-5);
-    padding: var(--ba-space-7);
-    border: 1px solid var(--ba-gray-200);
-    background: var(--ba-white);
-    box-shadow: 0 30px 70px -56px rgba(16, 47, 75, 0.72);
-  }
-
-  .contact-form h2 {
-    margin: 0;
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-  }
-
-  .contact-form label {
-    display: grid;
-    gap: var(--ba-space-2);
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    border: 1px solid var(--ba-gray-200);
-    padding: 14px 16px;
-    color: var(--ba-gray-700);
-    font: inherit;
-  }
-
-  .contact-form input:focus,
-  .contact-form textarea:focus {
-    border-color: var(--ba-gold-500);
-    outline: 2px solid rgba(179, 146, 89, 0.18);
-    outline-offset: 0;
-  }
-
-  .contact-form p {
-    margin: 0;
-    color: var(--ba-gray-700);
-    font-size: var(--ba-body-sm);
-  }
 </style>

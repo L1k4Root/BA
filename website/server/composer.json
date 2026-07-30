@@ -1,0 +1,28 @@
+{
+  "name": "bright-alliance/contact-form",
+  "description": "Private contact form runtime for bachile.cl",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": "^8.3",
+    "ext-filter": "*",
+    "ext-hash": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "phpmailer/phpmailer": "^7.0.0"
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  },
+  "scripts": {
+    "test": "php tests/run.php"
+  },
+  "config": {
+    "allow-plugins": false,
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}
