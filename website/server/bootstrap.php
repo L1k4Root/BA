@@ -27,7 +27,8 @@ return static function (string $homeDirectory, string $requestId): never {
     $logger = static function (string $event, array $context): void {
         $pairs = [];
         foreach ($context as $key => $value) {
-            $pairs[] = $key . '=' . str_replace(["\r", "\n", ' '], ['', '', '_'], (string) $value);
+            $sanitized = str_replace(["\r", "\n", ' '], ['', '', '_'], (string) $value);
+            $pairs[] = $key . '=' . substr($sanitized, 0, 200);
         }
         error_log('[ba-contact] event=' . $event . ' ' . implode(' ', $pairs));
     };

@@ -187,7 +187,7 @@ REMOTE_ACTIVATE
 REMOTE="$SSH_TARGET:${DEPLOY_REMOTE_PATH%/}/"
 
 log "Uploading $LOCAL_DIR/ to $REMOTE"
-rsync -az --delete -e "ssh -p $DEPLOY_PORT" "$LOCAL_DIR/" "$REMOTE"
+rsync -az --delay-updates --delete-delay -e "ssh -p $DEPLOY_PORT" "$LOCAL_DIR/" "$REMOTE"
 
 log "Deploy complete"
 log "Branch: $CURRENT_BRANCH"

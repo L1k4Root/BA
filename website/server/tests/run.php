@@ -30,9 +30,11 @@ final class ConfigurableRateLimiter implements RateLimiter
 {
     public bool $allowed = true;
     public bool $shouldFail = false;
+    public int $consumeCalls = 0;
 
     public function consume(string $identifier, int $limit, int $windowSeconds): bool
     {
+        $this->consumeCalls++;
         if ($this->shouldFail) {
             throw new RuntimeException('Simulated rate limiter failure.');
         }
@@ -169,6 +171,50 @@ $tests['returns generic success for honeypot submissions without sending'] = sta
     assertSameValue(200, $response->status, 'Honeypot should return generic success.');
     assertSameValue('sent', $response->code, 'Honeypot should not reveal bot detection.');
     assertSameValue(0, count($mailer->submissions), 'Honeypot must not invoke mailer.');
+};
+
+$tests['rate limits honeypot requests before logging them'] = static function (): void {
+    [$application, $mailer, $rateLimiter] = createApplication();
+    $rateLimiter->allowed = false;
+    $input = validInput();
+    $input['website'] = 'https://spam.example';
+    $response = $application->handle(validServer(), $input, 'request-honeypot-limited');
+
+    assertSameValue(429, $response->status, 'Rate-limited honeypot traffic should return 429.');
+    assertSameValue(1, $rateLimiter->consumeCalls, 'Honeypot traffic must consume the rate limit.');
+    assertSameValue(0, count($mailer->submissions), 'Rate-limited honeypot traffic must not invoke mailer.');
+};
+
+$tests['rate limits requests before rejecting their origin'] = static function (): void {
+    [$application, $mailer, $rateLimiter] = createApplication();
+    $server = validServer();
+    $server['HTTP_ORIGIN'] = 'https://attacker.example';
+    $response = $application->handle($server, validInput(), 'request-origin-limited');
+
+    assertSameValue(400, $response->status, 'Invalid origin should still return 400 below the limit.');
+    assertSameValue(1, $rateLimiter->consumeCalls, 'Invalid-origin traffic must consume the rate limit.');
+    assertSameValue(0, count($mailer->submissions), 'Invalid-origin traffic must not invoke mailer.');
+};
+
+$tests['normalizes the locale before logging honeypot traffic'] = static function (): void {
+    $mailer = new RecordingMailer();
+    $rateLimiter = new ConfigurableRateLimiter();
+    $events = [];
+    $application = new ContactApplication(
+        $mailer,
+        $rateLimiter,
+        ['https://bachile.cl'],
+        static function (string $event, array $context) use (&$events): void {
+            $events[] = [$event, $context];
+        },
+    );
+    $input = validInput();
+    $input['website'] = 'spam';
+    $input['locale'] = str_repeat('x', 10_000);
+    $response = $application->handle(validServer(), $input, 'request-honeypot-locale');
+
+    assertSameValue(200, $response->status, 'Honeypot response should remain generic.');
+    assertSameValue('es', $events[0][1]['locale'] ?? null, 'Logged locale must be normalized and bounded.');
 };
 
 $tests['rejects invalid origins and accepts a same-origin referer fallback'] = static function (): void {

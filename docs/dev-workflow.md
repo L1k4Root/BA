@@ -113,9 +113,9 @@ El script:
 - sincroniza `website/server/` a una nueva version bajo `.local/share/ba-contact/releases` fuera de `public_html`;
 - instala la version bloqueada de PHPMailer con Composer remoto y, sólo si termina correctamente, actualiza el enlace `current`;
 - sube solo el contenido de `website/dist/` al path remoto;
-- usa `rsync --delete` para que el remoto refleje exactamente el build local.
+- usa `rsync --delay-updates --delete-delay` para activar los archivos y las eliminaciones sólo después de completar la transferencia.
 
-`--delete` es intencional: elimina en el servidor archivos que ya no existen en `website/dist/`. No apunta al home del usuario ni a una carpeta compartida; `DEPLOY_REMOTE_PATH` debe ser la carpeta publica final del sitio.
+`--delete-delay` es intencional: elimina al final los archivos que ya no existen en `website/dist/`. No apunta al home del usuario ni a una carpeta compartida; `DEPLOY_REMOTE_PATH` debe ser la carpeta publica final del sitio.
 
 No guardar credenciales reales en Git. `.env.deploy` queda ignorado; solo se versiona `.env.deploy.example`.
 

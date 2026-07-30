@@ -92,21 +92,7 @@ final class ContactApplication
         }
 
         $locale = $this->stringValue($input['locale'] ?? null) ?? 'es';
-        if (!$this->originAllowed($server)) {
-            return $this->respond(400, 'invalid_origin', $requestId, $locale);
-        }
-
-        $honeypot = $this->stringValue($input['website'] ?? null);
-        if ($honeypot !== null && trim($honeypot) !== '') {
-            ($this->logger)('honeypot', ['request_id' => $requestId, 'locale' => $locale]);
-            return new ContactResponse(200, 'sent', $this->safeLocale($locale));
-        }
-
-        $errors = $this->validate($input);
-        if ($errors !== []) {
-            return $this->respond(400, 'validation_error', $requestId, $locale, $errors);
-        }
-
+        $safeLocale = $this->safeLocale($locale);
         $ipAddress = $this->stringValue($server['REMOTE_ADDR'] ?? null) ?? '';
         if ($ipAddress !== '') {
             try {
@@ -116,7 +102,7 @@ final class ContactApplication
                     self::RATE_WINDOW_SECONDS,
                 );
                 if (!$allowed) {
-                    return $this->respond(429, 'rate_limited', $requestId, $locale);
+                    return $this->respond(429, 'rate_limited', $requestId, $safeLocale);
                 }
             } catch (Throwable $exception) {
                 ($this->logger)('rate_limiter_unavailable', [
@@ -126,7 +112,21 @@ final class ContactApplication
             }
         }
 
-        $safeLocale = $this->safeLocale($locale);
+        if (!$this->originAllowed($server)) {
+            return $this->respond(400, 'invalid_origin', $requestId, $safeLocale);
+        }
+
+        $honeypot = $this->stringValue($input['website'] ?? null);
+        if ($honeypot !== null && trim($honeypot) !== '') {
+            ($this->logger)('honeypot', ['request_id' => $requestId, 'locale' => $safeLocale]);
+            return new ContactResponse(200, 'sent', $safeLocale);
+        }
+
+        $errors = $this->validate($input);
+        if ($errors !== []) {
+            return $this->respond(400, 'validation_error', $requestId, $locale, $errors);
+        }
+
         $submission = new ContactSubmission(
             trim((string) $input['name']),
             trim((string) $input['email']),
