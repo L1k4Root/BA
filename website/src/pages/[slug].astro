@@ -21,6 +21,7 @@ const bodyBelongsBelowHero = isDerechoEmpresa || isComercioInternacional;
 const serviceOpening = !isArticle && !bodyBelongsBelowHero ? page.body[0] : '';
 const serviceBody = !isArticle ? (bodyBelongsBelowHero ? page.body : page.body.slice(1)) : [];
 const hasServiceBody = serviceBody.length > 0;
+const hasServiceIntroMedia = (isDerechoEmpresa || isComercioInternacional) && Boolean(page.supportImage);
 const serviceIntroTitle = isComercioInternacional ? 'Conectando empresas, mercados y oportunidades' : isDerechoEmpresa ? '' : 'Nuestros pilares';
 const getAreaTitle = (area) => (typeof area === 'string' ? area : area.title);
 const getAreaText = (area) => (typeof area === 'string' ? '' : area.text);
@@ -47,8 +48,8 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     <>
       {hasServiceBody && (
         <section class="ba-section light">
-          <div class:list={['ba-container', page.models ? 'ba-grid-2' : 'service-copy']}>
-            <div>
+          <div class:list={['ba-container', page.models ? 'ba-grid-2' : 'service-copy', hasServiceIntroMedia && 'service-copy--with-media']}>
+            <div class="service-copy__text">
               {serviceIntroTitle && <h2 class="ba-heading-xl">{serviceIntroTitle}</h2>}
               {serviceBody.map((paragraph) => <p class="ba-body-lg">{paragraph}</p>)}
             </div>
@@ -59,6 +60,11 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
                   {page.models.map((model) => <li>{model}</li>)}
                 </ul>
               </div>
+            )}
+            {hasServiceIntroMedia && (
+              <figure class="service-copy__media">
+                <img src={page.supportImage} alt={`Bright Alliance | BA Chile - ${page.navLabel}`} loading="lazy" />
+              </figure>
             )}
           </div>
         </section>
@@ -132,7 +138,7 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
       {page.areas.length > 0 && (
         <section class="ba-section offwhite">
           <div class="ba-container">
-            {!isComercioInternacional && <SectionHeader eyebrow="Áreas" title={page.slug.includes('landing') ? 'Ámbitos de asesoría' : 'Áreas de especialización'} lead="Materias organizadas para una lectura ejecutiva y accionable." />}
+            <SectionHeader eyebrow="Áreas" title={page.slug.includes('landing') ? 'Ámbitos de asesoría' : 'Áreas de especialización'} lead="Materias organizadas para una lectura ejecutiva y accionable." />
             <div class="area-accordion">
               {page.areas.map((area, index) => (
                 <details class="area-item" open={index === 0}>
@@ -233,6 +239,18 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     max-width: 980px;
   }
 
+  .service-copy--with-media {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1fr);
+    gap: var(--ba-space-8);
+    align-items: center;
+    max-width: var(--ba-container-lg);
+  }
+
+  .service-copy__text p + p {
+    margin-top: var(--ba-space-4);
+  }
+
   .model-card {
     padding: var(--ba-space-7);
     border-left: 4px solid var(--ba-gold-500);
@@ -270,7 +288,8 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     margin-bottom: 0;
   }
 
-  .service-pillars__media {
+  .service-pillars__media,
+  .service-copy__media {
     position: relative;
     min-height: 300px;
     margin: 0;
@@ -280,14 +299,16 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     box-shadow: 0 28px 80px -56px rgba(16, 47, 75, 0.72);
   }
 
-  .service-pillars__media::after {
+  .service-pillars__media::after,
+  .service-copy__media::after {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgba(16, 47, 75, 0.04), rgba(16, 47, 75, 0.22));
   }
 
-  .service-pillars__media img {
+  .service-pillars__media img,
+  .service-copy__media img {
     width: 100%;
     height: 100%;
     min-height: 300px;
@@ -527,6 +548,10 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
   }
 
   @media (max-width: 860px) {
+    .service-copy--with-media {
+      grid-template-columns: 1fr;
+    }
+
     .pillar-grid {
       grid-template-columns: 1fr;
     }
@@ -564,6 +589,11 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
 
     .detail-item {
       padding: var(--ba-space-5);
+    }
+
+    .service-copy__media,
+    .service-copy__media img {
+      min-height: 240px;
     }
 
     .nested-item summary {
