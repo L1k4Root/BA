@@ -207,7 +207,77 @@ export const services: ServicePage[] = [
       'No se trata solo de cumplir la ley, sino de alinear las decisiones legales con la estrategia corporativa y el desarrollo sostenible del negocio.',
       'Este servicio se estructura sobre múltiples áreas de práctica —Derecho Corporativo, Derecho Laboral, Derecho Tributario, Contratos Civiles y Comerciales, Propiedad Intelectual, Libre Competencia, Compliance, Derecho del Consumidor, Derecho Penal Económico, entre otras—, las cuales se adaptan a las necesidades específicas de cada cliente.'
     ],
-    areas: [],
+    areas: [
+      {
+        title: 'Asesoría jurídico-corporativa',
+        text: 'Asesoramos integralmente a empresas en todas las etapas de su vida societaria, desde su constitución hasta su reorganización o eventual disolución, incluyendo su funcionamiento legal en el día a día, con foco en cumplimiento, eficiencia y resguardo patrimonial.',
+        items: ['Constitución, transformación, división, modificación y mantención de sociedades.', 'Redacción de estatutos, reformas y aumentos o disminuciones de capital.', 'Pactos de accionistas y acuerdos de socios.', 'Contratos de suscripción o cesión de acciones y participaciones.', 'Diseño de estructuras estratégicas de gobierno corporativo.', 'Asesoría permanente en administración, juntas de accionistas, directorios y operaciones habituales de la sociedad.']
+      },
+      {
+        title: 'Diseño estratégico de negocios y grupos empresariales',
+        text: 'Consultoría jurídica para diseño de modelos de negocio y creación/optimización de estructuras de grupo: holdings y subholdings, filiales y SPV, acuerdos entre relacionadas, protocolos de gobierno, matrices de control y reporte, y alineamiento jurídico-tributario-operativo para el crecimiento sostenible.'
+      },
+      {
+        title: 'Fusiones y Adquisiciones (M&A)',
+        text: 'Estructuración, due diligence legal, negociación y ejecución de transacciones (SPA/APA, JV, reorganizaciones); coordinación regulatoria y plan de integración postadquisición (PMI).'
+      },
+      {
+        title: 'Derecho laboral empresarial',
+        text: 'Acompañamos a empresas en la gestión integral de sus relaciones laborales y en la administración estratégica de sus equipos de trabajo, combinando asesoría jurídica, cumplimiento normativo y apoyo en la toma de decisiones clave sobre el recurso humano. Nuestro enfoque es preventivo, orientado a reducir contingencias y fortalecer la estabilidad organizacional.',
+        items: ['Contratación, redacción de anexos y pactos especiales de condiciones laborales.', 'Aplicación de medidas disciplinarias y desvinculaciones conforme a ley.', 'Diagnóstico y cumplimiento en materias laborales, previsionales y de seguridad social.', 'Diseño e implementación de políticas internas, reglamentos y protocolos laborales.', 'Asesoría continua en relaciones laborales estratégicas, clima laboral y manejo de equipos.', 'Representación en fiscalizaciones, procedimientos administrativos y litigios judiciales.', 'Acompañamiento en negociaciones colectivas y relaciones sindicales.']
+      },
+      {
+        title: 'Contratos civiles y comerciales',
+        text: 'Revisión, redacción y negociación de contratos; elaboración de contratos a la medida; estructuración contractual conforme a las particularidades del negocio.'
+      },
+      {
+        title: 'Negociaciones complejas',
+        text: 'Asistencia legal estratégica en negociaciones de alto impacto, nacionales e internacionales, integrando análisis jurídico, planificación comercial y gestión de riesgos.'
+      },
+      {
+        title: 'Litigación y defensa corporativa',
+        text: 'Representación ante tribunales ordinarios y especiales, organismos públicos y árbitros; defensa en controversias civiles, comerciales, laborales o administrativas.'
+      },
+      {
+        title: 'Compliance corporativo',
+        text: 'Diseño e implementación de programas integrales de cumplimiento normativo ajustados a las principales exigencias legales vigentes. Los programas contemplan la elaboración e implementación de políticas internas, canales de denuncia, mapas de riesgo, auditorías periódicas, capacitaciones, monitoreo y actualización normativa continua, asegurando una cultura organizacional de cumplimiento y ética empresarial.',
+        items: ['Ley N° 20.393 sobre responsabilidad penal de las personas jurídicas.', 'Ley N° 21.595 sobre delitos económicos y medioambientales.', 'Ley N° 21.459 sobre delitos informáticos.', 'Ley N° 21.719 sobre protección de datos personales.', 'Normativas anticorrupción, laborales, de libre competencia y de gobierno corporativo.']
+      },
+      {
+        title: 'Derecho tributario',
+        text: 'Planificación y cumplimiento tributario, estructuración fiscal eficiente y defensa ante fiscalizaciones. Incluye asesoría en planificación del retiro y planificación hereditaria, orientada a resguardar el patrimonio y optimizar la carga fiscal en procesos de sucesión y reorganización empresarial.'
+      },
+      {
+        title: 'Derecho penal empresarial',
+        text: 'Prevención y litigación penal en materias corporativas (delitos económicos, ambientales, laborales o tributarios).'
+      },
+      {
+        title: 'Derecho Público, Licitaciones y Litigación Administrativa',
+        text: 'Asesoramos a empresas en su relación con el Estado, tanto en procesos de contratación pública como en el ejercicio de sus derechos ante actos de la Administración, organismos fiscalizadores y tribunales especializados. Nuestro enfoque combina estrategia jurídica, conocimiento regulatorio y experiencia práctica en litigios administrativos y de contratación pública.',
+        items: ['Asesoría integral en licitaciones públicas y privadas (bases, propuestas, impugnaciones).', 'Constitución, regulación y operación de Uniones Temporales de Proveedores (UTP), consorcios y asociaciones transitorias.', 'Representación en procedimientos ante la Contraloría General de la República y otros entes públicos.', 'Litigación ante el Tribunal de Contratación Pública y recursos contencioso-administrativos.', 'Defensa y representación en fiscalizaciones de organismos públicos.', 'Diagnóstico de riesgos normativos y cumplimiento en relaciones con el Estado.']
+      },
+      {
+        title: 'Propiedad intelectual e identidad comercial',
+        text: 'Registro, renovación, cesión y licenciamiento de marcas, patentes, derechos de autor y dominios. Reconocimiento, establecimiento y protección integral de la identidad comercial y de los activos intangibles.'
+      },
+      {
+        title: 'Derecho del consumidor',
+        text: 'Cumplimiento de la Ley N° 19.496, revisión de contratos y comunicaciones comerciales, implementación de programas de cumplimiento y defensa ante fiscalizaciones (SERNAC) o reclamos, consultoría y asesoría estratégica.'
+      },
+      {
+        title: 'Derecho de la libre competencia',
+        text: 'Cumplimiento preventivo del DL N° 211, asesoría estratégica en denuncias y procesos ante la FNE, y desarrollo de programas internos de cumplimiento y cultura competitiva.'
+      },
+      {
+        title: 'Planificación del retiro y organización futura',
+        text: 'Acompañamiento jurídico y estratégico en procesos de sucesión y continuidad empresarial, resguardando la gobernanza, el legado del/los fundador/es y la proyección de la organización.'
+      },
+      {
+        title: 'Reorganización y Procedimientos Concursales',
+        text: 'Asesoramos a empresas en situaciones de crisis financiera, estructurando estrategias de reorganización, protección patrimonial o liquidación ordenada, bajo los marcos legales vigentes. Acompañamos todo el proceso con una visión preventiva, de continuidad operativa o cierre eficiente.',
+        items: ['Evaluación preliminar de viabilidad y riesgos (due diligence legal y financiera).', 'Asesoría en procesos de reorganización judicial o liquidación voluntaria (Ley N° 20.720).', 'Presentación de solicitudes ante la Superintendencia de Insolvencia y Reemprendimiento (SIIR).', 'Representación de acreedores en juntas, verificaciones de crédito y oposiciones.', 'Asesoría a socios, directores o representantes legales con exposición personal.', 'Coordinación con liquidadores, veedores y tribunales durante todas las etapas.', 'Protección de activos esenciales, continuidad de giros o preparación para cierre.']
+      }
+    ],
     cta: 'Solicitar asesoría en Derecho de la Empresa'
   },
   {
