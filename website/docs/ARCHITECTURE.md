@@ -57,6 +57,7 @@ Cada componente debe tener una responsabilidad visible concreta.
 - `ServiceAccordion.astro`: componente heredado disponible, pero no usado en home ni `/servicios/`.
 - `ClientTrustMarquee.astro`: carrusel continuo de logos de clientes.
 - `NewsPreview.astro`: actualidad jurídica externa resumida con fuente original.
+- `ArticleListing.astro`: presentación compartida de noticias externas y publicaciones internas.
 - `ArticleDetail.astro`: detalle editorial de noticias.
 - `FounderQuote.astro`: bloque editorial del fundador.
 - `ServiceCard.astro`: tarjeta de servicio reusable.
@@ -74,6 +75,9 @@ Las páginas deben componer componentes y evitar acumular estilos largos.
 - `src/pages/[slug].astro`: template para servicios y artículos en español.
 - `src/pages/nosotros.astro`: página institucional y valores.
 - `src/pages/contacto.astro`: contacto.
+- `src/pages/noticias.astro`: listado de actualidad jurídica externa.
+- `src/pages/blog-oficina.astro`: listado de publicaciones propias de la oficina.
+- `src/pages/noticias-blog.astro`: página puente que conserva las rutas históricas de Noticias y Blog.
 - `src/pages/dev/noticias.astro`: herramienta escondida para drafts de noticias en desarrollo.
 - `src/pages/en/*`: rutas en inglés existentes.
 
@@ -99,6 +103,12 @@ Reglas:
 - `articles`: lista combinada para conservar las rutas dinámicas.
 
 La automatización futura debe definir fuente, credenciales, frecuencia, deduplicación y revisión editorial antes de escribir en el sitio.
+
+Las rutas públicas en español se separan así:
+
+- `/noticias/`: noticias externas.
+- `/blog-oficina/`: publicaciones institucionales internas.
+- `/noticias-blog/`: acceso puente compatible con `#noticias` y `#blog-oficina`.
 
 ### Header
 

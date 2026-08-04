@@ -1,48 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { externalNews, internalPosts } from '../content/site';
-
-const externalArticles = externalNews.filter((article) => article.lang === 'es');
-const internalArticles = internalPosts.filter((article) => article.lang === 'es');
 ---
 
 <BaseLayout title="Noticias & Blog - Bright Alliance | BA Chile" description="Actualidad jurídica externa y noticias internas de Bright Alliance | BA Chile." lang="es">
-  <section class="ba-section light" id="noticias">
+  <section class="ba-section light news-hub">
     <div class="ba-container">
-      <SectionHeader eyebrow="Actualidad jurídica externa" title="/ Noticias & Blog" lead="Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales." />
-      <div class="article-list">
-        {externalArticles.map((article) => (
-          <article class="article-card">
-            <img src={article.image} alt={article.title} loading="lazy" />
-            <div>
-              <span class="ba-label">{article.category}</span>
-              <h2 class="ba-heading-md">{article.title}</h2>
-              <p>{article.summary}</p>
-              <span class="article-card__source">{article.source?.label}</span>
-              <a href={article.externalUrl || article.source?.href} target="_blank" rel="noreferrer">Ver fuente</a>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="ba-section offwhite" id="blog-oficina">
-    <div class="ba-container">
-      <SectionHeader eyebrow="Blog interno" title="Noticias propias de la oficina" lead="Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas." />
-      <div class="article-list">
-        {internalArticles.map((article) => (
-          <article class="article-card article-card--internal">
-            <img src={article.image} alt={article.title} loading="lazy" />
-            <div>
-              <span class="ba-label">{article.category}</span>
-              <h2 class="ba-heading-md">{article.title}</h2>
-              <p>{article.summary}</p>
-              <a href={`/${article.slug}/`}>Ver estructura</a>
-            </div>
-          </article>
-        ))}
+      <SectionHeader level="h1" title="/ Noticias & Blog" />
+      <div class="news-hub__grid">
+        <article class="news-hub__card" id="noticias">
+          <span class="ba-label">Actualidad jurídica externa</span>
+          <h2><a href="/noticias/">Noticias</a></h2>
+          <p>Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales.</p>
+          <a class="news-hub__link" href="/noticias/">Noticias</a>
+        </article>
+        <article class="news-hub__card news-hub__card--dark" id="blog-oficina">
+          <span class="ba-label">Blog interno</span>
+          <h2><a href="/blog-oficina/">Noticias propias de la oficina</a></h2>
+          <p>Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas.</p>
+          <a class="news-hub__link" href="/blog-oficina/">Blog oficina</a>
+        </article>
       </div>
     </div>
   </section>
@@ -54,52 +31,55 @@ const internalArticles = internalPosts.filter((article) => article.lang === 'es'
     scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
   }
 
-  .article-list {
+  .news-hub__grid {
     display: grid;
-    gap: var(--ba-space-6);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ba-space-5);
   }
 
-  .article-card {
-    display: grid;
-    grid-template-columns: minmax(240px, 0.42fr) minmax(0, 1fr);
-    overflow: hidden;
-    border: 1px solid var(--ba-gray-200);
+  .news-hub__card {
+    min-height: 340px;
+    padding: clamp(var(--ba-space-6), 4vw, var(--ba-space-8));
+    border-top: 4px solid var(--ba-gold-500);
     background: var(--ba-white);
+    box-shadow: 0 30px 84px -68px rgba(16, 47, 75, 0.62);
   }
 
-  .article-card img {
-    width: 100%;
-    height: 100%;
-    min-height: 260px;
-    object-fit: cover;
+  .news-hub__card--dark {
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
   }
 
-  .article-card div {
-    padding: var(--ba-space-7);
-  }
-
-  .article-card .ba-label {
+  .news-hub__card .ba-label {
     color: var(--ba-gold-500);
   }
 
-  .article-card h2 {
-    margin: var(--ba-space-3) 0;
-  }
-
-  .article-card p {
-    margin: 0 0 var(--ba-space-4);
-  }
-
-  .article-card__source {
-    display: block;
-    margin-bottom: var(--ba-space-5);
-    color: var(--ba-gray-700);
+  .news-hub__card h2 {
+    margin: var(--ba-space-6) 0 var(--ba-space-4);
+    color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
-    font-size: 13px;
-    font-weight: 600;
+    font-size: var(--ba-heading-lg);
+    line-height: 1.18;
   }
 
-  .article-card a {
+  .news-hub__card--dark h2 {
+    color: var(--ba-white);
+  }
+
+  .news-hub__card h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .news-hub__card p {
+    max-width: 560px;
+    margin: 0 0 var(--ba-space-7);
+  }
+
+  .news-hub__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
     font-size: 13px;
@@ -109,9 +89,30 @@ const internalArticles = internalPosts.filter((article) => article.lang === 'es'
     text-transform: uppercase;
   }
 
+  .news-hub__link::after {
+    margin-left: var(--ba-space-3);
+    color: var(--ba-gold-500);
+    content: '→';
+    font-size: 18px;
+  }
+
+  .news-hub__card--dark .news-hub__link {
+    color: var(--ba-white);
+  }
+
+  .news-hub__card h2 a:focus-visible,
+  .news-hub__link:focus-visible {
+    outline: 2px solid var(--ba-gold-500);
+    outline-offset: 5px;
+  }
+
   @media (max-width: 760px) {
-    .article-card {
+    .news-hub__grid {
       grid-template-columns: 1fr;
+    }
+
+    .news-hub__card {
+      min-height: 300px;
     }
   }
 </style>

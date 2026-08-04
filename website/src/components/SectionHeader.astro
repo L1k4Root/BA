@@ -5,14 +5,15 @@ type Props = {
   lead?: string;
   align?: 'left' | 'center';
   tone?: 'light' | 'dark';
+  level?: 'h1' | 'h2';
 };
 
-const { eyebrow, title, lead, align = 'left', tone = 'light' } = Astro.props;
+const { eyebrow, title, lead, align = 'left', tone = 'light', level = 'h2' } = Astro.props;
 ---
 
 <div class:list={['section-header', `align-${align}`, tone === 'dark' && 'is-dark']}>
   {eyebrow && <span class="ba-label ba-eyebrow">{eyebrow}</span>}
-  <h2 class="ba-heading-xl">{title}</h2>
+  {level === 'h1' ? <h1 class="ba-heading-xl">{title}</h1> : <h2 class="ba-heading-xl">{title}</h2>}
   {lead && <p class="ba-body-lg">{lead}</p>}
 </div>
 
@@ -31,6 +32,7 @@ const { eyebrow, title, lead, align = 'left', tone = 'light' } = Astro.props;
     justify-content: center;
   }
 
+  .section-header h1,
   .section-header h2 {
     margin: var(--ba-space-4) 0 0;
   }
@@ -40,6 +42,7 @@ const { eyebrow, title, lead, align = 'left', tone = 'light' } = Astro.props;
     color: var(--ba-gray-700);
   }
 
+  .section-header.is-dark h1,
   .section-header.is-dark h2,
   .section-header.is-dark p {
     color: var(--ba-white);

@@ -1,0 +1,17 @@
+---
+import ArticleListing from '../components/ArticleListing.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { externalNews } from '../content/site';
+
+const externalArticles = externalNews.filter((article) => article.lang === 'es');
+---
+
+<BaseLayout title="Noticias - Bright Alliance | BA Chile" description="Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales." lang="es">
+  <section class="ba-section light">
+    <div class="ba-container">
+      <SectionHeader level="h1" eyebrow="Actualidad jurídica externa" title="/ Noticias" lead="Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales." />
+      <ArticleListing articles={externalArticles} variant="external" />
+    </div>
+  </section>
+</BaseLayout>

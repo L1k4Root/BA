@@ -65,6 +65,7 @@ website/
       HomeIntro.astro
       HomeServices.astro
       NewsPreview.astro
+      ArticleListing.astro
       SectionHeader.astro
       ServiceAccordion.astro
       ServiceCard.astro
@@ -120,6 +121,7 @@ La regla base es que cada componente tenga una responsabilidad principal:
 - `ServiceAccordion.astro`: acordeón modular de servicios con apertura animada, CTA, imagen por especialidad, imagen base sin selección y estado inicial configurable por página.
 - `ClientTrustMarquee.astro`: carrusel continuo de logos y señales de confianza.
 - `NewsPreview.astro`: vista resumida de actualidad jurídica externa con enlaces a fuente.
+- `ArticleListing.astro`: listado compartido para noticias externas y publicaciones propias de la oficina.
 - `FounderQuote.astro`: bloque editorial del socio fundador.
 - `ServiceCard.astro`: tarjeta reusable para áreas de servicio.
 - `Header.astro` / `Footer.astro`: navegación global y cierre institucional.
@@ -212,7 +214,11 @@ Para agregar logos:
 - `/derecho-de-la-empresa/`
 - `/ingenieria-y-derecho/`
 - `/comercio-y-negocios-internacionales/`
+- `/noticias/`
+- `/blog-oficina/`
 - `/noticias-blog/`
+
+`/noticias-blog/` se conserva como página puente compatible con los fragmentos históricos `#noticias` y `#blog-oficina`. Los listados completos viven en `/noticias/` y `/blog-oficina/`.
 
 Las rutas de servicios en español se generan desde `src/pages/[slug].astro` y `src/content/site.ts`.
 

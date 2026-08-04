@@ -21,7 +21,7 @@ const bodyBelongsBelowHero = isDerechoEmpresa || isComercioInternacional;
 const serviceOpening = !isArticle && !bodyBelongsBelowHero ? page.body[0] : '';
 const serviceBody = !isArticle ? (bodyBelongsBelowHero ? page.body : page.body.slice(1)) : [];
 const hasServiceBody = serviceBody.length > 0;
-const hasServiceIntroMedia = (isDerechoEmpresa || isComercioInternacional) && Boolean(page.supportImage);
+const hasServiceIntroMedia = isComercioInternacional && Boolean(page.supportImage);
 const serviceIntroTitle = isComercioInternacional ? 'Conectando empresas, mercados y oportunidades' : isDerechoEmpresa ? '' : 'Nuestros pilares';
 const getAreaTitle = (area) => (typeof area === 'string' ? area : area.title);
 const getAreaText = (area) => (typeof area === 'string' ? '' : area.text);
@@ -73,22 +73,44 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
       {page.pillars && (
         <section class="ba-section offwhite service-pillars">
           <div class="ba-container">
-            <h2 class="ba-heading-xl service-pillars__heading">Nuestros pilares</h2>
-            <div class="pillar-grid">
-              {page.pillars.map((pillar, index) => (
-                <article class="pillar-card">
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.text}</p>
-                </article>
-              ))}
-            </div>
-            <div class="service-pillars__intro">
-              <SectionHeader eyebrow="Criterio de trabajo" title="Una práctica orientada a decisiones empresariales" lead="Cada línea de servicio se organiza desde una lectura legal, estratégica y operativa." />
-              <figure class="service-pillars__media">
-                <img src={page.supportImage || page.heroImage || '/assets/office/office-boardroom-wide.webp'} alt={`Criterio de trabajo - ${page.navLabel}`} loading="lazy" />
-              </figure>
-            </div>
+            {isDerechoEmpresa ? (
+              <>
+                <div class="service-pillars__intro service-pillars__intro--criteria-first">
+                  <SectionHeader eyebrow="Criterio de trabajo" title="Una práctica orientada a decisiones empresariales" lead="Cada línea de servicio se organiza desde una lectura legal, estratégica y operativa." />
+                  <figure class="service-pillars__media">
+                    <img src={page.supportImage || page.heroImage || '/assets/office/office-boardroom-wide.webp'} alt={`Criterio de trabajo - ${page.navLabel}`} loading="lazy" />
+                  </figure>
+                </div>
+                <div class="pillar-grid pillar-grid--criteria">
+                  {page.pillars.map((pillar, index) => (
+                    <article class="pillar-card">
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <h3>{pillar.title}</h3>
+                      <p>{pillar.text}</p>
+                    </article>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 class="ba-heading-xl service-pillars__heading">Nuestros pilares</h2>
+                <div class="pillar-grid">
+                  {page.pillars.map((pillar, index) => (
+                    <article class="pillar-card">
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <h3>{pillar.title}</h3>
+                      <p>{pillar.text}</p>
+                    </article>
+                  ))}
+                </div>
+                <div class="service-pillars__intro">
+                  <SectionHeader eyebrow="Criterio de trabajo" title="Una práctica orientada a decisiones empresariales" lead="Cada línea de servicio se organiza desde una lectura legal, estratégica y operativa." />
+                  <figure class="service-pillars__media">
+                    <img src={page.supportImage || page.heroImage || '/assets/office/office-boardroom-wide.webp'} alt={`Criterio de trabajo - ${page.navLabel}`} loading="lazy" />
+                  </figure>
+                </div>
+              </>
+            )}
           </div>
         </section>
       )}
@@ -251,6 +273,10 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     margin-top: var(--ba-space-4);
   }
 
+  .ba-grid-2 .service-copy__text p + p {
+    margin-top: var(--ba-space-4);
+  }
+
   .model-card {
     padding: var(--ba-space-7);
     border-left: 4px solid var(--ba-gold-500);
@@ -286,6 +312,19 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
 
   .service-pillars__intro :global(.section-header) {
     margin-bottom: 0;
+  }
+
+  .service-pillars__intro--criteria-first {
+    margin-top: 0;
+  }
+
+  .pillar-grid--criteria {
+    margin-top: var(--ba-space-8);
+    align-items: stretch;
+  }
+
+  .pillar-grid--criteria .pillar-card {
+    height: 100%;
   }
 
   .service-pillars__media,

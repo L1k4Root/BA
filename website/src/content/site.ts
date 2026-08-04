@@ -81,7 +81,7 @@ export const nav = {
     { label: 'Inicio', href: '/' },
     { label: 'Servicios', href: '/servicios/' },
     { label: 'Nosotros', href: '/nosotros/' },
-    { label: 'Noticias', href: '/noticias-blog/' },
+    { label: 'Noticias', href: '/noticias/' },
     { label: 'Contacto', href: '/contacto/' }
   ],
   en: [
@@ -206,6 +206,21 @@ export const services: ServicePage[] = [
       'En Bright Alliance BA Chile entendemos el Derecho de la Empresa como un soporte jurídico integral que permite a las organizaciones operar con solidez, eficiencia y visión de futuro.',
       'No se trata solo de cumplir la ley, sino de alinear las decisiones legales con la estrategia corporativa y el desarrollo sostenible del negocio.',
       'Este servicio se estructura sobre múltiples áreas de práctica —Derecho Corporativo, Derecho Laboral, Derecho Tributario, Contratos Civiles y Comerciales, Propiedad Intelectual, Libre Competencia, Compliance, Derecho del Consumidor, Derecho Penal Económico, entre otras—, las cuales se adaptan a las necesidades específicas de cada cliente.'
+    ],
+    models: ['Asesoría Caso a Caso', 'Asesoría por Proyecto', 'Departamento jurídico externo'],
+    pillars: [
+      {
+        title: 'Asesoría Caso a Caso',
+        text: 'Intervención puntual en materias jurídicas específicas, tales como contratos, consultas, litigios o informes legales, entregando soluciones precisas y ágiles.'
+      },
+      {
+        title: 'Asesoría por Proyecto',
+        text: 'Acompañamiento integral en procesos con objetivos definidos, como reestructuraciones societarias, expansiones, fusiones y adquisiciones, implementación de programas de cumplimiento, auditorías legales o proyectos internacionales.'
+      },
+      {
+        title: 'Departamento jurídico externo',
+        text: 'Servicio permanente que integra a nuestro equipo como una unidad legal funcional dentro de la empresa, brindando apoyo continuo en todas las áreas de su entorno jurídico, y actuando como un aliado estratégico en la gestión, prevención y toma de decisiones, aportando eficiencia, ahorro, continuidad y valor al negocio.'
+      }
     ],
     areas: [
       {
@@ -665,6 +680,8 @@ export const visibleRoutes = [
   '/derecho-de-la-empresa/',
   '/ingenieria-y-derecho/',
   '/comercio-y-negocios-internacionales/',
+  '/noticias/',
+  '/blog-oficina/',
   '/noticias-blog/',
   '/estructura-blog-institucional-ba-chile/',
   '/contacto/',
