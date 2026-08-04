@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CTA from '../components/CTA.astro';
 import ArticleDetail from '../components/ArticleDetail.astro';
+import ContentAccordionGroup from '../components/ContentAccordionGroup.astro';
+import ServicePillarGrid from '../components/ServicePillarGrid.astro';
 import { articles, contact, services } from '../content/site';
 
 export function getStaticPaths() {
@@ -23,9 +25,16 @@ const serviceBody = !isArticle ? (bodyBelongsBelowHero ? page.body : page.body.s
 const hasServiceBody = serviceBody.length > 0;
 const hasServiceIntroMedia = isComercioInternacional && Boolean(page.supportImage);
 const serviceIntroTitle = isComercioInternacional ? 'Conectando empresas, mercados y oportunidades' : isDerechoEmpresa ? '' : 'Nuestros pilares';
-const getAreaTitle = (area) => (typeof area === 'string' ? area : area.title);
-const getAreaText = (area) => (typeof area === 'string' ? '' : area.text);
-const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []);
+const areaAccordionEntries = !isArticle
+  ? page.areas.map((area) => typeof area === 'string'
+    ? { title: area }
+    : {
+        title: area.title,
+        text: area.text,
+        items: area.items,
+        titlePresentation: area.titlePresentation
+      })
+  : [];
 ---
 
 <BaseLayout title={`${page.title} - Bright Alliance | BA Chile`} description={page.summary} lang="es">
@@ -81,27 +90,15 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
                     <img src={page.supportImage || page.heroImage || '/assets/office/office-boardroom-wide.webp'} alt={`Criterio de trabajo - ${page.navLabel}`} loading="lazy" />
                   </figure>
                 </div>
-                <div class="pillar-grid pillar-grid--criteria">
-                  {page.pillars.map((pillar, index) => (
-                    <article class="pillar-card">
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <h3>{pillar.title}</h3>
-                      <p>{pillar.text}</p>
-                    </article>
-                  ))}
+                <div class="service-pillars__cards service-pillars__cards--after-intro">
+                  <ServicePillarGrid pillars={page.pillars} titleMinLines={page.pillarTitleMinLines} />
                 </div>
               </>
             ) : (
               <>
                 <h2 class="ba-heading-xl service-pillars__heading">Nuestros pilares</h2>
-                <div class="pillar-grid">
-                  {page.pillars.map((pillar, index) => (
-                    <article class="pillar-card">
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <h3>{pillar.title}</h3>
-                      <p>{pillar.text}</p>
-                    </article>
-                  ))}
+                <div class="service-pillars__cards">
+                  <ServicePillarGrid pillars={page.pillars} titleMinLines={page.pillarTitleMinLines} />
                 </div>
                 <div class="service-pillars__intro">
                   <SectionHeader eyebrow="Criterio de trabajo" title="Una práctica orientada a decisiones empresariales" lead="Cada línea de servicio se organiza desde una lectura legal, estratégica y operativa." />
@@ -129,18 +126,8 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
                     {section.paragraphs && section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
                     {section.subsectionsLabel && <p class="nested-item__label">{section.subsectionsLabel}</p>}
                     {section.subsections && (
-                      <div class="nested-accordion">
-                        {section.subsections.map((subsection, subsectionIndex) => (
-                          <details class="nested-item">
-                            <summary>
-                              <span>{String(subsectionIndex + 1).padStart(2, '0')}</span>
-                              <h4>{subsection.title}</h4>
-                            </summary>
-                            <div class="nested-item__body">
-                              <p>{subsection.text}</p>
-                            </div>
-                          </details>
-                        ))}
+                      <div class="service-detail__accordion">
+                        <ContentAccordionGroup entries={section.subsections} variant="compact" headingLevel={4} />
                       </div>
                     )}
                     {section.items && (
@@ -161,22 +148,7 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
         <section class="ba-section offwhite">
           <div class="ba-container">
             <SectionHeader eyebrow="Áreas" title={page.slug.includes('landing') ? 'Ámbitos de asesoría' : 'Áreas de especialización'} lead="Materias organizadas para una lectura ejecutiva y accionable." />
-            <div class="area-accordion">
-              {page.areas.map((area, index) => (
-                <details class="area-item" open={index === 0}>
-                  <summary>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <h3>{getAreaTitle(area)}</h3>
-                  </summary>
-                  {getAreaText(area) && <p>{getAreaText(area)}</p>}
-                  {getAreaItems(area).length > 0 && (
-                    <ul class="ba-list">
-                      {getAreaItems(area).map((item) => <li>{item}</li>)}
-                    </ul>
-                  )}
-                </details>
-              ))}
-            </div>
+            <ContentAccordionGroup entries={areaAccordionEntries} />
           </div>
         </section>
       )}
@@ -292,12 +264,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     font-weight: 600;
   }
 
-  .pillar-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--ba-space-5);
-  }
-
   .service-pillars__heading {
     margin: 0 0 var(--ba-space-7);
   }
@@ -318,13 +284,8 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     margin-top: 0;
   }
 
-  .pillar-grid--criteria {
+  .service-pillars__cards--after-intro {
     margin-top: var(--ba-space-8);
-    align-items: stretch;
-  }
-
-  .pillar-grid--criteria .pillar-card {
-    height: 100%;
   }
 
   .service-pillars__media,
@@ -356,14 +317,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     filter: saturate(0.82) contrast(1.03);
   }
 
-  .pillar-card {
-    min-height: 260px;
-    padding: var(--ba-space-7);
-    border: 1px solid rgba(16, 47, 75, 0.12);
-    background: var(--ba-white);
-  }
-
-  .pillar-card span,
   .detail-item > span {
     color: var(--ba-gold-500);
     font-family: var(--ba-font-head);
@@ -371,7 +324,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     font-weight: 700;
   }
 
-  .pillar-card h3,
   .detail-item h3 {
     margin: var(--ba-space-4) 0 var(--ba-space-3);
     color: var(--ba-navy-900);
@@ -380,7 +332,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     font-weight: 600;
   }
 
-  .pillar-card p,
   .detail-item p {
     margin: 0;
   }
@@ -428,69 +379,8 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     font-weight: 700;
   }
 
-  .nested-accordion {
-    display: grid;
-    gap: var(--ba-space-3);
+  .service-detail__accordion {
     margin-top: var(--ba-space-4);
-  }
-
-  .nested-item {
-    border: 1px solid rgba(16, 47, 75, 0.12);
-    background: var(--ba-white);
-  }
-
-  .nested-item[open] {
-    border-color: rgba(181, 143, 81, 0.44);
-    box-shadow: 0 22px 62px -56px rgba(16, 47, 75, 0.54);
-  }
-
-  .nested-item summary {
-    display: grid;
-    grid-template-columns: 42px minmax(0, 1fr) 18px;
-    gap: var(--ba-space-3);
-    align-items: center;
-    min-height: 72px;
-    padding: var(--ba-space-4) var(--ba-space-5);
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .nested-item summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .nested-item summary::after {
-    color: var(--ba-gold-500);
-    content: '+';
-    font-family: var(--ba-font-head);
-    font-size: 21px;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .nested-item[open] summary::after {
-    content: '-';
-  }
-
-  .nested-item summary span {
-    color: var(--ba-gold-500);
-    font-family: var(--ba-font-head);
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .nested-item h4 {
-    margin: 0;
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-    font-size: clamp(17px, 1.15vw, 20px);
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
-  .nested-item__body {
-    padding: 0 var(--ba-space-5) var(--ba-space-5) calc(42px + var(--ba-space-8));
   }
 
   .model-card h3 {
@@ -498,82 +388,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     color: var(--ba-gold-400);
     font-family: var(--ba-font-head);
     text-transform: uppercase;
-  }
-
-  .area-accordion {
-    display: grid;
-    gap: var(--ba-space-4);
-  }
-
-  .area-item {
-    padding: 0;
-    border: 1px solid var(--ba-gray-200);
-    background: var(--ba-white);
-    transition: border-color 160ms ease, box-shadow 160ms ease;
-  }
-
-  .area-item[open] {
-    border-color: rgba(181, 143, 81, 0.5);
-    box-shadow: 0 24px 70px -58px rgba(16, 47, 75, 0.72);
-  }
-
-  .area-item summary {
-    display: grid;
-    grid-template-columns: 72px minmax(0, 1fr) 24px;
-    gap: var(--ba-space-4);
-    align-items: center;
-    min-height: 104px;
-    padding: var(--ba-space-5) var(--ba-space-6);
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .area-item summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .area-item summary::after {
-    content: '+';
-    color: var(--ba-gold-500);
-    font-family: var(--ba-font-head);
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .area-item[open] summary::after {
-    content: '-';
-  }
-
-  .area-item span {
-    display: block;
-    color: var(--ba-gold-500);
-    font-family: var(--ba-font-head);
-    font-size: 30px;
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  .area-item h3 {
-    margin: 0;
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-    font-weight: 700;
-    line-height: 1.35;
-    font-size: clamp(18px, 1.4vw, 23px);
-  }
-
-  .area-item p,
-  .area-item .ba-list {
-    max-width: 900px;
-    margin: 0;
-    padding: 0 var(--ba-space-6) var(--ba-space-5) calc(72px + var(--ba-space-10));
-  }
-
-  .area-item .ba-list {
-    display: grid;
-    gap: var(--ba-space-2);
-    margin-top: calc(var(--ba-space-3) * -1);
   }
 
   .article-body img {
@@ -591,10 +405,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
       grid-template-columns: 1fr;
     }
 
-    .pillar-grid {
-      grid-template-columns: 1fr;
-    }
-
     .service-pillars__intro {
       grid-template-columns: 1fr;
     }
@@ -603,22 +413,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
       grid-template-columns: 1fr;
     }
 
-    .area-item summary {
-      grid-template-columns: 54px minmax(0, 1fr) 24px;
-    }
-
-    .area-item p,
-    .area-item .ba-list {
-      padding-left: var(--ba-space-6);
-    }
-
-    .nested-item summary {
-      grid-template-columns: 36px minmax(0, 1fr) 18px;
-    }
-
-    .nested-item__body {
-      padding-left: var(--ba-space-5);
-    }
   }
 
   @media (max-width: 620px) {
@@ -633,12 +427,6 @@ const getAreaItems = (area) => (typeof area === 'string' ? [] : area.items || []
     .service-copy__media,
     .service-copy__media img {
       min-height: 240px;
-    }
-
-    .nested-item summary {
-      grid-template-columns: 28px minmax(0, 1fr) 18px;
-      gap: var(--ba-space-2);
-      padding: var(--ba-space-4) var(--ba-space-3);
     }
 
     .service-hero h1 {

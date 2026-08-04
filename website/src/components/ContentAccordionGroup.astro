@@ -1,0 +1,58 @@
+---
+import type { TitlePresentation } from '../content/site';
+import ContentAccordionItem from './ContentAccordionItem.astro';
+
+export type ContentAccordionEntry = {
+  title: string;
+  text?: string;
+  items?: string[];
+  titlePresentation?: TitlePresentation;
+};
+
+type Props = {
+  entries: ContentAccordionEntry[];
+  variant?: 'area' | 'compact';
+  headingLevel?: 3 | 4;
+  defaultOpenIndex?: number | null;
+  titlePresentation?: TitlePresentation;
+};
+
+const {
+  entries,
+  variant = 'area',
+  headingLevel = 3,
+  defaultOpenIndex = null,
+  titlePresentation = 'natural'
+} = Astro.props;
+---
+
+<div class:list={['content-accordion-group', `is-${variant}`]} data-content-accordion-group>
+  {entries.map((entry, index) => (
+    <ContentAccordionItem
+      index={String(index + 1).padStart(2, '0')}
+      title={entry.title}
+      open={defaultOpenIndex === index}
+      variant={variant}
+      headingLevel={headingLevel}
+      titlePresentation={entry.titlePresentation ?? titlePresentation}
+    >
+      {entry.text && <p>{entry.text}</p>}
+      {entry.items && entry.items.length > 0 && (
+        <ul class="ba-list">
+          {entry.items.map((item) => <li>{item}</li>)}
+        </ul>
+      )}
+    </ContentAccordionItem>
+  ))}
+</div>
+
+<style>
+  .content-accordion-group {
+    display: grid;
+    gap: var(--ba-space-4);
+  }
+
+  .content-accordion-group.is-compact {
+    gap: var(--ba-space-3);
+  }
+</style>

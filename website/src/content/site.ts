@@ -1,16 +1,26 @@
 export type Language = 'es' | 'en';
 
+export type TitlePresentation = 'natural' | 'uppercase';
+
 export type ServiceArea =
   | string
   | {
       title: string;
       text: string;
       items?: string[];
+      titlePresentation?: TitlePresentation;
     };
 
 export type ServiceSubsection = {
   title: string;
   text: string;
+  titlePresentation?: TitlePresentation;
+};
+
+export type ServicePillar = {
+  title: string;
+  text: string;
+  titlePresentation?: TitlePresentation;
 };
 
 export type ServicePage = {
@@ -26,10 +36,8 @@ export type ServicePage = {
   models?: string[];
   heroImage?: string;
   supportImage?: string;
-  pillars?: Array<{
-    title: string;
-    text: string;
-  }>;
+  pillars?: ServicePillar[];
+  pillarTitleMinLines?: 1 | 2 | 3 | 4;
   sections?: Array<{
     title: string;
     text: string;
@@ -306,23 +314,24 @@ export const services: ServicePage[] = [
     heroImage: '/assets/services/engineering-law.webp',
     supportImage: '/assets/office/office-meeting-lounge.webp',
     body: [],
+    pillarTitleMinLines: 3,
     pillars: [
       {
-        title: 'CICLO DE VIDA COMPLETO DE PROYECTOS PÚBLICOS O PRIVADOS',
+        title: 'Ciclo de vida completo de proyectos públicos o privados',
         text: 'Acompañamiento desde etapa preliminar hasta cierre, con gestión estratégica del contrato, evidencia, hitos y riesgos.'
       },
       {
-        title: 'DEPARTAMENTO JURÍDICO EXTERNO',
+        title: 'Departamento jurídico externo',
         text: 'Servicio para empresas que requieren soporte legal continuo, especializado y alineado con su operación real, sin necesidad de internalizar una estructura jurídica completa.'
       },
       {
-        title: 'PROTECCIÓN PATRIMONIAL',
+        title: 'Protección patrimonial',
         text: 'Ordenamiento de exposición patrimonial de socios, directores, gerentes y representantes legales frente a contingencias.'
       }
     ],
     sections: [
       {
-        title: '1. CICLO DE VIDA COMPLETO DE PROYECTOS PÚBLICO O PRIVADOS',
+        title: '1. Ciclo de vida completo de proyectos público o privados',
         text: 'Acompañamiento jurídico y técnico integral durante todas las etapas del proyecto. Estructuración, licitación, génesis del contrato, ejecución y el cierre contractual. Identificamos y gestionamos riesgos, apoyamos negociaciones críticas y prevenimos, y aportamos a la resolución de controversias.',
         subsectionsLabel: 'ÁMBITOS DE ASESORÍA',
         subsections: [
@@ -369,13 +378,13 @@ export const services: ServicePage[] = [
         ]
       },
       {
-        title: '2. DEPARTAMENTO JURÍDICO EXTERNO',
+        title: '2. Departamento jurídico externo',
         text: 'Ofrecemos un servicio de Departamento Jurídico Externo que actúa como un verdadero socio estratégico para su organización empresarial. Este pilar proporciona soporte legal continuo, asegurando que todas las operaciones y estrategias empresariales estén alineadas con la legislación vigente y optimizadas para prevenir riesgos legales.',
         href: '/derecho-de-la-empresa/',
         items: ['Asesoría Legal Continua: Soporte integral en áreas de interés, tales como: gobiernos corporativos, contratos comerciales, cumplimiento normativo, derecho laboral, propiedad intelectual, y representación en litigios, entre otros (Remítase e intégrese con el área jurídica corporativa).', 'Soluciones Flexibles: Disponible como un plan anual para un soporte constante, o servicios personalizados por proyecto o caso específico, ajustándonos a las necesidades puntuales de la empresa.']
       },
       {
-        title: '3. PROTECCIÓN PATRIMONIAL',
+        title: '3. Protección patrimonial',
         text: 'Diagnóstico y diseño de estructuras jurídicas preventivas destinadas a resguardar el patrimonio personal, familiar y empresarial de socios, directores y representantes legales. Revisamos la organización societaria, titularidad de los activos, garantías, contratos y mecanismos de administración, procurando una adecuada separación patrimonial, la reducción lícita de riesgos y la continuidad del patrimonio frente a deudas, contingencias contractuales, laborales o societarias.'
       }
     ],
