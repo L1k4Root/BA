@@ -1,0 +1,39 @@
+---
+import type { ServicePillar, TitlePresentation } from '../content/site';
+import ServicePillarCard from './ServicePillarCard.astro';
+
+type Props = {
+  pillars: ServicePillar[];
+  titlePresentation?: TitlePresentation;
+  titleMinLines?: 1 | 2 | 3 | 4;
+};
+
+const { pillars, titlePresentation = 'natural', titleMinLines = 2 } = Astro.props;
+---
+
+<div class="service-pillar-grid" data-service-pillar-grid>
+  {pillars.map((pillar, index) => (
+    <ServicePillarCard
+      index={String(index + 1).padStart(2, '0')}
+      title={pillar.title}
+      text={pillar.text}
+      titlePresentation={pillar.titlePresentation ?? titlePresentation}
+      titleMinLines={titleMinLines}
+    />
+  ))}
+</div>
+
+<style>
+  .service-pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--ba-space-5);
+    align-items: stretch;
+  }
+
+  @media (max-width: 980px) {
+    .service-pillar-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

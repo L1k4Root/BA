@@ -69,6 +69,10 @@ website/
       SectionHeader.astro
       ServiceAccordion.astro
       ServiceCard.astro
+      ServicePillarCard.astro
+      ServicePillarGrid.astro
+      ContentAccordionItem.astro
+      ContentAccordionGroup.astro
       dev/
         NewsDraftWorkbench.astro
     content/
@@ -124,12 +128,16 @@ La regla base es que cada componente tenga una responsabilidad principal:
 - `ArticleListing.astro`: listado compartido para noticias externas y publicaciones propias de la oficina.
 - `FounderQuote.astro`: bloque editorial del socio fundador.
 - `ServiceCard.astro`: tarjeta reusable para áreas de servicio.
+- `ServicePillarCard.astro` / `ServicePillarGrid.astro`: tarjetas de pilares con alturas, títulos y descripciones alineadas de forma consistente.
+- `ContentAccordionItem.astro` / `ContentAccordionGroup.astro`: desplegable individual y grupo responsive compartidos por las páginas de servicios; los grupos parten cerrados por defecto.
 - `Header.astro` / `Footer.astro`: navegación global y cierre institucional.
 - `CTA.astro`: llamado final reutilizable.
 - `SectionHeader.astro`: encabezados consistentes.
 - `components/dev/NewsDraftWorkbench.astro`: herramienta local para drafts de noticias.
 
 Las páginas deben componer componentes, no concentrar todo el markup y CSS. El contenido editable debe vivir en `src/content/site.ts` salvo que sea copy estrictamente estructural de un componente.
+
+Los títulos de tarjetas y desplegables se almacenan con capitalización editorial natural. Si una pieza requiere mayúsculas por decisión visual, usar `titlePresentation: 'uppercase'` en ese contenido; no escribir todo el texto en mayúsculas ni agregar reglas CSS locales a una página.
 
 ### Servicios sin acordeón en home
 

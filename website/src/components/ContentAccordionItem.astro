@@ -1,0 +1,226 @@
+---
+import type { TitlePresentation } from '../content/site';
+
+type Props = {
+  index?: string;
+  title: string;
+  open?: boolean;
+  variant?: 'area' | 'compact';
+  headingLevel?: 3 | 4;
+  titlePresentation?: TitlePresentation;
+};
+
+const {
+  index,
+  title,
+  open = false,
+  variant = 'area',
+  headingLevel = 3,
+  titlePresentation = 'natural'
+} = Astro.props;
+---
+
+<details
+  class:list={[
+    'content-accordion-item',
+    `is-${variant}`,
+    titlePresentation === 'uppercase' && 'has-uppercase-title'
+  ]}
+  open={open}
+  data-content-accordion-item
+>
+  <summary>
+    {index && <span class="content-accordion-item__index" aria-hidden="true">{index}</span>}
+    {headingLevel === 4 ? <h4>{title}</h4> : <h3>{title}</h3>}
+    <span class="content-accordion-item__icon" aria-hidden="true"></span>
+  </summary>
+  <div class="content-accordion-item__body">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .content-accordion-item {
+    --accordion-index-column: 72px;
+    --accordion-summary-height: 104px;
+    --accordion-summary-padding-block: var(--ba-space-5);
+    --accordion-summary-padding-inline: var(--ba-space-6);
+    --accordion-title-size: clamp(18px, 1.4vw, 23px);
+    --accordion-body-padding-left: calc(var(--accordion-summary-padding-inline) + var(--accordion-index-column) + var(--ba-space-4));
+
+    padding: 0;
+    overflow: clip;
+    border: 1px solid var(--ba-gray-200);
+    background: var(--ba-white);
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  }
+
+  .content-accordion-item.is-compact {
+    --accordion-index-column: 42px;
+    --accordion-summary-height: 72px;
+    --accordion-summary-padding-block: var(--ba-space-4);
+    --accordion-summary-padding-inline: var(--ba-space-5);
+    --accordion-title-size: clamp(17px, 1.15vw, 20px);
+    --accordion-body-padding-left: calc(var(--accordion-summary-padding-inline) + var(--accordion-index-column) + var(--ba-space-3));
+  }
+
+  .content-accordion-item[open] {
+    border-color: rgba(181, 143, 81, 0.5);
+    box-shadow: 0 24px 70px -58px rgba(16, 47, 75, 0.72);
+  }
+
+  .content-accordion-item summary {
+    display: grid;
+    grid-template-columns: var(--accordion-index-column) minmax(0, 1fr) 24px;
+    gap: var(--ba-space-4);
+    align-items: center;
+    min-height: var(--accordion-summary-height);
+    padding: var(--accordion-summary-padding-block) var(--accordion-summary-padding-inline);
+    cursor: pointer;
+    list-style: none;
+    transition: background 160ms ease;
+  }
+
+  .content-accordion-item.is-compact summary {
+    grid-template-columns: var(--accordion-index-column) minmax(0, 1fr) 18px;
+    gap: var(--ba-space-3);
+  }
+
+  .content-accordion-item summary:hover {
+    background: rgba(16, 47, 75, 0.025);
+  }
+
+  .content-accordion-item summary:focus-visible {
+    outline: 3px solid rgba(181, 143, 81, 0.5);
+    outline-offset: -3px;
+  }
+
+  .content-accordion-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .content-accordion-item__index {
+    display: block;
+    color: var(--ba-gold-500);
+    font-family: var(--ba-font-head);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .content-accordion-item.is-compact .content-accordion-item__index {
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .content-accordion-item h3,
+  .content-accordion-item h4 {
+    min-width: 0;
+    margin: 0;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: var(--accordion-title-size);
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    text-transform: none;
+  }
+
+  .content-accordion-item.has-uppercase-title h3,
+  .content-accordion-item.has-uppercase-title h4 {
+    text-transform: uppercase;
+  }
+
+  .content-accordion-item__icon {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: var(--ba-gold-500);
+  }
+
+  .content-accordion-item__icon::before,
+  .content-accordion-item__icon::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 2px;
+    background: currentColor;
+    content: '';
+    transform: translate(-50%, -50%);
+    transition: transform 160ms ease;
+  }
+
+  .content-accordion-item__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .content-accordion-item[open] .content-accordion-item__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .content-accordion-item__body {
+    max-width: 1020px;
+    padding: 0 var(--accordion-summary-padding-inline) var(--ba-space-5) var(--accordion-body-padding-left);
+    color: var(--ba-gray-700);
+  }
+
+  .content-accordion-item__body :global(p) {
+    max-width: 900px;
+    margin: 0;
+  }
+
+  .content-accordion-item__body :global(.ba-list) {
+    display: grid;
+    max-width: 900px;
+    gap: var(--ba-space-2);
+    margin-top: var(--ba-space-4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .content-accordion-item,
+    .content-accordion-item summary,
+    .content-accordion-item__icon::before,
+    .content-accordion-item__icon::after {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .content-accordion-item {
+      --accordion-index-column: 54px;
+    }
+
+    .content-accordion-item.is-compact {
+      --accordion-index-column: 36px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .content-accordion-item,
+    .content-accordion-item.is-compact {
+      --accordion-index-column: 32px;
+      --accordion-summary-height: 68px;
+      --accordion-summary-padding-block: var(--ba-space-4);
+      --accordion-summary-padding-inline: var(--ba-space-3);
+      --accordion-body-padding-left: calc(var(--accordion-summary-padding-inline) + var(--accordion-index-column) + var(--ba-space-2));
+    }
+
+    .content-accordion-item summary,
+    .content-accordion-item.is-compact summary {
+      grid-template-columns: var(--accordion-index-column) minmax(0, 1fr) 18px;
+      gap: var(--ba-space-2);
+    }
+
+    .content-accordion-item__index {
+      font-size: 20px;
+    }
+
+    .content-accordion-item__body {
+      padding-right: var(--ba-space-4);
+      padding-bottom: var(--ba-space-4);
+      padding-left: var(--accordion-body-padding-left);
+    }
+  }
+</style>
