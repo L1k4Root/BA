@@ -4,23 +4,27 @@ type Props = {
   text?: string;
   href: string;
   label: string;
+  lang?: 'es' | 'en';
   agendaHref?: string;
   agendaLabel?: string;
 };
 
-const { title, text, href, label, agendaHref, agendaLabel = 'Agenda' } = Astro.props;
+const { title, text, href, label, lang, agendaHref, agendaLabel } = Astro.props;
+const resolvedLang = lang ?? (href.startsWith('/en/') ? 'en' : 'es');
+const eyebrow = resolvedLang === 'es' ? 'Contacto' : 'Contact';
+const resolvedAgendaLabel = agendaLabel ?? (resolvedLang === 'es' ? 'Agenda' : 'Schedule a meeting');
 ---
 
 <section class="cta-band">
   <div class="ba-container cta-band__inner">
     <div>
-      <span class="ba-label ba-eyebrow">Contacto</span>
+      <span class="ba-label ba-eyebrow">{eyebrow}</span>
       <h2 class="ba-heading-xl">{title}</h2>
       {text && <p class="ba-body-lg">{text}</p>}
     </div>
     <div class="cta-band__actions">
       <a class="ba-btn ba-btn-primary" href={href}>{label}</a>
-      {agendaHref && <a class="ba-btn ba-btn-agenda" href={agendaHref}>{agendaLabel}</a>}
+      {agendaHref && <a class="ba-btn ba-btn-agenda" href={agendaHref}>{resolvedAgendaLabel}</a>}
     </div>
   </div>
 </section>
@@ -110,6 +114,13 @@ const { title, text, href, label, agendaHref, agendaLabel = 'Agenda' } = Astro.p
 
     .cta-band__actions {
       justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .cta-band__actions,
+    .cta-band__actions .ba-btn {
+      width: 100%;
     }
   }
 </style>

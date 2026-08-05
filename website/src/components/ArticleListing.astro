@@ -1,13 +1,15 @@
 ---
-import type { ArticlePage } from '../content/site';
+import type { ArticlePage, Language } from '../content/site';
 
 type Props = {
   articles: ArticlePage[];
   variant: 'external' | 'internal';
+  lang?: Language;
 };
 
-const { articles, variant } = Astro.props;
+const { articles, variant, lang = 'es' } = Astro.props;
 const isExternal = variant === 'external';
+const isEnglish = lang === 'en';
 ---
 
 <div class="article-list">
@@ -20,9 +22,9 @@ const isExternal = variant === 'external';
         <p>{article.summary}</p>
         {isExternal && article.source?.label && <span class="article-card__source">{article.source.label}</span>}
         {isExternal ? (
-          <a href={article.externalUrl || article.source?.href} target="_blank" rel="noreferrer">Ver fuente</a>
+          <a href={article.externalUrl || article.source?.href} target="_blank" rel="noreferrer">{isEnglish ? 'View source' : 'Ver fuente'}</a>
         ) : (
-          <a href={`/${article.slug}/`}>Ver estructura</a>
+          <a href={`${isEnglish ? '/en' : ''}/${article.slug}/`}>{isEnglish ? 'Read article' : 'Leer artículo'}</a>
         )}
       </div>
     </article>
@@ -85,6 +87,9 @@ const isExternal = variant === 'external';
   }
 
   .article-card a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
     color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
     font-size: 13px;

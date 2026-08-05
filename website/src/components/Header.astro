@@ -1,7 +1,8 @@
 ---
 import Logo from './Logo.astro';
 import type { Language } from '../content/site';
-import { nav, servicesByLang } from '../content/site';
+import { servicesByLang } from '../content/site';
+import { getCounterpartPath, routePairs } from '../lib/i18n';
 
 type Props = {
   lang?: Language;
@@ -10,11 +11,48 @@ type Props = {
 };
 
 const { lang = 'es', tone = 'navy', overlay = false } = Astro.props;
-const items = nav[lang];
-const serviceItems = servicesByLang(lang).filter((item) => !item.slug.startsWith('landing') && item.slug !== 'compliance').slice(0, 3);
+const serviceRouteKeys = ['corporateBusinessLaw', 'engineeringAndLaw', 'internationalTradeBusiness'] as const;
+const services = servicesByLang(lang)
+  .filter((item) => !item.slug.startsWith('landing') && item.slug !== 'compliance')
+  .slice(0, 3);
+const serviceItems = serviceRouteKeys.flatMap((routeKey, index) => {
+  const service = services[index];
+  return service ? [{ service, href: routePairs[routeKey][lang] }] : [];
+});
 const isDark = tone === 'navy';
-const switchHref = lang === 'es' ? '/en/' : '/';
-const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
+const isEs = lang === 'es';
+const targetLang: Language = isEs ? 'en' : 'es';
+const switchHref = getCounterpartPath(Astro.url.pathname, lang) ?? routePairs.home[targetLang];
+const switchLabel = targetLang.toUpperCase();
+const copy = isEs
+  ? {
+      home: 'Inicio',
+      services: 'Servicios',
+      about: 'Nosotros',
+      news: 'Noticias',
+      officeBlog: 'Blog oficina',
+      contact: 'Contacto',
+      mainNav: 'Navegación principal',
+      servicesMenu: 'Áreas de servicio',
+      newsMenu: 'Noticias y blog',
+      openMenu: 'Abrir menú',
+      closeMenu: 'Cerrar menú',
+      switchLanguage: 'Ver esta página en inglés'
+    }
+  : {
+      home: 'Home',
+      services: 'Services',
+      about: 'About Us',
+      news: 'News',
+      officeBlog: 'Office Blog',
+      contact: 'Contact',
+      mainNav: 'Main navigation',
+      servicesMenu: 'Service areas',
+      newsMenu: 'News and office blog',
+      openMenu: 'Open menu',
+      closeMenu: 'Close menu',
+      switchLanguage: 'View this page in Spanish'
+    };
 ---
 
 <header class:list={['site-header', isDark && 'is-dark', overlay && 'is-overlay', !overlay && 'is-scrolled']} data-site-header data-overlay={overlay ? 'true' : 'false'}>
@@ -23,53 +61,58 @@ const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
       <Logo variant={isDark ? 'white' : 'navy'} />
     </a>
 
-    <button class="site-header__toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-menu-toggle>
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-label={copy.openMenu}
+      aria-controls="site-navigation"
+      aria-expanded="false"
+      data-menu-label-open={copy.openMenu}
+      data-menu-label-close={copy.closeMenu}
+      data-menu-toggle
+    >
       <span></span>
       <span></span>
       <span></span>
     </button>
 
-    <nav class="site-header__nav" aria-label="Principal" data-menu>
-      {items.map((item) => (
-        item.label === (lang === 'es' ? 'Servicios' : 'Services') ? (
-          <div class="site-header__dropdown">
-            <a class="site-header__dropdown-trigger" href={item.href} aria-haspopup="true">
-              {item.label}
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+    <nav id="site-navigation" class="site-header__nav" aria-label={copy.mainNav} data-menu>
+      <a href={routePairs.home[lang]}>{copy.home}</a>
+      <div class="site-header__dropdown">
+        <a class="site-header__dropdown-trigger" href={routePairs.services[lang]} aria-haspopup="true">
+          {copy.services}
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+        <div class="site-header__dropdown-menu" aria-label={copy.servicesMenu}>
+          {serviceItems.map(({ service, href }) => (
+            <a class="site-header__dropdown-link" href={href}>
+              <span>{service.navLabel}</span>
             </a>
-            <div class="site-header__dropdown-menu" aria-label={lang === 'es' ? 'Servicios' : 'Services'}>
-              {serviceItems.map((service) => (
-                <a class="site-header__dropdown-link" href={`${lang === 'en' ? '/en/' : '/'}${service.slug}/`}>
-                  <span>{service.navLabel}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        ) : item.label === 'Noticias' ? (
-          <div class="site-header__dropdown">
-            <a class="site-header__dropdown-trigger" href={item.href} aria-haspopup="true">
-              {item.label}
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </a>
-            <div class="site-header__dropdown-menu" aria-label="Noticias">
-              <a class="site-header__dropdown-link" href="/noticias/">
-                <span>Noticias</span>
-              </a>
-              <a class="site-header__dropdown-link" href="/blog-oficina/">
-                <span>Blog oficina</span>
-              </a>
-            </div>
-          </div>
-        ) : (
-          <a href={item.href}>{item.label}</a>
-        )
-      ))}
-      <a class="site-header__lang" href={switchHref}>
-        {lang === 'es' ? (
+          ))}
+        </div>
+      </div>
+      <a href={routePairs.about[lang]}>{copy.about}</a>
+      <div class="site-header__dropdown">
+        <a class="site-header__dropdown-trigger" href={routePairs.newsHub[lang]} aria-haspopup="true">
+          {copy.news}
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+        <div class="site-header__dropdown-menu" aria-label={copy.newsMenu}>
+          <a class="site-header__dropdown-link" href={routePairs.news[lang]}>
+            <span>{copy.news}</span>
+          </a>
+          <a class="site-header__dropdown-link" href={routePairs.officeBlog[lang]}>
+            <span>{copy.officeBlog}</span>
+          </a>
+        </div>
+      </div>
+      <a href={routePairs.contact[lang]}>{copy.contact}</a>
+      <a class="site-header__lang" href={switchHref} hreflang={targetLang} aria-label={copy.switchLanguage}>
+        {targetLang === 'es' ? (
           <svg class="site-header__flag" viewBox="0 0 27 18" aria-hidden="true" focusable="false">
             <rect width="27" height="18" fill="#fff" />
             <rect y="9" width="27" height="9" fill="#d52b1e" />
@@ -95,10 +138,25 @@ const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
 </header>
 
 <script>
-  const toggle = document.querySelector('[data-menu-toggle]');
-  const menu = document.querySelector('[data-menu]');
-  const header = document.querySelector('[data-site-header]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
   const isOverlay = header?.getAttribute('data-overlay') === 'true';
+  const mobileBreakpoint = window.matchMedia('(max-width: 980px)');
+
+  const setMenuState = (open: boolean) => {
+    if (!toggle || !menu) return;
+
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute(
+      'aria-label',
+      open ? toggle.dataset.menuLabelClose ?? '' : toggle.dataset.menuLabelOpen ?? ''
+    );
+    document.body.classList.toggle('is-menu-open', open);
+    menu.classList.toggle('is-open', open);
+  };
+
+  const closeMenu = () => setMenuState(false);
 
   const syncHeader = () => {
     if (!header || !isOverlay) return;
@@ -110,9 +168,22 @@ const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
 
   toggle?.addEventListener('click', () => {
     const open = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!open));
-    document.body.classList.toggle('is-menu-open', !open);
-    menu?.classList.toggle('is-open', !open);
+    setMenuState(!open);
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || toggle?.getAttribute('aria-expanded') !== 'true') return;
+
+    closeMenu();
+    toggle?.focus();
+  });
+
+  mobileBreakpoint.addEventListener('change', (event) => {
+    if (!event.matches) closeMenu();
   });
 </script>
 
@@ -421,20 +492,27 @@ const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
     }
 
     .site-header__nav {
-      position: fixed;
-      top: var(--ba-header-compact);
+      position: absolute;
+      top: 100%;
       right: 0;
       left: 0;
       display: none;
+      max-height: calc(100vh - var(--ba-header-compact));
+      max-height: calc(100dvh - var(--ba-header-compact));
       flex-direction: column;
       align-items: stretch;
-      padding: var(--ba-space-6);
+      gap: 0;
+      justify-content: flex-start;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: var(--ba-space-4) var(--ba-space-6) max(var(--ba-space-6), env(safe-area-inset-bottom));
       border-top: 1px solid var(--ba-gray-200);
       background: var(--ba-navy-900);
       box-shadow: 0 20px 40px rgba(16, 47, 75, 0.14);
       transform: none;
       margin-left: 0;
       margin-top: 0;
+      -webkit-overflow-scrolling: touch;
     }
 
     .site-header__nav.is-open {
@@ -479,7 +557,7 @@ const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
     }
 
     .site-header__dropdown-menu .site-header__dropdown-link {
-      min-height: auto;
+      min-height: 44px;
       padding: var(--ba-space-3) 0;
       border-bottom: 0;
       color: rgba(255, 255, 255, 0.82);
@@ -502,6 +580,14 @@ const switchLabel = lang === 'es' ? 'Esp' : 'Eng';
 
     .site-header__dropdown-menu .site-header__dropdown-link::after {
       display: none;
+    }
+
+    .site-header__lang {
+      min-height: 48px;
+      margin-top: var(--ba-space-2);
+      padding-left: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      border-left: 0;
     }
   }
  </style>

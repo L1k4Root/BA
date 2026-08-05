@@ -2,17 +2,26 @@
 import Logo from './Logo.astro';
 import type { Language } from '../content/site';
 import { contact, servicesByLang } from '../content/site';
+import { routePairs } from '../lib/i18n';
 
 type Props = {
   lang?: Language;
 };
 
 const { lang = 'es' } = Astro.props;
-const serviceItems = servicesByLang(lang).filter((item) => !item.slug.startsWith('landing') && item.slug !== 'compliance').slice(0, 3);
+const serviceRouteKeys = ['corporateBusinessLaw', 'engineeringAndLaw', 'internationalTradeBusiness'] as const;
+const services = servicesByLang(lang)
+  .filter((item) => !item.slug.startsWith('landing') && item.slug !== 'compliance')
+  .slice(0, 3);
+const serviceItems = serviceRouteKeys.flatMap((routeKey, index) => {
+  const service = services[index];
+  return service ? [{ service, href: routePairs[routeKey][lang] }] : [];
+});
 const isEs = lang === 'es';
+const address = isEs ? contact.address : contact.addressEn;
 ---
 
-<footer class="footer" id="contacto">
+<footer class="footer" id={isEs ? 'contacto' : 'contact'}>
   <div class="footer__top">
     <div>
       <Logo variant="white" />
@@ -21,14 +30,14 @@ const isEs = lang === 'es';
 
     <div>
       <h2>{isEs ? 'Servicios' : 'Services'}</h2>
-      {serviceItems.map((service) => (
-        <a href={`${lang === 'en' ? '/en/' : '/'}${service.slug}/`}>{service.navLabel}</a>
+      {serviceItems.map(({ service, href }) => (
+        <a href={href}>{service.navLabel}</a>
       ))}
     </div>
 
     <div>
       <h2>{isEs ? 'Contacto' : 'Contact'}</h2>
-      <p>{contact.address}</p>
+      <p>{address}</p>
       <a href={`mailto:${contact.email}`}>{contact.email}</a>
       <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
       <div class="footer__social">
@@ -88,8 +97,9 @@ const isEs = lang === 'es';
   }
 
   .footer a {
-    display: block;
-    margin-bottom: var(--ba-space-3);
+    display: flex;
+    min-height: 44px;
+    align-items: center;
     text-decoration: none;
   }
 
@@ -105,8 +115,8 @@ const isEs = lang === 'es';
 
   .footer__social a {
     display: inline-flex;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.28);

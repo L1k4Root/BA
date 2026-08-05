@@ -1,0 +1,147 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { routePairs } from '../lib/i18n';
+import type { Language } from '../content/site';
+
+type Props = {
+  lang?: Language;
+};
+
+const { lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
+const copy = isEnglish
+  ? {
+      title: '/ News & Blog',
+      externalEyebrow: 'External legal developments',
+      externalTitle: 'News',
+      externalText: 'Monitoring external sources relevant to businesses, regulation, and courts.',
+      internalEyebrow: 'Office blog',
+      internalTitle: 'Office news',
+      internalText: 'A space reserved for approved institutional news, BA Chile milestones, and internal publications.',
+      internalLink: 'Office blog'
+    }
+  : {
+      title: '/ Noticias & Blog',
+      externalEyebrow: 'Actualidad jurídica externa',
+      externalTitle: 'Noticias',
+      externalText: 'Seguimiento de fuentes externas relevantes para empresas, regulación y tribunales.',
+      internalEyebrow: 'Blog interno',
+      internalTitle: 'Noticias propias de la oficina',
+      internalText: 'Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas.',
+      internalLink: 'Blog oficina'
+    };
+---
+
+<section class="ba-section light news-hub">
+  <div class="ba-container">
+    <SectionHeader level="h1" title={copy.title} />
+    <div class="news-hub__grid">
+      <article class="news-hub__card" id={isEnglish ? 'news' : 'noticias'}>
+        <span class="ba-label">{copy.externalEyebrow}</span>
+        <h2><a href={routePairs.news[lang]}>{copy.externalTitle}</a></h2>
+        <p>{copy.externalText}</p>
+        <a class="news-hub__link" href={routePairs.news[lang]}>{copy.externalTitle}</a>
+      </article>
+      <article class="news-hub__card news-hub__card--dark" id={isEnglish ? 'office-blog' : 'blog-oficina'}>
+        <span class="ba-label">{copy.internalEyebrow}</span>
+        <h2><a href={routePairs.officeBlog[lang]}>{copy.internalTitle}</a></h2>
+        <p>{copy.internalText}</p>
+        <a class="news-hub__link" href={routePairs.officeBlog[lang]}>{copy.internalLink}</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  #noticias,
+  #news,
+  #blog-oficina,
+  #office-blog {
+    scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
+  }
+
+  .news-hub__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ba-space-5);
+  }
+
+  .news-hub__card {
+    min-height: 340px;
+    padding: clamp(var(--ba-space-6), 4vw, var(--ba-space-8));
+    border-top: 4px solid var(--ba-gold-500);
+    background: var(--ba-white);
+    box-shadow: 0 30px 84px -68px rgba(16, 47, 75, 0.62);
+  }
+
+  .news-hub__card--dark {
+    background: var(--ba-navy-900);
+    color: var(--ba-white);
+  }
+
+  .news-hub__card .ba-label {
+    color: var(--ba-gold-500);
+  }
+
+  .news-hub__card h2 {
+    margin: var(--ba-space-6) 0 var(--ba-space-4);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-heading-lg);
+    line-height: 1.18;
+  }
+
+  .news-hub__card--dark h2 {
+    color: var(--ba-white);
+  }
+
+  .news-hub__card h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .news-hub__card p {
+    max-width: 560px;
+    margin: 0 0 var(--ba-space-7);
+  }
+
+  .news-hub__link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .news-hub__link::after {
+    margin-left: var(--ba-space-3);
+    color: var(--ba-gold-500);
+    content: '→';
+    font-size: 18px;
+  }
+
+  .news-hub__card--dark .news-hub__link {
+    color: var(--ba-white);
+  }
+
+  .news-hub__card h2 a:focus-visible,
+  .news-hub__link:focus-visible {
+    outline: 2px solid var(--ba-gold-500);
+    outline-offset: 5px;
+  }
+
+  @media (max-width: 760px) {
+    .news-hub__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .news-hub__card {
+      min-height: 300px;
+    }
+  }
+</style>

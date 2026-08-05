@@ -22,7 +22,7 @@ const isEs = lang === 'es';
           {page.readTime && <span>{page.readTime}</span>}
           {page.source && <a href={page.source.href} target="_blank" rel="noreferrer">{page.source.label}</a>}
         </div>
-        {page.externalUrl && <a class="ba-btn ba-btn-primary article-detail__source-link" href={page.externalUrl} target="_blank" rel="noreferrer">Ver fuente original</a>}
+        {page.externalUrl && <a class="ba-btn ba-btn-primary article-detail__source-link" href={page.externalUrl} target="_blank" rel="noreferrer">{isEs ? 'Ver fuente original' : 'View original source'}</a>}
       </div>
       <figure class="article-detail__media">
         <img src={page.image} alt={page.title} />

@@ -11,7 +11,7 @@ const content = about.es;
   <section class="ba-section light page-hero">
     <div class="ba-container ba-grid-2">
       <div>
-        <SectionHeader eyebrow="Firma" title={content.title} lead={content.lead} />
+        <SectionHeader level="h1" eyebrow="Firma" title={content.title} lead={content.lead} />
         <a class="ba-btn ba-btn-outline-dark" href="/contacto/">Contactar</a>
       </div>
       <div class="ba-frame portrait">
@@ -77,10 +77,6 @@ const content = about.es;
 </BaseLayout>
 
 <style>
-  .page-hero {
-    padding-top: var(--ba-space-8);
-  }
-
   .portrait {
     aspect-ratio: 5 / 4;
   }

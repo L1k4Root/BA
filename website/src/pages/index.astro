@@ -26,15 +26,15 @@ const articles = externalNews.filter((article) => article.lang === lang).slice(0
     secondaryHref="/contacto/"
   />
 
-  <HomeIntro approach={content.approach} secondary={content.approachFollowup} />
+  <HomeIntro approach={content.approach} secondary={content.approachFollowup} lang={lang} />
 
-  <HomeServices heading={content.servicesHeading} subheading={content.servicesSubheading} services={services} />
+  <HomeServices heading={content.servicesHeading} subheading={content.servicesSubheading} services={services} lang={lang} />
 
-  <ClientTrustMarquee logos={clientLogos} />
+  <ClientTrustMarquee logos={clientLogos} lang={lang} />
 
-  <NewsPreview articles={articles} />
+  <NewsPreview articles={articles} lang={lang} />
 
   <FounderQuote heading={content.founderHeading} quote={content.founderQuote} text={content.founderText} />
 
-  <CTA title="Conversemos sobre su próximo proyecto" text="Ordenamos contratos, riesgos, cumplimiento y decisiones críticas con criterio jurídico y visión de negocio." href="/contacto/" label="Contactar" agendaHref={contact.agendaHref} />
+  <CTA title="Conversemos sobre su próximo proyecto" text="Ordenamos contratos, riesgos, cumplimiento y decisiones críticas con criterio jurídico y visión de negocio." href="/contacto/" label="Contactar" agendaHref={contact.agendaHref} lang={lang} />
 </BaseLayout>

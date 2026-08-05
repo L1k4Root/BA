@@ -1,19 +1,21 @@
 ---
 import SectionHeader from './SectionHeader.astro';
-import type { ServicePage } from '../content/site';
+import type { Language, ServicePage } from '../content/site';
 
 type Props = {
   heading: string;
   subheading: string;
   services: ServicePage[];
+  lang?: Language;
 };
 
-const { heading, subheading, services } = Astro.props;
+const { heading, subheading, services, lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
 ---
 
-<section class="ba-section offwhite" id="servicios">
+<section class="ba-section offwhite" id={isEnglish ? 'services' : 'servicios'}>
   <div class="ba-container">
-    <SectionHeader eyebrow="Servicios" title={heading} lead={subheading} />
+    <SectionHeader eyebrow={isEnglish ? 'Services' : 'Servicios'} title={heading} lead={subheading} />
     <div class="home-service-grid reveal-up">
       {services.slice(0, 3).map((service) => (
         <article class="home-service-card">
@@ -40,7 +42,7 @@ const { heading, subheading, services } = Astro.props;
           </div>
           <h3>{service.navLabel}</h3>
           <p>{service.summary}</p>
-          <a href={`/${service.slug}/`}>Ver servicio</a>
+          <a href={`${isEnglish ? '/en' : ''}/${service.slug}/`}>{isEnglish ? 'View service' : 'Ver servicio'}</a>
         </article>
       ))}
     </div>
@@ -48,7 +50,8 @@ const { heading, subheading, services } = Astro.props;
 </section>
 
 <style>
-  #servicios {
+  #servicios,
+  #services {
     scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
   }
 

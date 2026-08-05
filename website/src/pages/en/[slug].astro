@@ -1,140 +1,31 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import SectionHeader from '../../components/SectionHeader.astro';
-import CTA from '../../components/CTA.astro';
 import ArticleDetail from '../../components/ArticleDetail.astro';
-import { articles, services } from '../../content/site';
+import CTA from '../../components/CTA.astro';
+import ServiceDetailPage from '../../components/ServiceDetailPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { articles, contact, services } from '../../content/site';
 
 export function getStaticPaths() {
   return [
-    ...services.filter((item) => item.lang === 'en').map((page) => ({ params: { slug: page.slug }, props: { page, kind: 'service' } })),
-    ...articles.filter((item) => item.lang === 'en').map((page) => ({ params: { slug: page.slug }, props: { page, kind: 'article' } }))
+    ...services
+      .filter((item) => item.lang === 'en')
+      .map((page) => ({ params: { slug: page.slug }, props: { page, kind: 'service' } })),
+    ...articles
+      .filter((item) => item.lang === 'en')
+      .map((page) => ({ params: { slug: page.slug }, props: { page, kind: 'article' } }))
   ];
 }
 
 const { page, kind } = Astro.props;
 const isArticle = kind === 'article';
+const ctaTitle = isArticle ? 'Let us discuss the impact on your company' : page.cta;
+const ctaText = isArticle
+  ? 'Bright Alliance integrates Law, Strategy, and Business to turn legal complexity into clear decisions.'
+  : page.ctaText ?? 'Bright Alliance integrates Law, Strategy, and Business to turn legal complexity into clear decisions.';
 ---
 
 <BaseLayout title={`${page.title} - Bright Alliance | BA Chile`} description={page.summary} lang="en">
-  {isArticle ? (
-    <ArticleDetail page={page} lang="en" />
-  ) : (
-    <section class="ba-section light page-hero">
-      <div class="ba-container">
-        <SectionHeader eyebrow="Service" title={page.title} lead={page.summary} />
-        <p class="ba-body-lg intro">{page.intro}</p>
-        <a class="ba-btn ba-btn-primary" href="/en/contact/">{page.cta}</a>
-      </div>
-    </section>
-  )}
+  {isArticle ? <ArticleDetail page={page} lang="en" /> : <ServiceDetailPage page={page} lang="en" />}
 
-  {!isArticle && (
-    <>
-      <section class="ba-section offwhite">
-        <div class="ba-container ba-grid-2">
-          <div>
-            <h2 class="ba-heading-xl">Approach</h2>
-            {page.body.map((paragraph) => <p class="ba-body-lg">{paragraph}</p>)}
-          </div>
-          {page.models && (
-            <div class="model-card">
-              <h3>Advisory Models</h3>
-              <ul class="ba-list">
-                {page.models.map((model) => <li>{model}</li>)}
-              </ul>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section class="ba-section light">
-        <div class="ba-container">
-          <SectionHeader eyebrow="Areas" title="Areas of specialization" lead="Initial scope organized from the public website and Brand System." />
-          <div class="area-grid">
-            {page.areas.map((area, index) => (
-              <div class="area-item">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <p>{area}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
-  )}
-
-  <CTA title={isArticle ? 'Let us discuss the impact on your company' : page.cta} text="Bright Alliance integrates Law, Strategy, and Business to turn legal complexity into clear decisions." href="/en/contact/" label="Contact" />
+  <CTA title={ctaTitle} text={ctaText} href="/en/contact/" label="Contact" agendaHref={contact.agendaHref} lang="en" />
 </BaseLayout>
-
-<style>
-  .page-hero {
-    padding-top: var(--ba-space-8);
-  }
-
-  .intro {
-    max-width: 780px;
-    margin: calc(-1 * var(--ba-space-5)) 0 var(--ba-space-6);
-  }
-
-  .model-card {
-    padding: var(--ba-space-7);
-    border-left: 4px solid var(--ba-gold-500);
-    background: var(--ba-navy-900);
-    color: var(--ba-white);
-  }
-
-  .model-card h3 {
-    margin: 0 0 var(--ba-space-5);
-    color: var(--ba-gold-400);
-    font-family: var(--ba-font-head);
-    text-transform: uppercase;
-  }
-
-  .area-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--ba-space-5);
-  }
-
-  .area-item {
-    min-height: 150px;
-    padding: var(--ba-space-6);
-    border: 1px solid var(--ba-gray-200);
-    background: var(--ba-white);
-  }
-
-  .area-item span {
-    display: block;
-    margin-bottom: var(--ba-space-4);
-    color: var(--ba-gold-500);
-    font-family: var(--ba-font-head);
-    font-size: 30px;
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  .area-item p {
-    margin: 0;
-    color: var(--ba-navy-900);
-    font-family: var(--ba-font-head);
-    font-weight: 700;
-    line-height: 1.35;
-  }
-
-  .article-body img {
-    width: 100%;
-    margin-bottom: var(--ba-space-7);
-    border: 1px solid var(--ba-gray-200);
-  }
-
-  .article-body p {
-    font-size: var(--ba-body-lg);
-  }
-
-  @media (max-width: 860px) {
-    .area-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

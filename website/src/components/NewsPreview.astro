@@ -1,38 +1,69 @@
 ---
 import SectionHeader from './SectionHeader.astro';
-import type { ArticlePage } from '../content/site';
+import type { ArticlePage, Language } from '../content/site';
+import { routePairs } from '../lib/i18n';
 
 type Props = {
   articles: ArticlePage[];
+  lang?: Language;
 };
 
-const { articles } = Astro.props;
+const { articles, lang: requestedLang } = Astro.props;
+const lang = requestedLang ?? articles[0]?.lang ?? 'es';
+const copy = lang === 'es'
+  ? {
+      eyebrow: 'Noticias jurídicas',
+      title: 'Contingencia legal y empresarial',
+      lead: 'Seguimiento de fuentes oficiales relevantes para empresas, regulación y tribunales.',
+      source: 'Ver fuente',
+      article: 'Leer artículo',
+      all: 'Ver todas las noticias'
+    }
+  : {
+      eyebrow: 'Legal news',
+      title: 'Legal and business developments',
+      lead: 'Monitoring official sources relevant to businesses, regulation, and courts.',
+      source: 'View source',
+      article: 'Read article',
+      all: 'View all news'
+    };
 ---
 
-<section class="ba-section offwhite" id="noticias">
+<section class="ba-section offwhite" id={lang === 'es' ? 'noticias' : 'news'}>
   <div class="ba-container-xl">
-    <SectionHeader eyebrow="Noticias jurídicas" title="Contingencia legal y empresarial" />
+    <SectionHeader eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead} />
     <div class="news-grid reveal-up">
-      {articles.map((article) => (
-        <article class="news-card">
-          <div class="news-card__media">
-            <img src={article.image} alt={article.title} loading="lazy" />
-          </div>
-          <div class="news-card__body">
-            <span class="ba-label">{article.category}</span>
-            <h3 class="ba-heading-md">{article.title}</h3>
-            <p>{article.summary}</p>
-            <span class="news-card__source">{article.source?.label}</span>
-            <a href={article.externalUrl || article.source?.href || `/${article.slug}/`} target={article.externalUrl || article.source?.href ? '_blank' : undefined} rel={article.externalUrl || article.source?.href ? 'noreferrer' : undefined}>Ver fuente</a>
-          </div>
-        </article>
-      ))}
+      {articles.map((article) => {
+        const externalHref = article.externalUrl || (article.kind === 'external' ? article.source?.href : undefined);
+        const href = externalHref ?? `${lang === 'en' ? '/en' : ''}/${article.slug}/`;
+
+        return (
+          <article class="news-card">
+            <div class="news-card__media">
+              <img src={article.image} alt={article.title} loading="lazy" />
+            </div>
+            <div class="news-card__body">
+              <span class="ba-label">{article.category}</span>
+              <h3 class="ba-heading-md">{article.title}</h3>
+              <p>{article.summary}</p>
+              {article.source?.label && <span class="news-card__source">{article.source.label}</span>}
+              <a href={href} target={externalHref ? '_blank' : undefined} rel={externalHref ? 'noreferrer' : undefined}>
+                {externalHref ? copy.source : copy.article}
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+    <div class="news-preview__actions">
+      <a class="ba-btn ba-btn-outline-dark" href={routePairs.news[lang]}>{copy.all}</a>
     </div>
   </div>
 </section>
 
 <style>
-  #noticias {
+  #noticias,
+  #news {
     scroll-margin-top: calc(var(--ba-header-compact) + var(--ba-space-5));
   }
 
@@ -128,9 +159,11 @@ const { articles } = Astro.props;
   .news-card a {
     position: relative;
     display: inline-flex;
+    min-height: 44px;
+    align-items: center;
     align-self: flex-start;
     margin-top: auto;
-    padding-bottom: 7px;
+    padding: 8px 0;
     color: var(--ba-navy-900);
     font-family: var(--ba-font-head);
     font-size: 13px;
@@ -143,7 +176,7 @@ const { articles } = Astro.props;
   .news-card a::after {
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 4px;
     left: 0;
     height: 1px;
     background: var(--ba-gold-500);
@@ -155,6 +188,12 @@ const { articles } = Astro.props;
 
   .news-card:hover a::after {
     transform: scaleX(1);
+  }
+
+  .news-preview__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--ba-space-6);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -178,36 +217,35 @@ const { articles } = Astro.props;
 
   @media (max-width: 520px) {
     .news-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--ba-space-3);
+      grid-template-columns: 1fr;
+      gap: var(--ba-space-4);
     }
 
     .news-card__body {
-      padding: var(--ba-space-3);
+      padding: var(--ba-space-4);
     }
 
     .news-card .ba-label,
     .news-card__source {
-      font-size: 10px;
-      line-height: 1.2;
+      font-size: 12px;
+      line-height: 1.35;
     }
 
     .news-card h3 {
-      font-size: 14px;
+      font-size: 18px;
     }
 
     .news-card p {
-      display: none;
+      font-size: 15px;
     }
 
     .news-card a {
-      font-size: 11px;
+      font-size: 12px;
     }
-  }
 
-  @media (max-width: 340px) {
-    .news-grid {
-      grid-template-columns: 1fr;
+    .news-preview__actions,
+    .news-preview__actions .ba-btn {
+      width: 100%;
     }
   }
 </style>

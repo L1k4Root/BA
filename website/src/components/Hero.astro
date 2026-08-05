@@ -28,12 +28,12 @@ const {
   secondaryHref = lang === 'es' ? '#servicios' : '#services',
   secondaryLabel = lang === 'es' ? 'Ver áreas' : 'View services',
   image = '/assets/hero/santiago-andes-optimized.jpg',
-  imageAlt = 'Cordillera de los Andes y skyline de Santiago',
+  imageAlt = lang === 'es' ? 'Cordillera de los Andes y skyline de Santiago' : 'The Andes and the Santiago skyline',
   slides = [
     { src: image, alt: imageAlt },
     { src: '/assets/hero/chile-torres-paine.jpg', alt: 'Torres del Paine, Chile' },
-    { src: '/assets/hero/chile-lago-pehoe.jpg', alt: 'Lago Pehoe en Torres del Paine, Chile' },
-    { src: '/assets/hero/chile-puerto-valparaiso.jpg', alt: 'Puerto de Valparaiso, Chile' }
+    { src: '/assets/hero/chile-lago-pehoe.jpg', alt: lang === 'es' ? 'Lago Pehoe en Torres del Paine, Chile' : 'Lake Pehoe in Torres del Paine, Chile' },
+    { src: '/assets/hero/chile-puerto-valparaiso.jpg', alt: lang === 'es' ? 'Puerto de Valparaiso, Chile' : 'Port of Valparaiso, Chile' }
   ]
 } = Astro.props;
 ---

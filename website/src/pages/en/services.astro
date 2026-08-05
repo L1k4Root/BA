@@ -1,0 +1,9 @@
+---
+import ServicesLandingPage from '../../components/ServicesLandingPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { home } from '../../content/site';
+---
+
+<BaseLayout title="Services - Bright Alliance | BA Chile" description={home.en.servicesSubheading} lang="en">
+  <ServicesLandingPage lang="en" />
+</BaseLayout>

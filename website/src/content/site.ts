@@ -25,6 +25,7 @@ export type ServicePillar = {
 
 export type ServicePage = {
   lang: Language;
+  translationKey?: string;
   slug: string;
   title: string;
   navLabel: string;
@@ -54,6 +55,7 @@ export type ServicePage = {
 
 export type ArticlePage = {
   lang: Language;
+  translationKey?: string;
   kind?: 'external' | 'internal';
   slug: string;
   title: string;
@@ -78,6 +80,7 @@ export type ArticlePage = {
 
 export const contact = {
   address: 'Apoquindo N° 3076, oficina N° 702, Barrio El Golf, Las Condes, Santiago, Chile.',
+  addressEn: 'Apoquindo No. 3076, Office No. 702, El Golf District, Las Condes, Santiago, Chile.',
   email: 'contacto@bachile.cl',
   phone: '+56 9 3100 7417',
   linkedin: 'https://www.linkedin.com/company/brightalliance/',
@@ -94,7 +97,7 @@ export const nav = {
   ],
   en: [
     { label: 'Home', href: '/en/' },
-    { label: 'Services', href: '/en/#services' },
+    { label: 'Services', href: '/en/services/' },
     { label: 'About Us', href: '/en/about-us/' },
     { label: 'News', href: '/en/news-blog/' },
     { label: 'Contact', href: '/en/contact/' }
@@ -117,13 +120,14 @@ export const home = {
   en: {
     title: 'Law, Business, and Strategy',
     subtitle: 'A key language for visions that transcend.',
-    lead: 'We advise companies, investors, and business groups with legal criteria, business vision, and a strategic reading of risks and opportunities.',
-    approach: 'Our approach combines legal expertise, business insight, and organizational intelligence, ensuring that every business decision is sound, efficient, and aligned with strategic objectives.',
+    lead: 'We support companies, investors, and business groups with legal judgment, business vision, and a strategic understanding of their risks and opportunities.',
+    approach: 'We provide high-level legal solutions designed to strengthen corporate governance, mitigate risks, design and improve the relevant business models, and support the sustainable growth of our clients in Chile and abroad.',
+    approachFollowup: 'Our approach combines legal expertise, business vision, and organizational intelligence so that every business decision is sound, efficient, and aligned with the company\'s strategic objectives.',
     servicesHeading: 'Practice Areas',
     servicesSubheading: 'Business advisory organized around clear fronts: management, projects, and expansion.',
     founderHeading: 'Words from the Founding Partner',
-    founderQuote: 'To properly advise a business organization, it must be understood as an integrated system, composed of units that interact in a synergistic and interdependent manner.',
-    founderText: 'Truly effective legal counsel requires understanding this systemic logic and supporting the organization strategically from within, in direct connection with operations and decision-making processes.'
+    founderQuote: 'To properly advise a business organization, it must be understood as an integrated system composed of units that interact synergistically and interdependently. In this context, a dysfunction in any of its components inevitably impacts the others, affecting the performance of the system as a whole.',
+    founderText: 'Truly effective legal counsel therefore requires understanding this systemic logic and the ability to support the organization strategically from within, in direct connection with its operations and decision-making processes.'
   }
 };
 
@@ -180,28 +184,58 @@ export const about = {
   en: {
     slug: 'about-us',
     title: '/ About Us',
-    lead: 'Bright Alliance | BA Chile is a strategic legal firm that integrates Law, Strategy, and Business to offer high-level solutions designed to strengthen corporate management and support sustainable development.',
+    lead: 'Bright Alliance | BA Chile is a strategic law firm that integrates Law, Strategy, and Business to offer high-level legal solutions designed to strengthen corporate management, prevent risks, and support the sustainable development of our clients, both in Chile and abroad.',
     proposal: [
-      'Our proposal is based on a deep understanding of business and on the conviction that law must create value, facilitate decisions, and strengthen competitiveness.',
-      'Through an intelligent alliance between legal knowledge, business vision, and technical experience, we turn legal complexity into clear, secure, and sustainable strategic decisions.'
+      'Our proposal is based on a deep understanding of business and on the conviction that Law should be a tool to create value, facilitate decisions, and enhance competitiveness.',
+      'Through an intelligent alliance between legal knowledge, business vision, and technical expertise, we turn legal complexity into clear, secure, and sustainable strategic decisions.',
+      'The team supporting this proposal is made up of high-level professionals—lawyers, accountants, engineers, and specialized consultants—who share the same vision: to practice Law with excellence, strategic focus, and commitment to business development.',
+      'With a minimalist style and without individual prominence, their work is reflected in every project undertaken by Bright Alliance | BA Chile.'
     ],
-    mission: 'To support national and international companies through legal advice that builds solid structures, effective decisions, and sustainable business models.',
-    vision: 'To be a benchmark firm in strategic-legal advisory, recognized for generating solutions that transcend the legal sphere and promote innovative business development.',
+    mission: 'To support national and international companies with legal counsel, integrating Law, Strategy, and Business to build solid structures, effective decisions, and sustainable business models, driving the growth and consolidation of the organizations that place their trust in us.',
+    vision: 'To consolidate Bright Alliance | BA Chile as a benchmark firm in legal-strategic advisory, recognized for integrating Law with Strategy and Business management to generate solutions that transcend legal matters, strengthen corporate management, and promote sustainable and innovative business development, both nationally and internationally.',
     values: ['Commitment', 'Excellence', 'Leadership', 'Innovation', 'Adaptability', 'Integrity'],
     valueDetails: [
-      { title: 'Commitment', text: 'We actively engage with each client objective through trust, transparency, and shared responsibility.' },
-      { title: 'Excellence', text: 'We pursue rigor in every detail through timely, precise, and high-standard legal counsel.' },
-      { title: 'Leadership', text: 'We anticipate challenges, guide strategic decisions, and transform risk into growth opportunities.' },
-      { title: 'Innovation', text: 'We integrate creative thinking, modern management models, and practical technology criteria.' },
-      { title: 'Adaptability', text: 'We adapt to the nature, scale, pace, and competitive context of each organization.' },
-      { title: 'Integrity', text: 'We act with consistency, rectitude, and respect for the principles that sustain legal trust.' }
-    ]
+      {
+        title: 'Commitment',
+        text: 'We actively engage with each client\'s objectives, building relationships based on trust, transparency, and shared responsibility.'
+      },
+      {
+        title: 'Excellence',
+        text: 'We pursue perfection in every detail, providing rigorous, timely legal counsel of the highest professional quality.'
+      },
+      {
+        title: 'Leadership',
+        text: 'We exercise proactive and ethical leadership, anticipating challenges, guiding strategic decisions, and transforming risks into growth opportunities.'
+      },
+      {
+        title: 'Innovation',
+        text: 'We incorporate creative thinking, technological tools, and modern management models to offer efficient legal solutions adapted to today\'s business reality.'
+      },
+      {
+        title: 'Adaptability',
+        text: 'We adapt our work to the nature and scale of each organization, adjusting to its changes, pace, and competitive environment without losing rigor or strategic vision.'
+      },
+      {
+        title: 'Integrity',
+        text: 'We act with rectitude, consistency, and respect for the principles that underpin legal practice. Integrity is the axis that connects our technical work with our clients\' trust and the sustainability of their projects.'
+      }
+    ],
+    founder: {
+      name: 'José Francisco Mazzei Alliende',
+      role: 'Lawyer – MBA – LLM in Business Law. Founding Partner | Bright Alliance | BA Chile',
+      paragraphs: [
+        'At Bright Alliance, José Francisco Mazzei Alliende leads with a vision that transcends traditional legal practice, integrating strategy, innovation, and business thinking into the field of Business Law, both nationally and internationally.',
+        'His solid experience in corporate advisory, business group structuring, and strategic business design, together with his postgraduate education (MBA and LLM in Business Law), enables him to identify opportunities, anticipate risks, and generate solutions that connect legal, economic, and organizational dimensions.',
+        'His commitment to professional excellence is reflected not only in his practice, but also in his university teaching, where he shares his interdisciplinary approach with future generations of lawyers and entrepreneurs.'
+      ]
+    }
   }
 };
 
 export const services: ServicePage[] = [
   {
     lang: 'es',
+    translationKey: 'service-corporate-business-law',
     slug: 'derecho-de-la-empresa',
     title: '/ Derecho de la Empresa',
     navLabel: 'Derecho de la Empresa',
@@ -305,6 +339,7 @@ export const services: ServicePage[] = [
   },
   {
     lang: 'es',
+    translationKey: 'service-engineering-and-law',
     slug: 'ingenieria-y-derecho',
     title: '/ Ingeniería y Derecho',
     navLabel: 'Ingeniería y Derecho',
@@ -393,6 +428,7 @@ export const services: ServicePage[] = [
   },
   {
     lang: 'es',
+    translationKey: 'service-international-trade-business',
     slug: 'comercio-y-negocios-internacionales',
     title: '/ Comercio y Negocios Internacionales',
     navLabel: 'Comercio y Negocios Internacionales',
@@ -485,37 +521,253 @@ export const services: ServicePage[] = [
   },
   {
     lang: 'en',
+    translationKey: 'service-corporate-business-law',
     slug: 'corporate-business-law',
     title: '/ Corporate & Business Law',
     navLabel: 'Corporate & Business Law',
+    icon: 'corporate',
     summary: 'Strategic legal counsel for business management, corporate structuring, and growth.',
-    intro: 'At Bright Alliance | BA Chile, Corporate Law is a comprehensive legal framework that enables organizations to operate with strength, efficiency, and a forward-looking vision.',
-    body: ['It is not only about legal compliance, but about aligning legal decisions with corporate strategy and sustainable business development.'],
+    intro: '',
+    heroImage: '/assets/office/office-private-room.webp',
+    supportImage: '/assets/office/office-boardroom-wide.webp',
+    body: [
+      'At Bright Alliance BA Chile, we understand Corporate and Business Law as comprehensive legal support that enables organizations to operate with strength, efficiency, and a forward-looking vision.',
+      'It is not only a matter of complying with the law, but of aligning legal decisions with corporate strategy and the sustainable development of the business.',
+      'This service is structured around multiple practice areas—Corporate Law, Labor Law, Tax Law, Civil and Commercial Contracts, Intellectual Property, Competition Law, Compliance, Consumer Law, Corporate Criminal Law, among others—which are adapted to the specific needs of each client.'
+    ],
     models: ['Case-by-case advisory', 'Project-based advisory', 'External legal department'],
-    areas: ['Corporate legal advisory', 'Civil and commercial contracts', 'Labor and tax law', 'Compliance', 'Intellectual property', 'Competition and consumer protection'],
-    cta: 'Request corporate counsel'
+    pillars: [
+      {
+        title: 'Case-by-case advisory',
+        text: 'Targeted intervention in specific legal matters, such as contracts, consultations, litigation, or legal opinions, providing precise and agile solutions.'
+      },
+      {
+        title: 'Project-based advisory',
+        text: 'Comprehensive support in processes with defined objectives, such as corporate restructurings, expansions, mergers and acquisitions, implementation of compliance programs, legal audits, or international projects.'
+      },
+      {
+        title: 'External legal department',
+        text: 'An ongoing service that integrates our team as a functional legal unit within the company, providing continuous support in every area of its legal environment and acting as a strategic partner in management, prevention, and decision-making, bringing efficiency, savings, continuity, and value to the business.'
+      }
+    ],
+    areas: [
+      {
+        title: 'Corporate legal advisory',
+        text: 'We provide comprehensive advice to companies throughout every stage of their corporate life, from incorporation to reorganization or eventual dissolution, including their day-to-day legal operation, with a focus on compliance, efficiency, and asset protection.',
+        items: ['Incorporation, conversion, division, amendment, and maintenance of companies.', 'Drafting of bylaws, amendments, and capital increases or decreases.', 'Shareholders’ agreements and partners’ agreements.', 'Share or equity interest subscription and transfer agreements.', 'Design of strategic corporate governance structures.', 'Ongoing advice on management, shareholders’ meetings, boards of directors, and the company’s ordinary operations.']
+      },
+      {
+        title: 'Strategic design of businesses and business groups',
+        text: 'Legal consulting for business model design and the creation or optimization of group structures: holdings and subholdings, subsidiaries and SPVs, related-party agreements, governance protocols, control and reporting matrices, and legal, tax, and operational alignment for sustainable growth.'
+      },
+      {
+        title: 'Mergers and Acquisitions (M&A)',
+        text: 'Structuring, legal due diligence, negotiation, and execution of transactions (SPA/APA, JV, reorganizations); regulatory coordination and post-merger integration planning (PMI).'
+      },
+      {
+        title: 'Business labor law',
+        text: 'We support companies in the comprehensive management of their labor relations and the strategic administration of their work teams, combining legal counsel, regulatory compliance, and support for key human resources decisions. Our approach is preventive and aimed at reducing contingencies and strengthening organizational stability.',
+        items: ['Hiring, drafting of addenda, and special agreements on employment conditions.', 'Application of disciplinary measures and terminations in accordance with the law.', 'Assessment and compliance in labor, pension, and social security matters.', 'Design and implementation of internal policies, regulations, and labor protocols.', 'Ongoing advice on strategic labor relations, workplace climate, and team management.', 'Representation in inspections, administrative proceedings, and judicial litigation.', 'Support in collective bargaining and union relations.']
+      },
+      {
+        title: 'Civil and commercial contracts',
+        text: 'Review, drafting, and negotiation of contracts; preparation of tailored contracts; contractual structuring in accordance with the particular features of the business.'
+      },
+      {
+        title: 'Complex negotiations',
+        text: 'Strategic legal assistance in high-impact domestic and international negotiations, integrating legal analysis, commercial planning, and risk management.'
+      },
+      {
+        title: 'Litigation and corporate defense',
+        text: 'Representation before ordinary and special courts, public agencies, and arbitrators; defense in civil, commercial, labor, or administrative disputes.'
+      },
+      {
+        title: 'Corporate compliance',
+        text: 'Design and implementation of comprehensive regulatory compliance programs tailored to the principal legal requirements in force. The programs include the development and implementation of internal policies, reporting channels, risk maps, periodic audits, training, monitoring, and ongoing regulatory updates, ensuring an organizational culture of compliance and business ethics.',
+        items: ['Law No. 20,393 on the criminal liability of legal entities.', 'Law No. 21,595 on economic and environmental crimes.', 'Law No. 21,459 on cybercrime.', 'Law No. 21,719 on personal data protection.', 'Anti-corruption, labor, competition, and corporate governance regulations.']
+      },
+      {
+        title: 'Tax law',
+        text: 'Tax planning and compliance, efficient tax structuring, and defense during audits. This includes advice on retirement planning and estate planning, aimed at safeguarding assets and optimizing the tax burden in succession and business reorganization processes.'
+      },
+      {
+        title: 'Corporate criminal law',
+        text: 'Criminal prevention and litigation in corporate matters involving economic, environmental, labor, or tax offenses.'
+      },
+      {
+        title: 'Public Law, Procurement, and Administrative Litigation',
+        text: 'We advise companies in their dealings with the State, both in public procurement processes and in exercising their rights in relation to acts of the Administration, supervisory agencies, and specialized courts. Our approach combines legal strategy, regulatory knowledge, and practical experience in administrative and public procurement litigation.',
+        items: ['Comprehensive advice on public and private procurement processes, including terms, bids, and challenges.', 'Incorporation, regulation, and operation of Temporary Supplier Associations (UTP), consortia, and temporary associations.', 'Representation in proceedings before the Office of the Comptroller General of the Republic and other public bodies.', 'Litigation before the Public Procurement Court and administrative judicial remedies.', 'Defense and representation during inspections by public agencies.', 'Assessment of regulatory risks and compliance in dealings with the State.']
+      },
+      {
+        title: 'Intellectual property and commercial identity',
+        text: 'Registration, renewal, assignment, and licensing of trademarks, patents, copyrights, and domain names. Recognition, establishment, and comprehensive protection of commercial identity and intangible assets.'
+      },
+      {
+        title: 'Consumer law',
+        text: 'Compliance with Law No. 19,496, review of contracts and commercial communications, implementation of compliance programs, and defense during inspections by SERNAC or claims, together with consulting and strategic advice.'
+      },
+      {
+        title: 'Competition law',
+        text: 'Preventive compliance with Decree Law No. 211, strategic advice on complaints and proceedings before the FNE, and development of internal compliance programs and a competitive culture.'
+      },
+      {
+        title: 'Retirement planning and future organization',
+        text: 'Legal and strategic support in succession and business continuity processes, safeguarding governance, the legacy of the founder or founders, and the future of the organization.'
+      },
+      {
+        title: 'Reorganization and Insolvency Proceedings',
+        text: 'We advise companies facing financial distress, structuring strategies for reorganization, asset protection, or orderly liquidation under the applicable legal frameworks. We support the entire process with a preventive view focused on operational continuity or an efficient closure.',
+        items: ['Preliminary assessment of viability and risks through legal and financial due diligence.', 'Advice on judicial reorganization or voluntary liquidation proceedings under Law No. 20,720.', 'Filing of applications before the Superintendency of Insolvency and Re-Entrepreneurship (SIIR).', 'Representation of creditors at meetings, in claim verification, and in objections.', 'Advice to partners, directors, or legal representatives with personal exposure.', 'Coordination with liquidators, overseers, and courts throughout every stage.', 'Protection of essential assets, continuity of business activities, or preparation for closure.']
+      }
+    ],
+    cta: 'Request advice on Corporate and Business Law'
   },
   {
     lang: 'en',
+    translationKey: 'service-engineering-and-law',
     slug: 'engineering-and-law',
     title: '/ Engineering and Law',
     navLabel: 'Engineering and Law',
-    summary: 'Strategic legal solutions for companies, projects, and complex asset structures.',
-    intro: 'We support the full project lifecycle, from contractual preparation to execution, risk management, disputes, and closure.',
-    body: ['The advisory integrates legal criteria, business vision, and technical understanding for engineering, construction, mining, energy, and infrastructure companies.'],
-    areas: ['Engineering and construction contracts', 'Contract management', 'Risk prevention', 'Contract compliance', 'Forensic engineering', 'Dispute resolution', 'Asset protection'],
-    cta: 'Discuss your next project'
+    icon: 'engineering',
+    summary: 'Specialized legal-strategic advice for engineering, construction, mining, energy, and infrastructure companies—combining legal knowledge, business vision, and technical understanding.',
+    intro: '',
+    heroImage: '/assets/services/engineering-law.webp',
+    supportImage: '/assets/office/office-meeting-lounge.webp',
+    body: [],
+    pillarTitleMinLines: 3,
+    pillars: [
+      {
+        title: 'Full life cycle of public or private projects',
+        text: 'Support from the preliminary stage through closeout, with strategic management of the contract, evidence, milestones, and risks.'
+      },
+      {
+        title: 'External legal department',
+        text: 'A service for companies that require ongoing, specialized legal support aligned with their actual operations, without needing to internalize a complete legal structure.'
+      },
+      {
+        title: 'Asset protection',
+        text: 'Organization of the asset exposure of partners, directors, managers, and legal representatives in the face of contingencies.'
+      }
+    ],
+    sections: [
+      {
+        title: '1. Full life cycle of public or private projects',
+        text: 'Comprehensive legal and technical support throughout every stage of the project: structuring, bidding, contract formation, performance, and contractual closeout. We identify and manage risks, support critical negotiations, prevent disputes, and contribute to their resolution.',
+        subsectionsLabel: 'AREAS OF ADVISORY',
+        subsections: [
+          {
+            title: 'Tender processes',
+            text: 'Review of tender terms, identification of risks, and preparation of questions, bids, and legal documentation.'
+          },
+          {
+            title: 'Contract review and negotiation',
+            text: 'Analysis and negotiation of clauses to balance risks, obligations, guarantees, and liabilities.'
+          },
+          {
+            title: 'Strategic risk management',
+            text: 'Early identification, assessment, and mitigation of technical, legal, and commercial contingencies.'
+          },
+          {
+            title: 'Technical and legal support during performance',
+            text: 'Ongoing advice regarding changes, instructions, interferences, delays, and critical project decisions.'
+          },
+          {
+            title: 'Training, operational control, and documentary support',
+            text: 'Training and support for teams to properly control and document performance, manage communications and the relationship with the counterparty, and ensure contractual closeout that enables the recognition and recovery of costs and expenses incurred for the benefit of the principal, preventing financial impacts on the company.'
+          },
+          {
+            title: 'Contractual compliance',
+            text: 'Monitoring obligations, milestones, deadlines, and procedures to safeguard the company’s rights.'
+          },
+          {
+            title: 'Forensic engineering',
+            text: 'Technical and documentary analysis of the causes and impacts associated with delays, cost overruns, and breaches.'
+          },
+          {
+            title: 'Claims, breaches, and penalties',
+            text: 'Preparation, substantiation, and negotiation of claims, defenses, and contractual responses.'
+          },
+          {
+            title: 'Litigation and dispute resolution',
+            text: 'Representation in negotiations, mediations, arbitrations, and judicial proceedings.'
+          },
+          {
+            title: 'Contractual closeout',
+            text: 'Verification of outstanding obligations, acceptance of works, settlement of contracts, and release of guarantees.'
+          }
+        ]
+      },
+      {
+        title: '2. External legal department',
+        text: 'We offer an External Legal Department service that acts as a true strategic partner for your business organization. This pillar provides ongoing legal support, ensuring that all business operations and strategies are aligned with current legislation and optimized to prevent legal risks.',
+        href: '/en/corporate-business-law/',
+        items: ['Ongoing Legal Counsel: Comprehensive support in areas of interest such as corporate governance, commercial contracts, regulatory compliance, labor law, intellectual property, and representation in litigation, among others (refer to and integrate with the corporate legal area).', 'Flexible Solutions: Available as an annual plan for continuous support or as customized services for a project or specific case, adapting to the company’s particular needs.']
+      },
+      {
+        title: '3. Asset protection',
+        text: 'Assessment and design of preventive legal structures intended to safeguard the personal, family, and business assets of partners, directors, and legal representatives. We review the corporate organization, ownership of assets, guarantees, contracts, and management mechanisms, seeking appropriate asset separation, the lawful reduction of risks, and the continuity of assets in the face of debts or contractual, labor, or corporate contingencies.'
+      }
+    ],
+    areas: [],
+    cta: 'Let us discuss your next project'
   },
   {
     lang: 'en',
+    translationKey: 'service-international-trade-business',
     slug: 'international-trade-business',
     title: '/ International Trade & Business',
     navLabel: 'International Trade & Business',
+    icon: 'international',
     summary: 'Legal and strategic advisory services to connect companies, markets, and opportunities.',
-    intro: 'International trade requires solid legal structures, strategic vision, and a deep understanding of cross-border regulations.',
-    body: ['We support Chilean and international companies in expansion, representation, and investment processes.'],
-    areas: ['Foreign company incorporation in Chile', 'Foreign investment and capital repatriation', 'International M&A and joint ventures', 'International trade contracts', 'Commercial agency and representation', 'International corporate and tax structuring'],
-    cta: 'Evaluate international expansion'
+    intro: '',
+    heroImage: '/assets/services/international-trade.webp',
+    supportImage: '/assets/office/office-lounge-wide.webp',
+    body: [
+      'International trade requires solid legal structures, strategic vision, and knowledge of the rules governing operations between different countries.',
+      'At Bright Alliance | BA Chile, we support Chilean and foreign companies in their expansion, representation, or investment processes, integrating Law, Strategy, and Business to facilitate secure and sustainable decisions aligned with business objectives.',
+      'Our practice combines a solid local legal foundation with professional alliances in Europe (Italy), the Americas (Peru, Mexico, and the United States), and Oceania (Australia), enabling us to offer integrated solutions for cross-border projects, both in their structuring phase and in their contractual and tax implementation.'
+    ],
+    areas: [
+      {
+        title: 'Incorporation and representation of foreign companies in Chile',
+        text: 'Assistance with establishing agencies, subsidiaries, branches, or joint ventures; obtaining a Chilean tax identification number (RUT), appointing legal representatives, and achieving comprehensive regulatory compliance.'
+      },
+      {
+        title: 'Foreign investment and capital repatriation',
+        text: 'Advice on inbound and outbound investments, double taxation treaties, international tax planning, and investment protection mechanisms.'
+      },
+      {
+        title: 'International mergers, acquisitions, and joint ventures',
+        text: 'Structuring of international transactions, due diligence, drafting of partnership or technology transfer agreements, and multinational coordination of processes.'
+      },
+      {
+        title: 'International trade contracts',
+        text: 'Negotiation and drafting of sale, agency, distribution, franchise, licensing, supply, and service agreements with international components.'
+      },
+      {
+        title: 'Commercial agency and representation',
+        text: 'Advice on the legal structuring of agency, distribution, intermediation, or representation relationships between domestic and foreign companies; design of contracts with commercial balance and protection of rights.'
+      },
+      {
+        title: 'International corporate and tax architecture',
+        text: 'Design of efficient corporate and tax structures, including holdings, subholdings, and investment vehicles (SPVs); coordination of international tax planning and regulatory compliance across jurisdictions.'
+      },
+      {
+        title: 'Intellectual property and technology transfer',
+        text: 'Protection, licensing, and registration of trademarks and patents in different jurisdictions; international technology or know-how transfer agreements.'
+      },
+      {
+        title: 'Compliance and international regulations',
+        text: 'Implementation of anti-corruption policies, anti-money laundering measures, customs compliance, and export controls.'
+      },
+      {
+        title: 'Resolution of international disputes',
+        text: 'Representation and coordination in cross-border arbitration, mediation, or litigation; cooperation with partner firms in Europe, the Americas, and Oceania.'
+      }
+    ],
+    cta: 'Evaluate support for an international expansion process',
+    ctaText: ''
   },
 ];
 
@@ -527,6 +779,7 @@ export const clientLogos = Array.from({ length: 25 }, (_, index) => ({
 export const externalNews: ArticlePage[] = [
   {
     lang: 'es',
+    translationKey: 'news-cmf-open-finance-system-regulations',
     kind: 'external',
     slug: 'cmf-modifica-normativa-sistema-finanzas-abiertas',
     title: 'CMF modifica normativa del Sistema de Finanzas Abiertas',
@@ -546,6 +799,7 @@ export const externalNews: ArticlePage[] = [
   },
   {
     lang: 'es',
+    translationKey: 'news-cmf-securities-intermediaries-information',
     kind: 'external',
     slug: 'cmf-consulta-envio-informacion-intermediarios-valores',
     title: 'CMF consulta normas de envío de información para intermediarios',
@@ -565,6 +819,7 @@ export const externalNews: ArticlePage[] = [
   },
   {
     lang: 'es',
+    translationKey: 'news-supreme-court-fee-contracting-employment',
     kind: 'external',
     slug: 'corte-suprema-confirma-relacion-laboral-honorarios',
     title: 'Corte Suprema confirma fallo sobre relación laboral en contratación a honorarios',
@@ -585,6 +840,7 @@ export const externalNews: ArticlePage[] = [
   },
   {
     lang: 'es',
+    translationKey: 'news-law-21719-personal-data',
     kind: 'external',
     slug: 'ley-21719-proteccion-datos-personales-chile',
     title: 'Ley N° 21.719 regula la protección y tratamiento de datos personales',
@@ -601,86 +857,93 @@ export const externalNews: ArticlePage[] = [
     externalUrl: 'https://www.bcn.cl/leychile/navegar?idNorma=1209272',
     body: ['Ficha de actualidad externa basada en el texto oficial disponible en Ley Chile de la Biblioteca del Congreso Nacional.'],
     sections: [{ title: 'Relevancia empresarial', paragraphs: ['La noticia es relevante para empresas que tratan datos de clientes, trabajadores, proveedores o usuarios, y que deben preparar procesos, contratos y controles antes de la plena exigibilidad del nuevo marco.'] }]
-  }
-];
-
-export const internalPosts: ArticlePage[] = [
-  {
-    lang: 'es',
-    kind: 'internal',
-    slug: 'estructura-blog-institucional-ba-chile',
-    title: 'Blog institucional BA Chile',
-    summary: 'Espacio preparado para novedades internas, hitos de la oficina, publicaciones institucionales y noticias propias.',
-    image: '/assets/office/office-boardroom-wide.webp',
-    category: 'Institucional',
-    publishedAt: 'Pendiente',
-    readTime: 'Estructura preparada',
-    keyPoints: ['Título', 'Slug', 'Categoría', 'Resumen', 'Contenido', 'Foto principal', 'Fuente externa opcional'],
-    body: ['Esta entrada funciona como estructura editorial inicial para el blog interno de BA Chile.', 'Cuando exista una noticia real, se debe reemplazar por contenido institucional aprobado: apertura de sucursal, nuevo corresponsal, hito de la oficina o publicación propia.'],
-    sections: [{ title: 'Campos mínimos', paragraphs: ['Cada publicación interna debe definir título, slug, categoría, resumen, contenido, foto principal y fuente o URL externa opcional.'] }]
-  }
-];
-
-export const articles: ArticlePage[] = [
-  ...externalNews,
-  ...internalPosts,
-  {
-    lang: 'en',
-    slug: 'personal-data-in-chile',
-    title: 'Personal Data in Chile',
-    summary: 'What changes, how it affects companies, and why preparation matters.',
-    image: '/assets/news/data-privacy-server.jpg',
-    category: 'Regulation',
-    publishedAt: '2026',
-    readTime: '5 min',
-    keyPoints: ['Data governance', 'Contracts and processors', 'Security controls', 'Reputational risk'],
-    source: {
-      label: 'Library of Congress of Chile',
-      href: 'https://www.bcn.cl/leychile/'
-    },
-    body: ['Personal data regulation requires companies to review internal processes, contracts, security, and governance.', 'Preparation should connect legal obligations with operational controls.'],
-    sections: [
-      {
-        title: 'What changes for companies',
-        paragraphs: ['Personal data management now requires a practical understanding of what data is processed, why it is processed, who has access to it, and which controls support responsible use.', 'The first step is to map treatments, roles, purposes, providers, and internal control gaps.'],
-        items: ['Data inventory.', 'Review of legal basis and purposes.', 'Assessment of vendors that process company data.']
-      },
-      {
-        title: 'Contracts and vendors',
-        paragraphs: ['Many risks arise from technology vendors, software platforms, marketing services, payroll providers, and external storage.', 'Contracts should define data roles, confidentiality, security duties, incident response, subcontracting, and termination rules.'],
-        items: ['Data processing clauses.', 'Security and incident reporting standards.', 'Reasonable audit or verification mechanisms.']
-      }
-    ]
   },
   {
     lang: 'en',
-    slug: 'fintec-ley-how-is-in-chile',
-    title: '“Fintec Ley” ¿How is in Chile?',
-    summary: 'How Chilean Fintech regulation affects companies and why preparation matters.',
-    image: '/assets/news/fintech-payment.jpg',
-    category: 'Fintech',
-    publishedAt: '2026',
-    readTime: '5 min',
-    keyPoints: ['Business model', 'Operational risk', 'Governance', 'Regulatory relationship'],
+    translationKey: 'news-cmf-open-finance-system-regulations',
+    kind: 'external',
+    slug: 'cmf-amends-open-finance-system-regulations',
+    title: 'CMF Amends Open Finance System Regulations',
+    summary: 'The CMF published an amendment to General Rule No. 514 and incorporated technical specifications for the implementation of the Open Finance System.',
+    image: '/assets/website/ley-fintec.png',
+    category: 'Financial regulation',
+    publishedAt: '01/06/2026',
+    readTime: 'External source',
+    keyPoints: ['Fintech Law', 'Open Finance System', 'Technical annex', 'Regulatory graduality'],
     source: {
       label: 'Financial Market Commission',
-      href: 'https://www.cmfchile.cl/'
+      href: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110881.html'
     },
-    body: ['The Chilean Fintech framework creates technical obligations, but also an opportunity to organize operations and strengthen trust.', 'Bright Alliance approaches compliance as a legal, strategic, and operational process.'],
-    sections: [
-      {
-        title: 'Regulation and business model',
-        paragraphs: ['Companies connected to financial technology services should review their value proposition, activities, money flows, providers, and risk exposure.', 'A useful assessment must be specific to the company, not generic to the interface or product category.'],
-        items: ['Identification of regulated or sensitive activities.', 'Operational flow review.', 'Contracts with users, merchants, vendors, and partners.']
-      },
-      {
-        title: 'Compliance as trust infrastructure',
-        paragraphs: ['In digital financial markets, trust is part of the product. Legal, operational, and technology controls should support the commercial promise.', 'A robust structure can improve investor conversations, partnerships, and expansion readiness.'],
-        items: ['Internal governance.', 'Operational and technology risk management.', 'Documentary traceability for audits or regulatory review.']
-      }
-    ]
+    externalUrl: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110881.html',
+    body: ['External current-affairs brief based on the official publication of the Financial Market Commission.'],
+    sections: [{ title: 'Business relevance', paragraphs: ['The news is relevant to financial institutions, fintech companies, and businesses that must plan technical developments, compliance, and operational adaptation in response to the regulatory timetable.'] }]
+  },
+  {
+    lang: 'en',
+    translationKey: 'news-cmf-securities-intermediaries-information',
+    kind: 'external',
+    slug: 'cmf-consults-information-submission-rules-securities-intermediaries',
+    title: 'CMF Consults on Information Submission Rules for Securities Intermediaries',
+    summary: 'The proposal defines the form, frequency, and means for submitting supervisory information applicable to securities intermediaries and commodities exchange brokers.',
+    image: '/assets/news/fintech-payment.jpg',
+    category: 'Securities market',
+    publishedAt: '01/06/2026',
+    readTime: 'External source',
+    keyPoints: ['Supervision', 'Securities intermediaries', 'Commodities exchange brokers', 'Regulatory information'],
+    source: {
+      label: 'Financial Market Commission',
+      href: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110871.html'
+    },
+    externalUrl: 'https://www.cmfchile.cl/portal/prensa/625/w4-article-110871.html',
+    body: ['External current-affairs brief based on the official publication of the Financial Market Commission.'],
+    sections: [{ title: 'Business relevance', paragraphs: ['The news may affect compliance planning, regulatory data governance, and internal reporting processes at supervised entities.'] }]
+  },
+  {
+    lang: 'en',
+    translationKey: 'news-supreme-court-fee-contracting-employment',
+    kind: 'external',
+    slug: 'supreme-court-upholds-employment-relationship-fee-contracting',
+    title: 'Supreme Court Upholds Ruling on Employment Relationship in Fee-Based Contracting',
+    summary: 'The Judiciary reported a decision that declared the existence of an employment relationship and ordered the associated benefits.',
+    // Public-domain photo: Supreme Court of Justice of Chile, Palace of the Courts of Justice. Source: Wikimedia Commons, File:CorteSupremaChile.JPG.
+    image: '/assets/news/corte-suprema-chile.jpg',
+    category: 'Labor',
+    publishedAt: '01/06/2026',
+    readTime: 'External source',
+    keyPoints: ['Primacy of reality', 'Employment relationship', 'Fee-based contracting', 'Supreme Court'],
+    source: {
+      label: 'Judiciary',
+      href: 'https://www.pjud.cl/prensa-y-comunicaciones/noticias-del-poder-judicial/145575'
+    },
+    externalUrl: 'https://www.pjud.cl/prensa-y-comunicaciones/noticias-del-poder-judicial/145575',
+    body: ['External current-affairs brief based on the Judiciary communication.'],
+    sections: [{ title: 'Business relevance', paragraphs: ['The news is relevant to reviewing contracts, service delivery arrangements, and the criteria for subordination or dependence in public and private organizations.'] }]
+  },
+  {
+    lang: 'en',
+    translationKey: 'news-law-21719-personal-data',
+    kind: 'external',
+    slug: 'law-21719-personal-data-protection-processing',
+    title: 'Law No. 21,719 Regulates Personal Data Protection and Processing',
+    summary: 'The Library of Congress of Chile makes available the text of Law No. 21,719, which regulates personal data processing and creates a new data protection institution.',
+    image: '/assets/website/ley-datos-personales.png',
+    category: 'Personal data',
+    publishedAt: 'Effective 01/12/2026',
+    readTime: 'External source',
+    keyPoints: ['Law No. 21,719', 'Personal data', 'Data Protection Agency', 'Business compliance'],
+    source: {
+      label: 'Library of Congress of Chile',
+      href: 'https://www.bcn.cl/leychile/navegar?idNorma=1209272'
+    },
+    externalUrl: 'https://www.bcn.cl/leychile/navegar?idNorma=1209272',
+    body: ['External current-affairs brief based on the official text available through Ley Chile from the Library of Congress of Chile.'],
+    sections: [{ title: 'Business relevance', paragraphs: ['The news is relevant to companies that process data belonging to clients, workers, suppliers, or users and that must prepare processes, contracts, and controls before the new framework becomes fully enforceable.'] }]
   }
 ];
+
+export const internalPosts: ArticlePage[] = [];
+
+export const articles: ArticlePage[] = [...externalNews, ...internalPosts];
 
 export const visibleRoutes = [
   '/',
@@ -690,15 +953,25 @@ export const visibleRoutes = [
   '/ingenieria-y-derecho/',
   '/comercio-y-negocios-internacionales/',
   '/noticias/',
+  '/cmf-modifica-normativa-sistema-finanzas-abiertas/',
+  '/cmf-consulta-envio-informacion-intermediarios-valores/',
+  '/corte-suprema-confirma-relacion-laboral-honorarios/',
+  '/ley-21719-proteccion-datos-personales-chile/',
   '/blog-oficina/',
   '/noticias-blog/',
-  '/estructura-blog-institucional-ba-chile/',
   '/contacto/',
   '/en/',
   '/en/about-us/',
+  '/en/services/',
   '/en/corporate-business-law/',
   '/en/engineering-and-law/',
   '/en/international-trade-business/',
+  '/en/news/',
+  '/en/cmf-amends-open-finance-system-regulations/',
+  '/en/cmf-consults-information-submission-rules-securities-intermediaries/',
+  '/en/supreme-court-upholds-employment-relationship-fee-contracting/',
+  '/en/law-21719-personal-data-protection-processing/',
+  '/en/office-blog/',
   '/en/news-blog/',
   '/en/contact/'
 ];
