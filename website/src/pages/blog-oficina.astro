@@ -1,17 +1,8 @@
 ---
-import ArticleListing from '../components/ArticleListing.astro';
-import SectionHeader from '../components/SectionHeader.astro';
+import OfficeBlogPage from '../components/OfficeBlogPage.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { internalPosts } from '../content/site';
-
-const internalArticles = internalPosts.filter((article) => article.lang === 'es');
 ---
 
 <BaseLayout title="Noticias propias de la oficina - Bright Alliance | BA Chile" description="Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas." lang="es">
-  <section class="ba-section offwhite">
-    <div class="ba-container">
-      <SectionHeader level="h1" eyebrow="Blog interno" title="Noticias propias de la oficina" lead="Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas." />
-      <ArticleListing articles={internalArticles} variant="internal" />
-    </div>
-  </section>
+  <OfficeBlogPage lang="es" />
 </BaseLayout>

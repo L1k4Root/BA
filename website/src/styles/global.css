@@ -59,10 +59,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--ba-header-compact) + var(--ba-space-5));
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: var(--ba-font-body);
   font-size: var(--ba-body-md);
   line-height: 1.6;
@@ -74,6 +77,7 @@ body {
 
 body.is-menu-open {
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 img,
@@ -94,7 +98,7 @@ main > .ba-section:first-child:not(.page-hero):not(.hero) {
   padding-top: var(--ba-page-top-offset);
 }
 
-.page-hero {
+main > .ba-section.page-hero {
   padding-top: var(--ba-page-top-offset);
 }
 

@@ -1,32 +1,36 @@
 ---
+import type { Language } from '../content/site';
+
 type Props = {
   approach: string;
   secondary?: string;
+  lang?: Language;
 };
 
-const { approach, secondary } = Astro.props;
+const { approach, secondary, lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
 ---
 
 <section class="ba-section light intro-section">
   <div class="ba-container ba-grid-2">
     <div class="reveal-up">
       <div class="intro-section__heading">
-        <span class="ba-label ba-eyebrow">Quiénes somos</span>
-        <h2>En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa.</h2>
+        <span class="ba-label ba-eyebrow">{isEnglish ? 'About Us' : 'Quiénes somos'}</span>
+        <h2>{isEnglish ? 'At Bright Alliance | BA Chile, we integrate Law, Strategy, and Business.' : 'En Bright Alliance | BA Chile, integramos Derecho, Estrategia y Empresa.'}</h2>
       </div>
       <div class="intro-section__copy">
         <p class="ba-body-lg">{approach}</p>
         {secondary && <p class="ba-body-lg">{secondary}</p>}
       </div>
-      <a class="ba-btn ba-btn-outline-dark" href="/nosotros/">Leer más</a>
+      <a class="ba-btn ba-btn-outline-dark" href={isEnglish ? '/en/about-us/' : '/nosotros/'}>{isEnglish ? 'Read more' : 'Leer más'}</a>
     </div>
     <figure class="intro-media reveal-up">
       <div class="intro-media__image">
-        <img src="/assets/office/office-private-room.webp" alt="Oficina Bright Alliance | BA Chile" loading="lazy" />
+        <img src="/assets/office/office-private-room.webp" alt={isEnglish ? 'Bright Alliance | BA Chile office' : 'Oficina Bright Alliance | BA Chile'} loading="lazy" />
       </div>
       <div class="intro-media__caption">
         <span>Bright Alliance | BA Chile</span>
-        <strong>Derecho · Estrategia · Empresa</strong>
+        <strong>{isEnglish ? 'Law · Strategy · Business' : 'Derecho · Estrategia · Empresa'}</strong>
       </div>
     </figure>
   </div>

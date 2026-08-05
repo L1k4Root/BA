@@ -1,5 +1,6 @@
 ---
 import SectionHeader from './SectionHeader.astro';
+import type { Language } from '../content/site';
 
 type ClientLogo = {
   src: string;
@@ -8,9 +9,12 @@ type ClientLogo = {
 
 type Props = {
   logos: ClientLogo[];
+  lang?: Language;
 };
 
-const { logos } = Astro.props;
+const { logos, lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
+const logoAlt = (alt: string) => isEnglish ? alt.replace('Cliente BA Chile', 'BA Chile client') : alt;
 const firstRow = logos.filter((_, index) => index % 2 === 0);
 const secondRow = logos.filter((_, index) => index % 2 === 1);
 ---
@@ -18,25 +22,25 @@ const secondRow = logos.filter((_, index) => index % 2 === 1);
 <section class="ba-section offwhite clients-section">
   <div class="ba-container-xl">
     <div class="clients-heading reveal-up">
-      <SectionHeader align="center" eyebrow="Confianza empresarial" title="Una selección de clientes que han confiado en nosotros" />
-      <div class="trust-points" aria-label="Criterios de confianza BA Chile">
-        <span>Confidencialidad</span>
-        <span>Continuidad</span>
-        <span>Criterio ejecutivo</span>
+      <SectionHeader align="center" eyebrow={isEnglish ? 'Business trust' : 'Confianza empresarial'} title={isEnglish ? 'A selection of clients who have placed their trust in us' : 'Una selección de clientes que han confiado en nosotros'} />
+      <div class="trust-points" aria-label={isEnglish ? 'BA Chile trust criteria' : 'Criterios de confianza BA Chile'}>
+        <span>{isEnglish ? 'Confidentiality' : 'Confidencialidad'}</span>
+        <span>{isEnglish ? 'Continuity' : 'Continuidad'}</span>
+        <span>{isEnglish ? 'Executive judgment' : 'Criterio ejecutivo'}</span>
       </div>
     </div>
-    <div class="logo-marquee reveal-up" aria-label="Logos de clientes BA Chile">
+    <div class="logo-marquee reveal-up" aria-label={isEnglish ? 'BA Chile client logos' : 'Logos de clientes BA Chile'}>
       <div class="logo-track">
         {[...firstRow, ...firstRow].map((logo) => (
           <div class="client-logo">
-            <img src={logo.src} alt={logo.alt} loading="lazy" />
+            <img src={logo.src} alt={logoAlt(logo.alt)} loading="lazy" />
           </div>
         ))}
       </div>
       <div class="logo-track logo-track--reverse">
         {[...secondRow, ...secondRow].map((logo) => (
           <div class="client-logo">
-            <img src={logo.src} alt={logo.alt} loading="lazy" />
+            <img src={logo.src} alt={logoAlt(logo.alt)} loading="lazy" />
           </div>
         ))}
       </div>

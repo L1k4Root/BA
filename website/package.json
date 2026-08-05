@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check:site": "node scripts/check-site.mjs",
     "preview": "astro preview",
     "deploy:prod": "../scripts/deploy.sh"
   },

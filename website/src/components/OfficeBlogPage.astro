@@ -1,0 +1,60 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import type { Language } from '../content/site';
+
+type Props = {
+  lang?: Language;
+};
+
+const { lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
+const copy = isEnglish
+  ? {
+      eyebrow: 'Office blog',
+      title: 'Office news',
+      lead: 'A space reserved for approved institutional news, BA Chile milestones, and internal publications.',
+      emptyTitle: 'There are no approved publications yet',
+      emptyText: 'This space will be published when BA Chile has reviewed and approved institutional content.'
+    }
+  : {
+      eyebrow: 'Blog interno',
+      title: 'Noticias propias de la oficina',
+      lead: 'Espacio preparado para novedades institucionales, hitos de BA Chile y publicaciones internas aprobadas.',
+      emptyTitle: 'Aún no hay publicaciones aprobadas',
+      emptyText: 'Este espacio se publicará cuando BA Chile cuente con contenido institucional revisado y aprobado.'
+    };
+---
+
+<section class="ba-section offwhite">
+  <div class="ba-container">
+    <SectionHeader level="h1" eyebrow={copy.eyebrow} title={copy.title} lead={copy.lead} />
+    <div class="empty-state" role="status">
+      <h2>{copy.emptyTitle}</h2>
+      <p>{copy.emptyText}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .empty-state {
+    max-width: 760px;
+    border-top: 4px solid var(--ba-gold-500);
+    padding: clamp(var(--ba-space-6), 5vw, var(--ba-space-8));
+    background: var(--ba-white);
+    box-shadow: 0 30px 84px -68px rgba(16, 47, 75, 0.62);
+  }
+
+  .empty-state h2 {
+    margin: 0 0 var(--ba-space-4);
+    color: var(--ba-navy-900);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-heading-md);
+  }
+
+  .empty-state p {
+    max-width: 60ch;
+    margin: 0;
+    color: var(--ba-gray-700);
+    font-size: var(--ba-body-lg);
+  }
+</style>

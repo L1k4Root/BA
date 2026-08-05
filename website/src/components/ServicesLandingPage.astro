@@ -1,0 +1,126 @@
+---
+import CTA from './CTA.astro';
+import HomeServices from './HomeServices.astro';
+import { contact, home, servicesByLang, type Language } from '../content/site';
+
+type Props = {
+  lang?: Language;
+};
+
+const { lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
+const services = servicesByLang(lang).filter((service) => !service.slug.startsWith('landing') && service.slug !== 'compliance');
+const content = home[lang];
+const copy = isEnglish
+  ? {
+      eyebrow: 'Services',
+      title: '/ Services',
+      hero: 'Three legal-strategic advisory fronts for companies, projects, and operations that require legal judgment, business vision, and structure.',
+      services: 'Three legal-strategic advisory fronts for companies, projects, and operations that require legal judgment and business vision.',
+      ctaTitle: 'Let us discuss the area you need to strengthen',
+      ctaText: 'We can review structure, contracts, projects, international expansion, or legal continuity from an executive perspective.',
+      ctaLabel: 'Contact',
+      ctaHref: '/en/contact/',
+      imageAlt: 'Bright Alliance | BA Chile services'
+    }
+  : {
+      eyebrow: 'Servicios',
+      title: '/ Servicios',
+      hero: 'Tres frentes de asesoría jurídico-estratégica para empresas, proyectos y operaciones que requieren criterio legal, visión de negocio y estructura.',
+      services: 'Tres frentes de asesoría jurídico-estratégica para empresas, proyectos y operaciones que requieren criterio legal y visión de negocio.',
+      ctaTitle: 'Conversemos sobre el área que necesita fortalecer',
+      ctaText: 'Podemos revisar estructura, contratos, proyectos, expansión internacional o continuidad jurídica desde una perspectiva ejecutiva.',
+      ctaLabel: 'Contactar',
+      ctaHref: '/contacto/',
+      imageAlt: 'Servicios Bright Alliance | BA Chile'
+    };
+---
+
+<section class="services-hero">
+  <img class="services-hero__image" src="/assets/office/office-boardroom-wide.webp" alt={copy.imageAlt} />
+  <div class="services-hero__overlay"></div>
+  <div class="ba-container services-hero__content">
+    <span class="ba-label ba-eyebrow">{copy.eyebrow}</span>
+    <h1>{copy.title}</h1>
+    <p>{copy.hero}</p>
+  </div>
+</section>
+
+<HomeServices heading={content.servicesHeading} subheading={copy.services} services={services} lang={lang} />
+
+<CTA
+  title={copy.ctaTitle}
+  text={copy.ctaText}
+  href={copy.ctaHref}
+  label={copy.ctaLabel}
+  agendaHref={contact.agendaHref}
+  lang={lang}
+/>
+
+<style>
+  .services-hero {
+    position: relative;
+    display: grid;
+    min-height: 620px;
+    overflow: hidden;
+    color: var(--ba-white);
+  }
+
+  .services-hero__image,
+  .services-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+
+  .services-hero__image {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .services-hero__overlay {
+    background:
+      linear-gradient(90deg, rgba(5, 14, 23, 0.76) 0%, rgba(16, 47, 75, 0.52) 50%, rgba(16, 47, 75, 0.28) 100%),
+      linear-gradient(180deg, rgba(5, 14, 23, 0.28) 0%, rgba(5, 14, 23, 0.58) 100%);
+  }
+
+  .services-hero__content {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    padding-top: var(--ba-header-expanded);
+  }
+
+  .services-hero .ba-eyebrow {
+    color: var(--ba-gold-400);
+  }
+
+  .services-hero h1 {
+    max-width: 880px;
+    margin: var(--ba-space-4) 0 var(--ba-space-5);
+    color: var(--ba-white);
+    font-family: var(--ba-font-head);
+    font-size: var(--ba-display-xl);
+    font-weight: 700;
+    line-height: 1.08;
+  }
+
+  .services-hero p {
+    max-width: 760px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(18px, 1.4vw, 22px);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 620px) {
+    .services-hero {
+      min-height: 560px;
+    }
+
+    .services-hero h1 {
+      font-size: clamp(38px, 12vw, 48px);
+    }
+  }
+</style>

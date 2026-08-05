@@ -1,0 +1,17 @@
+---
+import ArticleListing from '../../components/ArticleListing.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { externalNews } from '../../content/site';
+
+const externalArticles = externalNews.filter((article) => article.lang === 'en');
+---
+
+<BaseLayout title="News - Bright Alliance | BA Chile" description="Monitoring external sources relevant to businesses, regulation, and courts." lang="en">
+  <section class="ba-section light">
+    <div class="ba-container">
+      <SectionHeader level="h1" eyebrow="External legal developments" title="/ News" lead="Monitoring external sources relevant to businesses, regulation, and courts." />
+      <ArticleListing articles={externalArticles} variant="external" lang="en" />
+    </div>
+  </section>
+</BaseLayout>
