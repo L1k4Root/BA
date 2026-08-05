@@ -60,10 +60,12 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--ba-header-compact) + var(--ba-space-5));
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: var(--ba-font-body);
   font-size: var(--ba-body-md);
   line-height: 1.6;

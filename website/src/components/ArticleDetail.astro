@@ -63,7 +63,7 @@ const isEs = lang === 'es';
 
 <style>
   .article-detail__hero {
-    padding: calc(var(--ba-space-9) + 96px) 0 var(--ba-space-9);
+    padding: var(--ba-page-top-offset) 0 var(--ba-space-9);
     background:
       linear-gradient(180deg, rgba(16, 47, 75, 0.04), rgba(16, 47, 75, 0)),
       var(--ba-white);
@@ -243,11 +243,8 @@ const isEs = lang === 'es';
   }
 
   @media (max-width: 620px) {
-    .article-detail__hero {
-      padding-top: calc(var(--ba-space-8) + 86px);
-    }
-
     .article-detail__intro h1 {
+      max-width: none;
       font-size: 38px;
     }
 
