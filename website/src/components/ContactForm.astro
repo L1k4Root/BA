@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
+const GOOGLE_ADS_LEAD_CONVERSION = 'AW-18330419853/m6AfCJWn8t0cEI2F0KRE';
 const copy = locale === 'es'
   ? {
       title: 'Contacto',
@@ -41,6 +42,7 @@ const copy = locale === 'es'
   action="/api/contact.php"
   method="post"
   data-contact-form
+  data-google-ads-conversion={GOOGLE_ADS_LEAD_CONVERSION}
   data-message-success={copy.success}
   data-message-invalid={copy.invalid}
   data-message-rate-limited={copy.rateLimited}
@@ -83,6 +85,33 @@ const copy = locale === 'es'
 </form>
 
 <script>
+  type GoogleAdsConversionParameters = {
+    send_to: string;
+    transaction_id: string;
+  };
+
+  type GoogleTag = (
+    command: 'event',
+    eventName: 'conversion',
+    parameters: GoogleAdsConversionParameters,
+  ) => void;
+
+  function trackGoogleAdsLead(destination: string, requestId: string): void {
+    const gtag = (window as Window & { gtag?: GoogleTag }).gtag;
+    if (typeof gtag !== 'function') {
+      return;
+    }
+
+    try {
+      gtag('event', 'conversion', {
+        send_to: destination,
+        transaction_id: requestId,
+      });
+    } catch {
+      // Google Ads measurement is best-effort and must not alter form delivery status.
+    }
+  }
+
   document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -105,14 +134,17 @@ const copy = locale === 'es'
       status.dataset.state = '';
 
       try {
+        const formData = new FormData(form);
+        const honeypotValue = formData.get('website');
+        const hasHoneypotContent = typeof honeypotValue === 'string' && honeypotValue.trim() !== '';
         const response = await fetch(form.action, {
           method: 'POST',
-          body: new FormData(form),
+          body: formData,
           headers: {
             Accept: 'application/json',
           },
         });
-        const payload = await response.json().catch(() => null) as { code?: string } | null;
+        const payload = await response.json().catch(() => null) as { code?: string; requestId?: string } | null;
 
         if (!response.ok) {
           if (response.status === 400) {
@@ -126,8 +158,12 @@ const copy = locale === 'es'
           return;
         }
 
-        if (payload?.code !== 'sent') {
+        if (payload?.code !== 'sent' || typeof payload.requestId !== 'string' || payload.requestId.trim() === '') {
           throw new Error('Unexpected contact endpoint response');
+        }
+
+        if (!hasHoneypotContent && form.dataset.googleAdsConversion) {
+          trackGoogleAdsLead(form.dataset.googleAdsConversion, payload.requestId);
         }
 
         form.reset();

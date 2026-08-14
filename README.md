@@ -45,6 +45,12 @@ npm run deploy:prod
 
 El deploy solo sube `website/dist/`. No despliega `email-marketing/` ni `assets/`.
 
+## Google Ads
+
+La medición del formulario usa una sola etiqueta `gtag.js` global y emite la conversión sólo después de un envío confirmado por el backend. El acceso para agentes está aislado a BA, es de sólo lectura y no contiene credenciales en el repositorio.
+
+Ver [docs/google-ads-operations.md](docs/google-ads-operations.md) para instalación, autenticación, consultas permitidas, guardrails, rotación y revocación.
+
 ## Flujo Git
 
 La separacion entre web y mailing vive en carpetas, no en ramas permanentes.

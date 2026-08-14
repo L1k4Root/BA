@@ -5,6 +5,11 @@ import { extname, relative, resolve, sep } from 'node:path';
 
 const SITE_ORIGIN = 'https://bachile.cl';
 const DIST_DIR = resolve(process.cwd(), 'dist');
+const GOOGLE_ADS_TAG_ID = 'AW-18330419853';
+const GOOGLE_ADS_TAG_LOADER = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_TAG_ID}`;
+const GOOGLE_ADS_TAG_CONFIG = `gtag('config', '${GOOGLE_ADS_TAG_ID}')`;
+const GOOGLE_ADS_LEAD_CONVERSION = `${GOOGLE_ADS_TAG_ID}/m6AfCJWn8t0cEI2F0KRE`;
+const CONTACT_ROUTES = new Set(['/contacto/', '/en/contact/']);
 
 const translatedRoutePairs = [
   { name: 'home', es: '/', en: '/en/' },
@@ -92,6 +97,11 @@ function decodeHtml(value) {
     .replace(/&amp;/gi, '&')
     .replace(/&lt;/gi, '<')
     .replace(/&gt;/gi, '>');
+}
+
+function countOccurrences(value, needle) {
+  if (!needle) return 0;
+  return value.split(needle).length - 1;
 }
 
 function parseAttributes(tag) {
@@ -202,9 +212,29 @@ function normalizedAbsoluteHref(href) {
   }
 }
 
+function isRedirectPage(html) {
+  return tags(html, 'meta').some((tag) => (parseAttributes(tag)['http-equiv'] ?? '').toLowerCase() === 'refresh');
+}
+
+function checkGoogleAdsInstrumentation(route, html) {
+  const tagLoaderCount = countOccurrences(html, GOOGLE_ADS_TAG_LOADER);
+  check(tagLoaderCount === 1, `${route}: expected one Google tag loader for ${GOOGLE_ADS_TAG_ID}, found ${tagLoaderCount}`);
+
+  const tagConfigCount = countOccurrences(html, GOOGLE_ADS_TAG_CONFIG);
+  check(tagConfigCount === 1, `${route}: expected one Google tag config for ${GOOGLE_ADS_TAG_ID}, found ${tagConfigCount}`);
+
+  const conversionDestinationCount = countOccurrences(html, GOOGLE_ADS_LEAD_CONVERSION);
+  const expectedConversionDestinationCount = CONTACT_ROUTES.has(route) ? 1 : 0;
+  check(
+    conversionDestinationCount === expectedConversionDestinationCount,
+    `${route}: expected ${expectedConversionDestinationCount} Google Ads lead destination(s), found ${conversionDestinationCount}`
+  );
+}
+
 function checkExpectedRoute({ name, lang, route, pair }, html) {
   const routeLabel = `${route} (${name}, ${lang})`;
   const renderedHtml = stripNonRenderedText(html);
+
   const htmlTags = tags(renderedHtml, 'html');
   const actualLang = htmlTags.length === 1 ? parseAttributes(htmlTags[0]).lang : undefined;
   check(htmlTags.length === 1 && actualLang === lang, `${routeLabel}: expected <html lang="${lang}">, found ${actualLang ? `lang="${actualLang}"` : 'no usable html lang'}`);
@@ -284,6 +314,11 @@ async function main() {
 
   const allFiles = await walkFiles(DIST_DIR);
   const htmlFiles = allFiles.filter((file) => file.endsWith('.html'));
+
+  for (const file of htmlFiles) {
+    const html = await readFile(file, 'utf8');
+    if (!isRedirectPage(html)) checkGoogleAdsInstrumentation(routeForHtmlFile(file), html);
+  }
 
   for (const expected of expectedRoutes) {
     const file = await findRouteFile(expected.route);

@@ -113,3 +113,16 @@ If verification was not run, state that explicitly in the final handoff.
 - The parent `MetricLogic` repo may show this directory as untracked or nested. That is parent-repo topology noise, not proof that this repo is unmanaged.
 - The current checkout may be on a feature branch without an upstream. Confirm before assuming commits are published.
 - Hostinger deploy depends on local SSH and `.env.deploy`; never commit real deploy credentials.
+
+## Google Ads Guardrails
+
+- Use the project-scoped `ba_google_ads` MCP only for read-only inspection of the Bright Alliance account.
+- Before any GAQL query, run `list_accessible_customers`. Continue only when it returns exactly the documented BA Customer ID; stop on zero, multiple, or mismatched accounts.
+- Never mutate campaigns, ad groups, ads, keywords, audiences, bids, budgets, users, account links, goals, or conversion actions.
+- Never query another customer or route BA through a shared MCC. Do not set `GOOGLE_ADS_LOGIN_CUSTOMER_ID` for this direct-access contract.
+- Use explicit finite date ranges for metrics. Report the account, date range, timezone, currency, and queried fields.
+- Keep `metrics.conversions` and `metrics.all_conversions` distinct. Do not present one as the other.
+- Do not submit a real contact form, create a test lead, push, deploy, or alter Google Ads configuration without separate explicit authorization.
+- Do not put credentials, service-account JSON, PII, lead content, access tokens, or secret values in Git, docs, logs, prompts, or screenshots.
+- If a request requires write access, stop and propose a separate reviewed workflow with explicit authorization. Do not bypass these rules through another API, CLI, browser session, or MCP server.
+- Follow `docs/google-ads-operations.md` and the repo skill `inspect-ba-google-ads` for allowed queries, authentication, rotation, revocation, and stop conditions.

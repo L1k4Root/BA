@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inspect BA Google Ads"
+  short_description: "Read-only Google Ads reporting for BA"
+  default_prompt: "Use $inspect-ba-google-ads to inspect BA campaign performance and conversion status without making changes."
