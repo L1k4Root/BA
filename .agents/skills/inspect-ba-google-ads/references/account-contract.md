@@ -12,7 +12,7 @@
 ## Measurement identity
 
 - Google tag: `AW-18330419853`.
-- Conversion action name: `Enviar formulario de clientes potenciales`.
+- Conversion action name: `Contacto`.
 - Expected destination: `AW-18330419853/n9BUCPz82-EcEI2F0KRE`.
 - Transaction ID: contact endpoint `requestId`.
 - Enhanced Conversions: out of scope.
@@ -42,7 +42,7 @@ SELECT
   conversion_action.primary_for_goal,
   conversion_action.tag_snippets
 FROM conversion_action
-WHERE conversion_action.name = 'Enviar formulario de clientes potenciales'
+WHERE conversion_action.name = 'Contacto'
 ```
 
 ## Approved campaign metrics shape
