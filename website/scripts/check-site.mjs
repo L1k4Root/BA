@@ -8,7 +8,7 @@ const DIST_DIR = resolve(process.cwd(), 'dist');
 const GOOGLE_ADS_TAG_ID = 'AW-18330419853';
 const GOOGLE_ADS_TAG_LOADER = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_TAG_ID}`;
 const GOOGLE_ADS_TAG_CONFIG = `gtag('config', '${GOOGLE_ADS_TAG_ID}')`;
-const GOOGLE_ADS_LEAD_CONVERSION = `${GOOGLE_ADS_TAG_ID}/m6AfCJWn8t0cEI2F0KRE`;
+const GOOGLE_ADS_LEAD_CONVERSION = `${GOOGLE_ADS_TAG_ID}/n9BUCPz82-EcEI2F0KRE`;
 const CONTACT_ROUTES = new Set(['/contacto/', '/en/contact/']);
 
 const translatedRoutePairs = [

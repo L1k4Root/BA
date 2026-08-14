@@ -31,7 +31,7 @@ Inspect only the documented Bright Alliance account through `ba_google_ads`. Pre
 - Do not access another customer, shared MCC, or cross-client report.
 - Do not expose service-account JSON, developer tokens, PII, search-user identifiers, or lead content.
 - Do not submit a real form or deploy the site without separate explicit authorization.
-- Stop if the conversion destination returned by `tag_snippets` differs from `AW-18330419853/m6AfCJWn8t0cEI2F0KRE`.
+- Stop if the conversion destination returned by `tag_snippets` differs from `AW-18330419853/n9BUCPz82-EcEI2F0KRE`.
 - Stop if the requested work requires a write. Describe the required change without applying it.
 
 ## Reporting contract

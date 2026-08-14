@@ -32,7 +32,7 @@ El formulario español y el inglés envían `name`, `email`, `message`, `locale`
 - envía con Google Workspace SMTP y conserva el correo del visitante como `Reply-To`;
 - no registra nombre, correo ni mensaje.
 
-La respuesta JSON del endpoint tiene el contrato `{ code?: string; requestId?: string }`. El navegador emite la conversión Google Ads `AW-18330419853/m6AfCJWn8t0cEI2F0KRE` únicamente cuando la respuesta HTTP es exitosa, `code === "sent"`, `requestId` es válido y el honeypot estaba vacío. `requestId` se envía como `transaction_id`; no se envía PII, valor ni moneda. Si Google está bloqueado o falla, el usuario conserva el éxito del formulario.
+La respuesta JSON del endpoint tiene el contrato `{ code?: string; requestId?: string }`. El navegador emite la conversión Google Ads `AW-18330419853/n9BUCPz82-EcEI2F0KRE` únicamente cuando la respuesta HTTP es exitosa, `code === "sent"`, `requestId` es válido y el honeypot estaba vacío. `requestId` se envía como `transaction_id`; no se envía PII, valor ni moneda. Si Google está bloqueado o falla, el usuario conserva el éxito del formulario.
 
 La etiqueta base vive una sola vez en `src/layouts/BaseLayout.astro`. No agregar GTM ni otra configuración global. El runbook de acceso API y diagnóstico está en [`../docs/google-ads-operations.md`](../docs/google-ads-operations.md).
 

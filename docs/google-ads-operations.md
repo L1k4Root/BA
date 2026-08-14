@@ -8,7 +8,7 @@ Identificadores públicos vigentes:
 
 - Google tag: `AW-18330419853`.
 - Acción: `Enviar formulario de clientes potenciales`.
-- Destino esperado: `AW-18330419853/m6AfCJWn8t0cEI2F0KRE`.
+- Destino esperado: `AW-18330419853/n9BUCPz82-EcEI2F0KRE`.
 - Customer ID de BA: **pendiente de registrar y verificar**.
 
 El sitio usa `gtag.js` directamente desde `BaseLayout.astro`. No instalar Google Tag Manager, otro `gtag('config', ...)` ni una segunda etiqueta base. El formulario emite la conversión sólo después de una respuesta HTTP exitosa con `code: "sent"` y `requestId`; ese ID se usa como `transaction_id`. El evento no incluye nombre, correo, mensaje, valor ni moneda.
@@ -91,7 +91,7 @@ FROM conversion_action
 WHERE conversion_action.name = 'Enviar formulario de clientes potenciales'
 ```
 
-Detener el despliegue si `tag_snippets` no contiene exactamente `AW-18330419853/m6AfCJWn8t0cEI2F0KRE`, si hay más de una acción candidata o si `status` no es `ENABLED`. Reconciliarlo con el administrador de la cuenta; no modificar la acción mediante el agente.
+Detener el despliegue si `tag_snippets` no contiene exactamente `AW-18330419853/n9BUCPz82-EcEI2F0KRE`, si hay más de una acción candidata o si `status` no es `ENABLED`. Reconciliarlo con el administrador de la cuenta; no modificar la acción mediante el agente.
 
 ## Consultas GAQL permitidas
 
